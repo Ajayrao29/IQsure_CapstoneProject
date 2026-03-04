@@ -1,0 +1,148 @@
+<div class="landing">
+  <!-- Header -->
+  <header class="landing-header">
+    <div class="header-content">
+      <div class="brand">
+        <h1>IQ<span>sure</span></h1>
+        <p>Gamified Insurance Literacy Platform</p>
+      </div>
+      <nav class="header-nav">
+        <a routerLink="/about">About</a>
+        <a routerLink="/login">Login</a>
+        <a routerLink="/register">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Learn Insurance.<br>Earn Rewards.<br><span>Save Money.</span></h1>
+        <p>Master insurance concepts through gamified quizzes and unlock real premium discounts on your policies.</p>
+        <div class="hero-buttons">
+          <a routerLink="/register" class="btn-primary">Get Started Free</a>
+          <a routerLink="/about" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card">
+          <div class="card-icon">🎯</div>
+          <div class="card-text">
+            <div class="card-title">Quiz Score</div>
+            <div class="card-value">95%</div>
+          </div>
+        </div>
+        <div class="floating-card delay-1">
+          <div class="card-icon">⭐</div>
+          <div class="card-text">
+            <div class="card-title">Points Earned</div>
+            <div class="card-value">250</div>
+          </div>
+        </div>
+        <div class="floating-card delay-2">
+          <div class="card-icon">💰</div>
+          <div class="card-text">
+            <div class="card-title">Discount</div>
+            <div class="card-value">30% OFF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="section-header">
+      <h2>How IQsure Works</h2>
+      <p>Four simple steps to start saving on insurance</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" *ngFor="let f of features">
+        <div class="feature-icon">{{ f.icon }}</div>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item" *ngFor="let s of stats">
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-label">{{ s.label }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits">
+    <div class="benefits-content">
+      <div class="benefits-text">
+        <h2>Why Choose IQsure?</h2>
+        <ul>
+          <li>
+            <span class="check">✓</span>
+            <div>
+              <strong>Real Savings</strong>
+              <p>Get actual premium discounts, not just virtual rewards</p>
+            </div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div>
+              <strong>Gamified Learning</strong>
+              <p>Make insurance education fun with quizzes and achievements</p>
+            </div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div>
+              <strong>Transparent Pricing</strong>
+              <p>See exactly how your learning translates to savings</p>
+            </div>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <div>
+              <strong>Compete & Share</strong>
+              <p>Climb the leaderboard and share your achievements</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="benefits-visual">
+        <div class="benefit-badge">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-text">Insurance Expert</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>Ready to Start Saving?</h2>
+    <p>Join IQsure today and unlock premium discounts through learning</p>
+    <a routerLink="/register" class="btn-primary">Create Free Account</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>IQ<span>sure</span></h3>
+        <p>Gamified Insurance Literacy Platform</p>
+      </div>
+      <div class="footer-links">
+        <a routerLink="/about">About</a>
+        <a routerLink="/login">Login</a>
+        <a routerLink="/register">Register</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 IQsure. Built for The Hartford Insurance.</p>
+    </div>
+  </footer>
+</div>

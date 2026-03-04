@@ -1,0 +1,57 @@
+<div class="page">
+  <div class="page-header">
+    <h1>Policy Management</h1>
+    <button class="btn-primary" (click)="openCreate()">+ New Policy</button>
+  </div>
+
+  <div class="form-card" *ngIf="showForm">
+    <h2>{{ editingPolicy ? 'Edit Policy' : 'Create Policy' }}</h2>
+    <div class="form-row">
+      <div class="form-group"><label>Title</label><input [(ngModel)]="form.title" placeholder="Policy title" /></div>
+      <div class="form-group">
+        <label>Type</label>
+        <select [(ngModel)]="form.policyType">
+          <option value="HEALTH">Health</option>
+          <option value="LIFE">Life</option>
+          <option value="MOTOR">Motor</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea [(ngModel)]="form.description" rows="2" placeholder="Brief description…"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>Base Premium ($)</label><input type="number" [(ngModel)]="form.basePremium" placeholder="500" /></div>
+      <div class="form-group"><label>Coverage ($)</label><input type="number" [(ngModel)]="form.coverageAmount" placeholder="100000" /></div>
+      <div class="form-group"><label>Duration (months)</label><input type="number" [(ngModel)]="form.durationMonths" placeholder="12" /></div>
+    </div>
+    <div class="form-group checkbox-group">
+      <label><input type="checkbox" [(ngModel)]="form.isActive" /> Active</label>
+    </div>
+    <div class="form-actions">
+      <button class="btn-primary" (click)="save()">{{ editingPolicy ? 'Update' : 'Create' }}</button>
+      <button class="btn-secondary" (click)="showForm = false">Cancel</button>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading…</div>
+
+  <div class="table-wrapper" *ngIf="!loading">
+    <table>
+      <thead><tr><th>Title</th><th>Type</th><th>Premium</th><th>Coverage</th><th>Months</th><th>Active</th><th>Actions</th></tr></thead>
+      <tbody>
+        <tr *ngFor="let p of policies">
+          <td>{{ p.title }}</td>
+          <td>{{ p.policyType }}</td>
+          <td>${{ p.basePremium }}</td>
+          <td>${{ p.coverageAmount | number }}</td>
+          <td>{{ p.durationMonths }}</td>
+          <td><span [class]="p.isActive ? 'active-tag' : 'inactive-tag'">{{ p.isActive ? 'Yes' : 'No' }}</span></td>
+          <td class="action-btns">
+            <button class="btn-sm" (click)="openEdit(p)">Edit</button>
+            <button class="btn-danger btn-sm" (click)="delete(p.policyId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

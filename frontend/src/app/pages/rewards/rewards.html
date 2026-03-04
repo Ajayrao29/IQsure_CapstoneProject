@@ -1,0 +1,30 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Rewards</h1>
+      <p>Redeem exclusive discounts and perks</p>
+    </div>
+  </div>
+
+  <div class="toast" *ngIf="message" [class.error]="messageType === 'error'">{{ message }}</div>
+
+  <div class="loading" *ngIf="loading">Loading rewards…</div>
+
+  <div class="rewards-grid" *ngIf="!loading">
+    <div class="reward-card" *ngFor="let r of rewards" [class.expired]="isExpired(r.expiryDate)" [class.redeemed]="isRedeemed(r.rewardId)">
+      <div class="reward-icon">🎁</div>
+      <div class="reward-type">{{ r.rewardType }}</div>
+      <div class="reward-value">{{ r.discountValue }}% OFF</div>
+      <div class="reward-expiry">Expires: {{ r.expiryDate | date:'mediumDate' }}</div>
+      <div class="expired-tag" *ngIf="isExpired(r.expiryDate)">Expired</div>
+      <div class="redeemed-tag" *ngIf="isRedeemed(r.rewardId)">✓ Redeemed</div>
+      <button
+        class="btn-primary"
+        *ngIf="!isRedeemed(r.rewardId) && !isExpired(r.expiryDate)"
+        (click)="redeem(r.rewardId)">
+        Redeem
+      </button>
+    </div>
+  </div>
+</div>
+

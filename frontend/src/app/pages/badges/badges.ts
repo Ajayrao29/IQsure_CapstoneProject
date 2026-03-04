@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
+
+@Component({ selector: 'app-badges', standalone: true, imports: [CommonModule], templateUrl: './badges.html', styleUrls: ['./badges.scss'] })
+export class BadgesComponent implements OnInit {
+  allBadges: any[] = [];
+  myBadgeIds: Set<number> = new Set();
+  loading = true;
+  constructor(private api: ApiService, private auth: AuthService) {}
+  ngOnInit(): void {
+    const userId = this.auth.getUserId()!;
+    this.api.getAllBadges().subscribe(all => { this.allBadges = all; this.loading = false; });
+    this.api.getBadgesByUser(userId).subscribe(mine => mine.forEach((b: any) => this.myBadgeIds.add(b.badgeId)));
+  }
+  isEarned(badgeId: number): boolean { return this.myBadgeIds.has(badgeId); }
+}

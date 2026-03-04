@@ -1,0 +1,47 @@
+package org.hartford.iqsure.controller;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.hartford.iqsure.dto.response.LeaderboardEntryDTO;
+import org.hartford.iqsure.dto.response.UserResponseDTO;
+import org.hartford.iqsure.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
+@Tag(name = "Users", description = "User profiles and leaderboard")
+public class UserController {
+
+    private final UserService userService;
+
+    @GetMapping
+    @Operation(summary = "Get all users (Admin)")
+    public ResponseEntity<List<UserResponseDTO>> getAll() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/{userId}")
+    @Operation(summary = "Get user profile by ID")
+    public ResponseEntity<UserResponseDTO> getProfile(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getProfile(userId));
+    }
+
+    @DeleteMapping("/{userId}")
+    @Operation(summary = "Delete user (Admin)")
+    public ResponseEntity<Void> delete(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/leaderboard")
+    @Operation(summary = "Get leaderboard — top users by points")
+    public ResponseEntity<List<LeaderboardEntryDTO>> leaderboard() {
+        return ResponseEntity.ok(userService.getLeaderboard());
+    }
+}
+

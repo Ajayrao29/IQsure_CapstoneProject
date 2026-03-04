@@ -1,0 +1,114 @@
+<div class="page" *ngIf="!loading">
+
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+    <div>
+      <h1>Welcome back, <span>{{ user?.name }}</span> 👋</h1>
+      <p>Keep learning, keep earning discounts on your insurance.</p>
+    </div>
+    <div class="points-badge">
+      <div class="points-number">{{ user?.userPoints }}</div>
+      <div class="points-label">Total Points</div>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon">🧩</div>
+      <div class="stat-value">{{ myAttempts.length }}</div>
+      <div class="stat-label">Quizzes Taken</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏅</div>
+      <div class="stat-value">{{ myBadges.length }}</div>
+      <div class="stat-label">Badges Earned</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⭐</div>
+      <div class="stat-value">{{ user?.userPoints }}</div>
+      <div class="stat-label">Points</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-value">${{ totalSavings }}</div>
+      <div class="stat-label">Total Saved</div>
+    </div>
+  </div>
+
+  <!-- Share Achievement -->
+  <div class="share-section" *ngIf="user?.userPoints >= 50">
+    <div class="share-card">
+      <div class="share-content">
+        <h3>🎉 Share Your Achievement!</h3>
+        <p>You've earned {{ user?.userPoints }} points! Share your progress with friends.</p>
+      </div>
+      <button class="btn-primary" (click)="shareAchievement()">📤 Share</button>
+    </div>
+  </div>
+
+  <!-- Two-column section -->
+  <div class="two-col">
+
+    <!-- Recent Attempts -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Recent Quiz Attempts</h2>
+        <a routerLink="/quizzes" class="card-link">Take a Quiz →</a>
+      </div>
+      <div *ngIf="recentAttempts.length === 0" class="empty-msg">
+        No attempts yet. <a routerLink="/quizzes">Start your first quiz!</a>
+      </div>
+      <div class="attempt-item" *ngFor="let a of recentAttempts">
+        <div class="attempt-title">{{ a.quizTitle }}</div>
+        <div class="attempt-stats">
+          <span class="score-badge" [class.good]="a.percentage >= 70" [class.bad]="a.percentage < 50">
+            {{ a.percentage }}%
+          </span>
+          <span class="attempt-points">+{{ a.pointsEarned }} pts</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Your Badges</h2>
+        <a routerLink="/badges" class="card-link">All Badges →</a>
+      </div>
+      <div *ngIf="myBadges.length === 0" class="empty-msg">
+        Earn points to unlock badges!
+      </div>
+      <div class="badge-grid">
+        <div class="badge-item" *ngFor="let b of myBadges">
+          <div class="badge-icon">🏅</div>
+          <div class="badge-name">{{ b.name }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+      <a routerLink="/quizzes" class="action-card">
+        <span>🧩</span><span>Take a Quiz</span>
+      </a>
+      <a routerLink="/policies" class="action-card">
+        <span>📋</span><span>Browse Policies</span>
+      </a>
+      <a routerLink="/rewards" class="action-card">
+        <span>🎁</span><span>View Rewards</span>
+      </a>
+      <a routerLink="/leaderboard" class="action-card">
+        <span>🏆</span><span>Leaderboard</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="loading" *ngIf="loading">Loading your dashboard…</div>
+

@@ -1,0 +1,12 @@
+.pts-badge {
+  background: rgba(254,48,130,0.12); color: #FE3082;
+  font-size: 0.8rem; font-weight: 700;
+  padding: 0.2rem 0.6rem; border-radius: 20px;
+}
+.role-badge {
+  background: rgba(107,114,128,0.15); color: #9ca3af;
+  font-size: 0.75rem; font-weight: 700;
+  padding: 0.2rem 0.6rem; border-radius: 20px; text-transform: uppercase;
+  &.admin { background: rgba(254,48,130,0.12); color: #FE3082; }
+}
+

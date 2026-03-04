@@ -1,0 +1,356 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< org.hartford:IQsure >-------------------------
+[INFO] Building IQsure 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.0.3:run (default-cli) > test-compile @ IQsure >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ IQsure ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ IQsure ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 78 source files with javac [debug parameters release 17] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[WARNING] /C:/Users/AJAY LINGAMPALLI/OneDrive/Documents/IQsure/src/main/java/org/hartford/iqsure/dto/auth/AuthResponse.java:[15,20] @Builder will ignore the initializing expression entirely. If you want the initializing expression to serve as default, add @Builder.Default. If it is not supposed to be settable during building, make the field final.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ IQsure ---
+[INFO] skip non existing resourceDirectory C:\Users\AJAY LINGAMPALLI\OneDrive\Documents\IQsure\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ IQsure ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] <<< spring-boot:4.0.3:run (default-cli) < test-compile @ IQsure <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.0.3:run (default-cli) @ IQsure ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.3)
+
+2026-03-02T21:11:02.414+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hartford.iqsure.IQsureApplication    : Starting IQsureApplication using Java 21.0.10 with PID 6204 (C:\Users\AJAY LINGAMPALLI\OneDrive\Documents\IQsure\target\classes started by AJAY LINGAMPALLI in C:\Users\AJAY LINGAMPALLI\OneDrive\Documents\IQsure)
+2026-03-02T21:11:02.419+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hartford.iqsure.IQsureApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-03-02T21:11:02.474+05:30  INFO 6204 --- [IQsure] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-02T21:11:02.474+05:30  INFO 6204 --- [IQsure] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-02T21:11:03.795+05:30  INFO 6204 --- [IQsure] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-02T21:11:04.013+05:30  INFO 6204 --- [IQsure] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 195 ms. Found 13 JPA repository interfaces.
+2026-03-02T21:11:05.116+05:30  INFO 6204 --- [IQsure] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-03-02T21:11:05.137+05:30  INFO 6204 --- [IQsure] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-02T21:11:05.137+05:30  INFO 6204 --- [IQsure] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.18]
+2026-03-02T21:11:05.199+05:30  INFO 6204 --- [IQsure] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2723 ms
+2026-03-02T21:11:05.512+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-02T21:11:05.634+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.4.Final
+2026-03-02T21:11:06.336+05:30  INFO 6204 --- [IQsure] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-02T21:11:06.390+05:30  INFO 6204 --- [IQsure] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-02T21:11:06.734+05:30  INFO 6204 --- [IQsure] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:iqsuredb user=SA
+2026-03-02T21:11:06.776+05:30  INFO 6204 --- [IQsure] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-02T21:11:06.804+05:30  WARN 6204 --- [IQsure] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-02T21:11:06.836+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:iqsuredb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: IQSUREDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-02T21:11:08.965+05:30  INFO 6204 --- [IQsure] [  restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists answers cascade 
+Hibernate: 
+    drop table if exists badges cascade 
+Hibernate: 
+    drop table if exists discount_rules cascade 
+Hibernate: 
+    drop table if exists policies cascade 
+Hibernate: 
+    drop table if exists premium_calculation_logs cascade 
+Hibernate: 
+    drop table if exists questions cascade 
+Hibernate: 
+    drop table if exists quiz_attempts cascade 
+Hibernate: 
+    drop table if exists quizzes cascade 
+Hibernate: 
+    drop table if exists rewards cascade 
+Hibernate: 
+    drop table if exists user_badges cascade 
+Hibernate: 
+    drop table if exists user_policies cascade 
+Hibernate: 
+    drop table if exists user_rewards cascade 
+Hibernate: 
+    drop table if exists users cascade 
+Hibernate: 
+    create table answers (
+        right_option integer not null,
+        answer_id bigint generated by default as identity,
+        question_id bigint not null,
+        text TEXT not null,
+        primary key (answer_id)
+    )
+Hibernate: 
+    create table badges (
+        req_points integer not null,
+        badge_id bigint generated by default as identity,
+        description TEXT,
+        name varchar(255) not null unique,
+        primary key (badge_id)
+    )
+Hibernate: 
+    create table discount_rules (
+        discount_percentage float(53) not null,
+        is_active boolean not null,
+        min_badges_earned integer not null,
+        min_quiz_score_percent float(53) not null,
+        min_user_points integer not null,
+        rule_id bigint generated by default as identity,
+        description TEXT,
+        rule_name varchar(255) not null unique,
+        applicable_policy_type enum ('HEALTH','LIFE','MOTOR'),
+        primary key (rule_id)
+    )
+Hibernate: 
+    create table policies (
+        base_premium float(53) not null,
+        coverage_amount float(53) not null,
+        duration_months integer not null,
+        is_active boolean not null,
+        policy_id bigint generated by default as identity,
+        description TEXT,
+        title varchar(255) not null,
+        policy_type enum ('HEALTH','LIFE','MOTOR') not null,
+        primary key (policy_id)
+    )
+Hibernate: 
+    create table premium_calculation_logs (
+        badge_count_snapshot integer not null,
+        base_premium float(53) not null,
+        best_quiz_score_snapshot float(53) not null,
+        final_premium float(53) not null,
+        total_discount_percent float(53) not null,
+        user_points_snapshot integer not null,
+        calculated_at timestamp(6) not null,
+        log_id bigint generated by default as identity,
+        policy_id bigint not null,
+        user_id bigint not null,
+        applied_rule_names TEXT,
+        primary key (log_id)
+    )
+Hibernate: 
+    create table questions (
+        question_id bigint generated by default as identity,
+        quiz_id bigint not null,
+        options TEXT not null,
+        text TEXT not null,
+        primary key (question_id)
+    )
+Hibernate: 
+    create table quiz_attempts (
+        points_earned integer,
+        score integer not null,
+        total_questions integer not null,
+        attempt_date timestamp(6) not null,
+        attempt_id bigint generated by default as identity,
+        quiz_id bigint not null,
+        user_id bigint not null,
+        primary key (attempt_id)
+    )
+Hibernate: 
+    create table quizzes (
+        quiz_id bigint generated by default as identity,
+        category varchar(255) not null,
+        title varchar(255) not null,
+        difficulty enum ('EASY','HARD','MEDIUM') not null,
+        primary key (quiz_id)
+    )
+Hibernate: 
+    create table rewards (
+        discount_value float(53) not null,
+        expiry_date date not null,
+        reward_id bigint generated by default as identity,
+        reward_type varchar(255) not null,
+        primary key (reward_id)
+    )
+Hibernate: 
+    create table user_badges (
+        badge_id bigint not null,
+        earned_date timestamp(6) not null,
+        id bigint generated by default as identity,
+        user_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table user_policies (
+        discount_applied float(53) not null,
+        final_premium float(53) not null,
+        id bigint generated by default as identity,
+        policy_id bigint not null,
+        purchase_date timestamp(6) not null,
+        user_id bigint not null,
+        status enum ('ACTIVE','CANCELLED','EXPIRED') not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table user_rewards (
+        id bigint generated by default as identity,
+        redeemed_date timestamp(6) not null,
+        reward_id bigint not null,
+        user_id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table users (
+        user_points integer,
+        user_id bigint generated by default as identity,
+        email varchar(255) not null unique,
+        name varchar(255) not null,
+        password varchar(255) not null,
+        phone varchar(255),
+        role enum ('ROLE_ADMIN','ROLE_USER') not null,
+        primary key (user_id)
+    )
+Hibernate: 
+    alter table if exists answers 
+       add constraint FK3erw1a3t0r78st8ty27x6v3g1 
+       foreign key (question_id) 
+       references questions
+Hibernate: 
+    alter table if exists premium_calculation_logs 
+       add constraint FKiju7ohl6pfmgv3h5wi3suu7xq 
+       foreign key (policy_id) 
+       references policies
+Hibernate: 
+    alter table if exists premium_calculation_logs 
+       add constraint FKdxxit4jn4st6rt5senfbt6j3q 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists questions 
+       add constraint FKn3gvco4b0kewxc0bywf1igfms 
+       foreign key (quiz_id) 
+       references quizzes
+Hibernate: 
+    alter table if exists quiz_attempts 
+       add constraint FKfwipvfipnnwsoacoyv5k7fbxc 
+       foreign key (quiz_id) 
+       references quizzes
+Hibernate: 
+    alter table if exists quiz_attempts 
+       add constraint FKpj4a9hw0iv1mo1ut6rppg594u 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists user_badges 
+       add constraint FKk6e00pguaij0uke6xr81gt045 
+       foreign key (badge_id) 
+       references badges
+Hibernate: 
+    alter table if exists user_badges 
+       add constraint FKr46ah81sjymsn035m4ojstn5s 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists user_policies 
+       add constraint FK7stwljvnp153el6s8fkmlq4ja 
+       foreign key (policy_id) 
+       references policies
+Hibernate: 
+    alter table if exists user_policies 
+       add constraint FKt4q4fj2srnc9ashsi1vvuit1u 
+       foreign key (user_id) 
+       references users
+Hibernate: 
+    alter table if exists user_rewards 
+       add constraint FKj53yk8gtooowu02nlq4isx5dd 
+       foreign key (reward_id) 
+       references rewards
+Hibernate: 
+    alter table if exists user_rewards 
+       add constraint FK4ear62j8k2olcikuil4rye8la 
+       foreign key (user_id) 
+       references users
+2026-03-02T21:11:09.150+05:30  INFO 6204 --- [IQsure] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-02T21:11:09.284+05:30  INFO 6204 --- [IQsure] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-02T21:11:11.568+05:30  WARN 6204 --- [IQsure] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-02T21:11:12.213+05:30  WARN 6204 --- [IQsure] [  restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-03-02T21:11:12.242+05:30  INFO 6204 --- [IQsure] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+Hibernate: 
+    drop table if exists answers cascade 
+Hibernate: 
+    drop table if exists badges cascade 
+Hibernate: 
+    drop table if exists discount_rules cascade 
+Hibernate: 
+    drop table if exists policies cascade 
+Hibernate: 
+    drop table if exists premium_calculation_logs cascade 
+Hibernate: 
+    drop table if exists questions cascade 
+Hibernate: 
+    drop table if exists quiz_attempts cascade 
+Hibernate: 
+    drop table if exists quizzes cascade 
+Hibernate: 
+    drop table if exists rewards cascade 
+Hibernate: 
+    drop table if exists user_badges cascade 
+Hibernate: 
+    drop table if exists user_policies cascade 
+Hibernate: 
+    drop table if exists user_rewards cascade 
+Hibernate: 
+    drop table if exists users cascade 
+2026-03-02T21:11:12.273+05:30  WARN 6204 --- [IQsure] [  restartedMain] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-240]
+2026-03-02T21:11:12.274+05:30  INFO 6204 --- [IQsure] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-02T21:11:12.278+05:30  INFO 6204 --- [IQsure] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-02T21:11:12.295+05:30  INFO 6204 --- [IQsure] [  restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-02T21:11:12.325+05:30 ERROR 6204 --- [IQsure] [  restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  25.418 s
+[INFO] Finished at: 2026-03-02T21:11:12+05:30
+[INFO] ------------------------------------------------------------------------

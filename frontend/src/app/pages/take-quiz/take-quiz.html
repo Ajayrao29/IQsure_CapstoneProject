@@ -1,0 +1,49 @@
+<div class="page" *ngIf="!loading">
+
+  <!-- Quiz Header -->
+  <div class="quiz-header">
+    <div>
+      <h1>{{ quiz?.title }}</h1>
+      <p>{{ quiz?.category }} · {{ quiz?.difficulty }}</p>
+    </div>
+    <div class="quiz-timer">
+      <div class="timer-icon">⏱️</div>
+      <div class="timer-display" [style.color]="timeColor">{{ timeFormatted }}</div>
+      <div class="speed-bonus" *ngIf="speedBonus > 0">🚀 +{{ speedBonus }}% Speed Bonus!</div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <div class="questions-list">
+    <div class="question-card" *ngFor="let q of questions; let i = index">
+      <div class="q-number">Q{{ i + 1 }}</div>
+      <p class="q-text">{{ q.text }}</p>
+      <div class="options-list">
+        <button
+          class="option-btn"
+          *ngFor="let opt of q.options; let j = index"
+          [class.selected]="isSelected(q.questionId, j)"
+          (click)="selectOption(q.questionId, j)">
+          <span class="option-letter">{{ 'ABCD'[j] }}</span>
+          <span>{{ opt }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-section">
+    <p class="submit-hint" *ngIf="!allAnswered">
+      ⚠️ Please answer all {{ questions.length }} questions before submitting.
+    </p>
+    <button
+      class="btn-primary btn-lg"
+      [disabled]="!allAnswered || submitting"
+      (click)="submitQuiz()">
+      {{ submitting ? 'Submitting…' : 'Submit Quiz' }}
+    </button>
+  </div>
+
+</div>
+
+<div class="loading" *ngIf="loading">Loading quiz…</div>

@@ -1,0 +1,349 @@
+/* ─── Hartford Brand Variables ─────────────────────────────────────────────── */
+:root {
+  --claret:     #75013F;
+  --fuchsia:    #FE3082;
+  --warm-gray:  #EAE5DF;
+  --white:      #FFFFFF;
+  --light-bg:   #F8F6F4;
+  --card-bg:    #FFFFFF;
+  --border:     #E0DDD9;
+  --text-dark:  #2C2C2C;
+  --text-gray:  #6B6B6B;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--light-bg);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ─── Page Layout ───────────────────────────────────────────────────────────── */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--claret);
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    color: var(--text-gray);
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+/* ─── Buttons ───────────────────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fuchsia);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(254,48,130,0.2);
+
+  &:hover  { background: #e0206e; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(254,48,130,0.3); }
+  &:active { transform: translateY(0); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: var(--claret);
+  border: 2px solid var(--border);
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover { border-color: var(--claret); background: var(--claret); color: white; }
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF5F5;
+  color: #DC2626;
+  border: 1px solid #FCA5A5;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover { background: #FEE2E2; border-color: #DC2626; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+.btn-sm { padding: 0.4rem 0.9rem !important; font-size: 0.85rem !important; }
+
+/* ─── Forms ─────────────────────────────────────────────────────────────────── */
+.form-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+  h2, h3 { color: var(--claret); font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem; }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  input, select, textarea {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: var(--fuchsia);
+      box-shadow: 0 0 0 3px rgba(254,48,130,0.1);
+    }
+
+    &::placeholder { color: #9CA3AF; }
+  }
+
+  textarea { resize: vertical; min-height: 100px; }
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 500;
+
+  input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--fuchsia); cursor: pointer; }
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* ─── Tables ────────────────────────────────────────────────────────────────── */
+.table-wrapper {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead tr {
+    background: var(--warm-gray);
+    border-bottom: 2px solid var(--border);
+
+    th {
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--claret);
+      white-space: nowrap;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s ease;
+
+    &:last-child { border-bottom: none; }
+    &:hover { background: #FFF9F5; }
+
+    td {
+      padding: 1rem 1.5rem;
+      color: var(--text-dark);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.action-btns { display: flex; gap: 0.5rem; align-items: center; }
+
+/* ─── Cards ─────────────────────────────────────────────────────────────────── */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+  &:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: var(--claret); }
+}
+
+/* ─── Misc ───────────────────────────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-gray);
+  font-size: 1rem;
+}
+
+.empty-msg {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  padding: 1.5rem 0;
+
+  a { color: var(--fuchsia); text-decoration: none; font-weight: 600;
+    &:hover { text-decoration: underline; } }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--light-bg); }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--claret); }
+
+/* ─── Auth Pages ────────────────────────────────────────────────────────────── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--warm-gray) 0%, #FFFFFF 100%);
+  padding: 2rem;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 40px rgba(117,1,63,0.1);
+
+  .auth-logo {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--claret);
+    span { color: var(--fuchsia); }
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--claret);
+    text-align: center;
+    margin: 0 0 0.5rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .error-msg {
+    background: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    color: #DC2626;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .switch-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: var(--text-gray);
+    font-size: 0.9rem;
+
+    a {
+      color: var(--fuchsia);
+      font-weight: 600;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--text-gray);
+    text-transform: none;
+  }
+}

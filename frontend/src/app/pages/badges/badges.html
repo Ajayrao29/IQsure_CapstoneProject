@@ -1,0 +1,25 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Badges</h1>
+      <p>Earn points by taking quizzes to unlock these badges</p>
+    </div>
+    <div class="earned-count">
+      <span>{{ myBadgeIds.size }} / {{ allBadges.length }}</span>
+      <small>Earned</small>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading badges…</div>
+
+  <div class="badges-grid" *ngIf="!loading">
+    <div class="badge-card" *ngFor="let b of allBadges" [class.earned]="isEarned(b.badgeId)">
+      <div class="badge-icon">{{ isEarned(b.badgeId) ? '🏅' : '🔒' }}</div>
+      <div class="badge-name">{{ b.name }}</div>
+      <div class="badge-desc">{{ b.description }}</div>
+      <div class="badge-req">{{ b.reqPoints }} pts required</div>
+      <div class="earned-label" *ngIf="isEarned(b.badgeId)">✓ Earned</div>
+    </div>
+  </div>
+</div>
+

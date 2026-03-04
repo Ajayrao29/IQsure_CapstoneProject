@@ -1,0 +1,78 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
+
+@Component({ 
+  selector: 'app-achievements', 
+  standalone: true, 
+  imports: [CommonModule], 
+  templateUrl: './achievements.html', 
+  styleUrls: ['./achievements.scss'] 
+})
+export class AchievementsComponent implements OnInit {
+  userPoints = 0;
+  level = 1;
+  levelProgress = 0;
+  nextLevelPoints = 100;
+  completionRate = 0;
+  streak = 0;
+  
+  achievements = [
+    { icon: '🎓', name: 'First Steps', description: 'Complete your first quiz', points: 10, unlocked: false },
+    { icon: '💯', name: 'Perfect Score', description: 'Score 100% on any quiz', points: 50, unlocked: false },
+    { icon: '🔥', name: 'On Fire', description: 'Complete 3 quizzes in one day', points: 30, unlocked: false },
+    { icon: '📚', name: 'Knowledge Seeker', description: 'Complete all 3 quiz categories', points: 75, unlocked: false },
+    { icon: '💎', name: 'Premium Hunter', description: 'Purchase your first policy', points: 100, unlocked: false },
+    { icon: '🎯', name: 'Sharpshooter', description: 'Score 80%+ on 5 quizzes', points: 150, unlocked: false },
+    { icon: '👑', name: 'Top 10', description: 'Reach top 10 on leaderboard', points: 200, unlocked: false },
+    { icon: '🌟', name: 'Badge Collector', description: 'Unlock all badges', points: 250, unlocked: false },
+  ];
+
+  constructor(private api: ApiService, private auth: AuthService) {}
+
+  ngOnInit(): void {
+    const userId = this.auth.getUserId()!;
+    this.api.getProfile(userId).subscribe(u => {
+      this.userPoints = u.userPoints;
+      this.calculateLevel();
+      this.checkAchievements(userId);
+    });
+  }
+
+  calculateLevel(): void {
+    this.level = Math.floor(this.userPoints / 100) + 1;
+    this.nextLevelPoints = this.level * 100;
+    this.levelProgress = ((this.userPoints % 100) / 100) * 100;
+  }
+
+  checkAchievements(userId: number): void {
+    this.api.getAttemptsByUser(userId).subscribe(attempts => {
+      if (attempts.length > 0) this.achievements[0].unlocked = true;
+      if (attempts.some(a => a.percentage === 100)) this.achievements[1].unlocked = true;
+      if (attempts.filter(a => new Date(a.attemptDate).toDateString() === new Date().toDateString()).length >= 3) 
+        this.achievements[2].unlocked = true;
+      
+      const categories = new Set(attempts.map(a => a.quizTitle.split(' ')[0]));
+      if (categories.size >= 3) this.achievements[3].unlocked = true;
+      
+      if (attempts.filter(a => a.percentage >= 80).length >= 5) this.achievements[5].unlocked = true;
+      
+      this.completionRate = Math.round((attempts.length / 3) * 100);
+      this.streak = Math.floor(Math.random() * 7) + 1;
+    });
+
+    this.api.getUserPolicies(userId).subscribe(policies => {
+      if (policies.length > 0) this.achievements[4].unlocked = true;
+    });
+
+    this.api.getBadgesByUser(userId).subscribe(badges => {
+      if (badges.length >= 4) this.achievements[7].unlocked = true;
+    });
+
+    this.api.getLeaderboard().subscribe(board => {
+      const userRank = board.findIndex(e => e.userId === userId) + 1;
+      if (userRank > 0 && userRank <= 10) this.achievements[6].unlocked = true;
+    });
+  }
+}
