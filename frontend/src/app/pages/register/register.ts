@@ -7,7 +7,13 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({ selector: 'app-register', standalone: true, imports: [CommonModule, FormsModule, RouterLink], templateUrl: './register.html', styleUrls: ['./register.scss'] })
 export class RegisterComponent {
-  name = ''; email = ''; password = ''; phone = ''; error = ''; loading = false;
+  name = '';
+  email = '';
+  password = '';
+  phone = '';
+  error = '';
+  loading = false;
+
   constructor(private api: ApiService, private auth: AuthService, private router: Router) {}
   register(): void {
     this.error = '';
