@@ -4,7 +4,9 @@
     <h1>Welcome back</h1>
     <p class="subtitle">Sign in to your account</p>
 
-    <div class="error-msg" *ngIf="error">{{ error }}</div>
+    @if (error) {
+      <div class="error-msg">{{ error }}</div>
+    }
 
     <form (ngSubmit)="login()">
 
@@ -16,7 +18,7 @@
           [(ngModel)]="email"
           placeholder="you@example.com"
           required
-        />
+          />
       </div>
 
       <div class="form-group">
@@ -27,7 +29,7 @@
           [(ngModel)]="password"
           placeholder="••••••••"
           required
-        />
+          />
       </div>
 
       <button

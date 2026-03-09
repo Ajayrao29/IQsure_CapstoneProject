@@ -1,42 +1,50 @@
-<div class="page result-page" *ngIf="result">
-
-  <!-- Score Card -->
-  <div class="score-card">
-    <div class="score-message">{{ scoreMessage }}</div>
-    <div class="score-circle" [style.border-color]="scoreColor">
-      <span class="score-number" [style.color]="scoreColor">{{ result.percentage }}%</span>
-      <span class="score-sub">{{ result.score }} / {{ result.totalQuestions }} correct</span>
-    </div>
-    <h1>{{ result.quizTitle }}</h1>
-    <div class="points-earned" *ngIf="result.pointsEarned > 0">
-      +{{ result.pointsEarned }} points earned!
-    </div>
-    <div class="speed-bonus-display" *ngIf="result.speedBonus > 0">
-      🚀 Speed Bonus: +{{ result.speedBonus }}% extra points!
-    </div>
-    <div class="no-points" *ngIf="result.pointsEarned === 0">
-      Points are only awarded on your first attempt.
-    </div>
-  </div>
-
-  <!-- New Badges Unlocked -->
-  <div class="badges-section" *ngIf="result.newBadgesUnlocked?.length > 0">
-    <h2>🏅 New Badges Unlocked!</h2>
-    <div class="badges-grid">
-      <div class="badge-card" *ngFor="let b of result.newBadgesUnlocked">
-        <div class="badge-icon">🏅</div>
-        <div class="badge-name">{{ b.name }}</div>
-        <div class="badge-desc">{{ b.description }}</div>
+@if (result) {
+  <div class="page result-page">
+    <!-- Score Card -->
+    <div class="score-card">
+      <div class="score-message">{{ scoreMessage }}</div>
+      <div class="score-circle" [style.border-color]="scoreColor">
+        <span class="score-number" [style.color]="scoreColor">{{ result.percentage }}%</span>
+        <span class="score-sub">{{ result.score }} / {{ result.totalQuestions }} correct</span>
       </div>
+      <h1>{{ result.quizTitle }}</h1>
+      @if (result.pointsEarned > 0) {
+        <div class="points-earned">
+          +{{ result.pointsEarned }} points earned!
+        </div>
+      }
+      @if (result.speedBonus > 0) {
+        <div class="speed-bonus-display">
+          🚀 Speed Bonus: +{{ result.speedBonus }}% extra points!
+        </div>
+      }
+      @if (result.pointsEarned === 0) {
+        <div class="no-points">
+          Points are only awarded on your first attempt.
+        </div>
+      }
+    </div>
+    <!-- New Badges Unlocked -->
+    @if (result.newBadgesUnlocked?.length > 0) {
+      <div class="badges-section">
+        <h2>🏅 New Badges Unlocked!</h2>
+        <div class="badges-grid">
+          @for (b of result.newBadgesUnlocked; track b) {
+            <div class="badge-card">
+              <div class="badge-icon">🏅</div>
+              <div class="badge-name">{{ b.name }}</div>
+              <div class="badge-desc">{{ b.description }}</div>
+            </div>
+          }
+        </div>
+      </div>
+    }
+    <!-- Actions -->
+    <div class="result-actions">
+      <a routerLink="/quizzes" class="btn-primary">Take Another Quiz</a>
+      <a routerLink="/dashboard" class="btn-secondary">Back to Dashboard</a>
+      <a routerLink="/policies" class="btn-secondary">View Policies & Discounts</a>
     </div>
   </div>
-
-  <!-- Actions -->
-  <div class="result-actions">
-    <a routerLink="/quizzes" class="btn-primary">Take Another Quiz</a>
-    <a routerLink="/dashboard" class="btn-secondary">Back to Dashboard</a>
-    <a routerLink="/policies" class="btn-secondary">View Policies & Discounts</a>
-  </div>
-
-</div>
+}
 

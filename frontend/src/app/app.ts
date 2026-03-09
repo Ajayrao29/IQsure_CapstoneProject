@@ -24,22 +24,24 @@ import { Component } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar';   // → components/navbar/navbar.ts
 import { AuthService } from './services/auth.service';          // → services/auth.service.ts
-import { CommonModule } from '@angular/common';
+
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',       // This component's HTML tag name
   standalone: true,            // Standalone component (no NgModule needed)
-  imports: [RouterOutlet, NavbarComponent, CommonModule],
+  imports: [RouterOutlet, NavbarComponent],
   template: `
     <!-- Show navbar only on authenticated pages (not landing/login/register) -->
-    <app-navbar *ngIf="showNavbar"></app-navbar>
+    @if (showNavbar) {
+      <app-navbar></app-navbar>
+    }
     <main class="main-content">
       <!-- This is where the current page component gets rendered based on the URL -->
       <!-- e.g., /dashboard → DashboardComponent, /quizzes → QuizzesComponent -->
       <router-outlet></router-outlet>
     </main>
-  `,
+    `,
   styles: [`.main-content { min-height: calc(100vh - 64px); }`]
 })
 export class App {

@@ -7,12 +7,12 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-quiz-result',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './quiz-result.html',
   styleUrls: ['./quiz-result.scss']
 })

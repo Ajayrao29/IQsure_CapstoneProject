@@ -6,88 +6,99 @@
     </div>
   </div>
 
-  <div class="loading" *ngIf="loading">Loading policies…</div>
+  @if (loading) {
+    <div class="loading">Loading policies…</div>
+  }
 
-  <div class="policy-grid" *ngIf="!loading">
-    <div class="policy-card" *ngFor="let p of policies">
-      <div class="policy-type-icon">{{ getPolicyIcon(p.policyType) }}</div>
-      <div class="policy-type-tag">{{ p.policyType }}</div>
-      <h3>{{ p.title }}</h3>
-      <p class="policy-desc">{{ p.description }}</p>
-      <div class="policy-details">
-        <div class="detail-item">
-          <span class="detail-label">Base Premium</span>
-          <span class="detail-value">${{ p.basePremium }}/yr</span>
+  @if (!loading) {
+    <div class="policy-grid">
+      @for (p of policies; track p) {
+        <div class="policy-card">
+          <div class="policy-type-icon">{{ getPolicyIcon(p.policyType) }}</div>
+          <div class="policy-type-tag">{{ p.policyType }}</div>
+          <h3>{{ p.title }}</h3>
+          <p class="policy-desc">{{ p.description }}</p>
+          <div class="policy-details">
+            <div class="detail-item">
+              <span class="detail-label">Base Premium</span>
+              <span class="detail-value">${{ p.basePremium }}/yr</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Coverage</span>
+              <span class="detail-value">${{ p.coverageAmount | number }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Duration</span>
+              <span class="detail-value">{{ p.durationMonths }} months</span>
+            </div>
+          </div>
+          <button class="btn-primary" (click)="previewPremium(p.policyId)">
+            Preview My Premium →
+          </button>
         </div>
-        <div class="detail-item">
-          <span class="detail-label">Coverage</span>
-          <span class="detail-value">${{ p.coverageAmount | number }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Duration</span>
-          <span class="detail-value">{{ p.durationMonths }} months</span>
-        </div>
-      </div>
-      <button class="btn-primary" (click)="previewPremium(p.policyId)">
-        Preview My Premium →
-      </button>
+      }
     </div>
-  </div>
+  }
 
   <!-- Premium Preview Modal -->
-  <div class="modal-overlay" *ngIf="preview || loadingPreview" (click)="closePreview()">
-    <div class="modal" (click)="$event.stopPropagation()">
-
-      <div class="loading" *ngIf="loadingPreview">Calculating your premium…</div>
-
-      <div *ngIf="preview && !loadingPreview">
-        <div class="modal-header">
-          <h2>Premium Breakdown</h2>
-          <button class="modal-close" (click)="closePreview()">✕</button>
-        </div>
-
-        <div class="breakdown-row">
-          <span>Base Premium</span>
-          <span>${{ preview.basePremium }}</span>
-        </div>
-
-        <div class="discounts-section" *ngIf="preview.appliedDiscounts?.length > 0">
-          <p class="discounts-title">✅ Your Discounts</p>
-          <div class="discount-row" *ngFor="let d of preview.appliedDiscounts">
-            <span>{{ d.ruleName }} <small>({{ d.reason }})</small></span>
-            <span class="discount-pct">-{{ d.discountPercentage }}%</span>
+  @if (preview || loadingPreview) {
+    <div class="modal-overlay" (click)="closePreview()">
+      <div class="modal" (click)="$event.stopPropagation()">
+        @if (loadingPreview) {
+          <div class="loading">Calculating your premium…</div>
+        }
+        @if (preview && !loadingPreview) {
+          <div>
+            <div class="modal-header">
+              <h2>Premium Breakdown</h2>
+              <button class="modal-close" (click)="closePreview()">✕</button>
+            </div>
+            <div class="breakdown-row">
+              <span>Base Premium</span>
+              <span>${{ preview.basePremium }}</span>
+            </div>
+            @if (preview.appliedDiscounts?.length > 0) {
+              <div class="discounts-section">
+                <p class="discounts-title">✅ Your Discounts</p>
+                @for (d of preview.appliedDiscounts; track d) {
+                  <div class="discount-row">
+                    <span>{{ d.ruleName }} <small>({{ d.reason }})</small></span>
+                    <span class="discount-pct">-{{ d.discountPercentage }}%</span>
+                  </div>
+                }
+              </div>
+            }
+            @if (preview.appliedDiscounts?.length === 0) {
+              <div class="no-discounts">
+                <p>No discounts yet. Take more quizzes to earn discounts! 🎯</p>
+              </div>
+            }
+            <div class="breakdown-row total">
+              <span>Total Discount</span>
+              <span class="green">{{ preview.totalDiscountPercent }}% off</span>
+            </div>
+            <div class="breakdown-row final">
+              <span>Your Final Premium</span>
+              <span class="pink">${{ preview.finalPremium }}/yr</span>
+            </div>
+            <div class="modal-stats">
+              <span>{{ preview.userPoints }} pts</span>
+              <span>{{ preview.badgesEarned }} badges</span>
+              <span>{{ preview.bestQuizScorePercent }}% best score</span>
+            </div>
+            @if (message) {
+              <div class="success-msg">{{ message }}</div>
+            }
+            <div class="modal-actions">
+              <button class="btn-primary" (click)="purchase()" [disabled]="purchasing">
+                {{ purchasing ? 'Processing…' : 'Buy This Policy' }}
+              </button>
+              <button class="btn-secondary" (click)="closePreview()">Cancel</button>
+            </div>
           </div>
-        </div>
-
-        <div class="no-discounts" *ngIf="preview.appliedDiscounts?.length === 0">
-          <p>No discounts yet. Take more quizzes to earn discounts! 🎯</p>
-        </div>
-
-        <div class="breakdown-row total">
-          <span>Total Discount</span>
-          <span class="green">{{ preview.totalDiscountPercent }}% off</span>
-        </div>
-        <div class="breakdown-row final">
-          <span>Your Final Premium</span>
-          <span class="pink">${{ preview.finalPremium }}/yr</span>
-        </div>
-
-        <div class="modal-stats">
-          <span>{{ preview.userPoints }} pts</span>
-          <span>{{ preview.badgesEarned }} badges</span>
-          <span>{{ preview.bestQuizScorePercent }}% best score</span>
-        </div>
-
-        <div class="success-msg" *ngIf="message">{{ message }}</div>
-
-        <div class="modal-actions">
-          <button class="btn-primary" (click)="purchase()" [disabled]="purchasing">
-            {{ purchasing ? 'Processing…' : 'Buy This Policy' }}
-          </button>
-          <button class="btn-secondary" (click)="closePreview()">Cancel</button>
-        </div>
+        }
       </div>
     </div>
-  </div>
+  }
 </div>
 

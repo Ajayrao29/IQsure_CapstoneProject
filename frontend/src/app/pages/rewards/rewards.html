@@ -6,28 +6,41 @@
     </div>
   </div>
 
-  <div class="toast" *ngIf="message" [class.error]="messageType === 'error'">{{ message }}</div>
+  @if (message) {
+    <div class="toast" [class.error]="messageType === 'error'">{{ message }}</div>
+  }
 
-  <div class="loading" *ngIf="loading">Loading rewards…</div>
+  @if (loading) {
+    <div class="loading">Loading rewards…</div>
+  }
 
-  <div class="rewards-grid" *ngIf="!loading">
-    <div class="reward-card" *ngFor="let r of rewards" [class.expired]="isExpired(r.expiryDate)" [class.redeemed]="isRedeemed(r.rewardId)">
-      <div class="reward-icon">&#9733;</div>
-      <div class="reward-type">{{ r.rewardType }}</div>
-      <div class="reward-value">{{ r.discountValue }}% OFF</div>
-      <div class="reward-bar-track">
-        <div class="reward-bar-fill" [style.width.%]="r.discountValue"></div>
-      </div>
-      <div class="reward-expiry">Expires: {{ r.expiryDate | date:'mediumDate' }}</div>
-      <div class="expired-tag" *ngIf="isExpired(r.expiryDate)">Expired</div>
-      <div class="redeemed-tag" *ngIf="isRedeemed(r.rewardId)">Redeemed</div>
-      <button
-        class="btn-primary"
-        *ngIf="!isRedeemed(r.rewardId) && !isExpired(r.expiryDate)"
-        (click)="redeem(r.rewardId)">
-        Redeem
-      </button>
+  @if (!loading) {
+    <div class="rewards-grid">
+      @for (r of rewards; track r) {
+        <div class="reward-card" [class.expired]="isExpired(r.expiryDate)" [class.redeemed]="isRedeemed(r.rewardId)">
+          <div class="reward-icon">&#9733;</div>
+          <div class="reward-type">{{ r.rewardType }}</div>
+          <div class="reward-value">{{ r.discountValue }}% OFF</div>
+          <div class="reward-bar-track">
+            <div class="reward-bar-fill" [style.width.%]="r.discountValue"></div>
+          </div>
+          <div class="reward-expiry">Expires: {{ r.expiryDate | date:'mediumDate' }}</div>
+          @if (isExpired(r.expiryDate)) {
+            <div class="expired-tag">Expired</div>
+          }
+          @if (isRedeemed(r.rewardId)) {
+            <div class="redeemed-tag">Redeemed</div>
+          }
+          @if (!isRedeemed(r.rewardId) && !isExpired(r.expiryDate)) {
+            <button
+              class="btn-primary"
+              (click)="redeem(r.rewardId)">
+              Redeem
+            </button>
+          }
+        </div>
+      }
     </div>
-  </div>
+  }
 </div>
 

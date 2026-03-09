@@ -7,14 +7,14 @@
  * BACKEND: Multiple controllers — UserController, AttemptController, UserPolicyController, BadgeController
  */
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-achievements',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './achievements.html',
   styleUrls: ['./achievements.scss']
 })

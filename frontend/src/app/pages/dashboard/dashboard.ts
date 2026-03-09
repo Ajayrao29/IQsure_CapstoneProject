@@ -8,12 +8,12 @@
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { forkJoin, Subject, takeUntil } from 'rxjs';
 
-@Component({ selector: 'app-dashboard', standalone: true, imports: [CommonModule, RouterLink], templateUrl: './dashboard.html', styleUrls: ['./dashboard.scss'] })
+@Component({ selector: 'app-dashboard', standalone: true, imports: [RouterLink], templateUrl: './dashboard.html', styleUrls: ['./dashboard.scss'] })
 export class DashboardComponent implements OnInit, OnDestroy {
   user: any = null; myBadges: any[] = []; myAttempts: any[] = []; loading = true; totalSavings = 0;
   private destroy$ = new Subject<void>();

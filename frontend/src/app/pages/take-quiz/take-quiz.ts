@@ -8,12 +8,12 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { interval, Subscription } from 'rxjs';
 
-@Component({ selector: 'app-take-quiz', standalone: true, imports: [CommonModule], templateUrl: './take-quiz.html', styleUrls: ['./take-quiz.scss'] })
+@Component({ selector: 'app-take-quiz', standalone: true, imports: [], templateUrl: './take-quiz.html', styleUrls: ['./take-quiz.scss'] })
 export class TakeQuizComponent implements OnInit {
   quiz: any = null; questions: any[] = [];
   selectedAnswers: { [questionId: number]: number } = {};

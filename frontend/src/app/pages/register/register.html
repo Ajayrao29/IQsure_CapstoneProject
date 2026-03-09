@@ -4,7 +4,9 @@
     <h1>Create account</h1>
     <p class="subtitle">Join IQsure and start earning rewards</p>
 
-    <div class="error-msg" *ngIf="error">{{ error }}</div>
+    @if (error) {
+      <div class="error-msg">{{ error }}</div>
+    }
 
     <div class="form-group">
       <label>Full Name</label>

@@ -55,11 +55,13 @@
   <section class="values">
     <h2>Our Values</h2>
     <div class="values-grid">
-      <div class="value-card" *ngFor="let v of values">
-        <div class="value-icon">{{ v.icon }}</div>
-        <h3>{{ v.title }}</h3>
-        <p>{{ v.desc }}</p>
-      </div>
+      @for (v of values; track v) {
+        <div class="value-card">
+          <div class="value-icon">{{ v.icon }}</div>
+          <h3>{{ v.title }}</h3>
+          <p>{{ v.desc }}</p>
+        </div>
+      }
     </div>
   </section>
 
@@ -68,11 +70,13 @@
     <div class="tech-content">
       <h2>Built with Modern Technology</h2>
       <div class="tech-grid">
-        <div class="tech-item" *ngFor="let t of team">
-          <div class="tech-icon">{{ t.icon }}</div>
-          <h3>{{ t.role }}</h3>
-          <p>{{ t.desc }}</p>
-        </div>
+        @for (t of team; track t) {
+          <div class="tech-item">
+            <div class="tech-icon">{{ t.icon }}</div>
+            <h3>{{ t.role }}</h3>
+            <p>{{ t.desc }}</p>
+          </div>
+        }
       </div>
 
     </div>

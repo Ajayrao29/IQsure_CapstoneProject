@@ -33,14 +33,20 @@
   </div>
 
   <div class="achievements-grid">
-    <div class="achievement-card" *ngFor="let a of achievements" [class.unlocked]="a.unlocked">
-      <div class="achievement-icon">{{ a.icon }}</div>
-      <div class="achievement-name">{{ a.name }}</div>
-      <div class="achievement-desc">{{ a.description }}</div>
-      <div class="achievement-reward" *ngIf="a.unlocked">+{{ a.points }} pts</div>
-      <div class="locked-overlay" *ngIf="!a.unlocked">
-        <span>🔒 Locked</span>
+    @for (a of achievements; track a) {
+      <div class="achievement-card" [class.unlocked]="a.unlocked">
+        <div class="achievement-icon">{{ a.icon }}</div>
+        <div class="achievement-name">{{ a.name }}</div>
+        <div class="achievement-desc">{{ a.description }}</div>
+        @if (a.unlocked) {
+          <div class="achievement-reward">+{{ a.points }} pts</div>
+        }
+        @if (!a.unlocked) {
+          <div class="locked-overlay">
+            <span>🔒 Locked</span>
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
 </div>

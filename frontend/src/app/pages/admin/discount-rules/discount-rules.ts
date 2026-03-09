@@ -11,11 +11,11 @@
  * GUARD: AdminGuard — only accessible by admin users
  */
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 
-@Component({ selector: 'app-discount-rules', standalone: true, imports: [CommonModule, FormsModule], templateUrl: './discount-rules.html', styleUrls: ['./discount-rules.scss'] })
+@Component({ selector: 'app-discount-rules', standalone: true, imports: [FormsModule], templateUrl: './discount-rules.html', styleUrls: ['./discount-rules.scss'] })
 export class DiscountRulesComponent implements OnInit {
   rules: any[] = []; loading = true; showForm = false; editingRule: any = null;
   form: any = { ruleName: '', description: '', minQuizScorePercent: 0, minUserPoints: 0, minBadgesEarned: 0, discountPercentage: null, applicablePolicyType: null, isActive: true };

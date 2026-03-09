@@ -13,7 +13,7 @@
       <div class="savings-label">Total Saved</div>
       <div class="savings-desc">From {{ policies.length }} purchased policies</div>
     </div>
-    
+
     <div class="savings-card potential">
       <div class="savings-icon">🎯</div>
       <div class="savings-amount">${{ potentialSavings | number:'1.2-2' }}</div>
@@ -25,21 +25,25 @@
   <div class="comparison-section">
     <h2>📊 Your Savings Breakdown</h2>
     <div class="comparison-grid">
-      <div class="comparison-item" *ngFor="let p of policies">
-        <div class="policy-name">{{ p.policyTitle }}</div>
-        <div class="price-comparison">
-          <div class="original-price">${{ p.basePremium }}</div>
-          <div class="arrow">→</div>
-          <div class="final-price">${{ p.finalPremium }}</div>
+      @for (p of policies; track p) {
+        <div class="comparison-item">
+          <div class="policy-name">{{ p.policyTitle }}</div>
+          <div class="price-comparison">
+            <div class="original-price">${{ p.basePremium }}</div>
+            <div class="arrow">→</div>
+            <div class="final-price">${{ p.finalPremium }}</div>
+          </div>
+          <div class="savings-badge">Saved ${{ p.savedAmount | number:'1.2-2' }} ({{ p.discountApplied }}%)</div>
         </div>
-        <div class="savings-badge">Saved ${{ p.savedAmount | number:'1.2-2' }} ({{ p.discountApplied }}%)</div>
+      }
+    </div>
+
+    @if (policies.length === 0) {
+      <div class="empty-state">
+        <p>No policies purchased yet. Start taking quizzes to unlock discounts!</p>
+        <a routerLink="/quizzes" class="btn-primary">Take a Quiz</a>
       </div>
-    </div>
-    
-    <div class="empty-state" *ngIf="policies.length === 0">
-      <p>No policies purchased yet. Start taking quizzes to unlock discounts!</p>
-      <a routerLink="/quizzes" class="btn-primary">Take a Quiz</a>
-    </div>
+    }
   </div>
 
   <div class="tips-section">

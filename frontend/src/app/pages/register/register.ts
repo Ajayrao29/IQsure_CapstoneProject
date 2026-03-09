@@ -7,12 +7,12 @@
  */
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 
-@Component({ selector: 'app-register', standalone: true, imports: [CommonModule, FormsModule, RouterLink], templateUrl: './register.html', styleUrls: ['./register.scss'] })
+@Component({ selector: 'app-register', standalone: true, imports: [FormsModule, RouterLink], templateUrl: './register.html', styleUrls: ['./register.scss'] })
 export class RegisterComponent {
   name = '';
   email = '';

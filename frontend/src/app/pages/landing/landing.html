@@ -58,21 +58,25 @@
       <p>Four simple steps to start saving on insurance</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card" *ngFor="let f of features">
-        <div class="feature-icon">{{ f.icon }}</div>
-        <h3>{{ f.title }}</h3>
-        <p>{{ f.desc }}</p>
-      </div>
+      @for (f of features; track f) {
+        <div class="feature-card">
+          <div class="feature-icon">{{ f.icon }}</div>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      }
     </div>
   </section>
 
   <!-- Stats Section -->
   <section class="stats">
     <div class="stats-grid">
-      <div class="stat-item" *ngFor="let s of stats">
-        <div class="stat-value">{{ s.value }}</div>
-        <div class="stat-label">{{ s.label }}</div>
-      </div>
+      @for (s of stats; track s) {
+        <div class="stat-item">
+          <div class="stat-value">{{ s.value }}</div>
+          <div class="stat-label">{{ s.label }}</div>
+        </div>
+      }
     </div>
   </section>
 

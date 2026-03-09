@@ -7,10 +7,10 @@
  * GUARD: AdminGuard — only accessible by admin users
  */
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ApiService } from '../../../services/api.service';
 
-@Component({ selector: 'app-admin-users', standalone: true, imports: [CommonModule], templateUrl: './users.html', styleUrls: ['./users.scss'] })
+@Component({ selector: 'app-admin-users', standalone: true, imports: [], templateUrl: './users.html', styleUrls: ['./users.scss'] })
 export class AdminUsersComponent implements OnInit {
   users: any[] = []; loading = true;
   constructor(private api: ApiService) {}
