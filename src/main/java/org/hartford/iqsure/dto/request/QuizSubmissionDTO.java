@@ -32,4 +32,6 @@ public class QuizSubmissionDTO {
      */
     @NotEmpty(message = "Answers cannot be empty")
     private Map<Long, Integer> answers;
+
+    private Integer speedBonus;
 }

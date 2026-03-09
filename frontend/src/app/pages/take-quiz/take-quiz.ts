@@ -29,7 +29,25 @@ export class TakeQuizComponent implements OnInit {
     const quizId = Number(this.route.snapshot.paramMap.get('id'));
     this.api.getQuizById(quizId).subscribe(q => this.quiz = q);
     this.api.getQuestionsByQuiz(quizId).subscribe(qs => {
-      this.questions = qs;
+      this.questions = qs.map((q: any) => {
+        let opts = q.options;
+        if (typeof opts === 'string') {
+          opts = opts.includes('|') ? opts.split('|') : opts.split(',');
+        } else if (Array.isArray(opts)) {
+          if (opts.length === 1 && typeof opts[0] === 'string') {
+            opts = opts[0].includes('|') ? opts[0].split('|') : opts[0].split(',');
+          } else if (opts.length > 0 && typeof opts[0] === 'string' && opts[0].includes('|')) {
+            opts = opts.join(',').split('|');
+          }
+        }
+        
+        // Remove 'A) ', 'b. ', etc. from the start of options since the HTML handles rendering letters
+        if (Array.isArray(opts)) {
+          opts = opts.map((opt: string) => opt.replace(/^[A-Da-d][\)\.]\s*/, '').trim());
+        }
+
+        return { ...q, options: opts };
+      });
       this.loading = false;
       this.startTimer();
     });
@@ -79,12 +97,20 @@ export class TakeQuizComponent implements OnInit {
   submitQuiz(): void {
     this.timerSubscription?.unsubscribe();
     this.submitting = true;
-    this.api.submitQuiz(this.auth.getUserId()!, { quizId: this.quiz.quizId, answers: this.selectedAnswers }).subscribe({
+    this.api.submitQuiz(this.auth.getUserId()!, { 
+      quizId: this.quiz.quizId, 
+      answers: this.selectedAnswers,
+      speedBonus: this.speedBonus 
+    }).subscribe({
       next: (result: any) => {
         result.speedBonus = this.speedBonus;
         this.router.navigate(['/quiz-result'], { state: { result } });
       },
-      error: () => { this.submitting = false; }
+      error: (err: any) => {
+        console.error('Quiz submission error:', err);
+        alert('Failed to submit quiz: ' + (err.error?.message || err.message || 'Unknown error. Check console and network tab.'));
+        this.submitting = false; 
+      }
     });
   }
 }

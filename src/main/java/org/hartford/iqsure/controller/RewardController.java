@@ -49,6 +49,12 @@ public class RewardController {
         return ResponseEntity.ok(rewardService.getRewardsByUser(userId));
     }
 
+    @GetMapping("/user/{userId}/earned")
+    @Operation(summary = "Get all earned rewards for a user (auto-awarded from discount rules)")
+    public ResponseEntity<List<java.util.Map<String, Object>>> getEarnedByUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(rewardService.getEarnedRewardsForUser(userId));
+    }
+
     @PostMapping("/{rewardId}/redeem")
     @Operation(summary = "Redeem a reward for a user")
     public ResponseEntity<RewardResponseDTO> redeem(

@@ -67,7 +67,33 @@ export class AchievementsComponent implements OnInit {
       if (attempts.filter(a => a.percentage >= 80).length >= 5) this.achievements[5].unlocked = true;
 
       this.completionRate = Math.round((attempts.length / 3) * 100);
-      this.streak = Math.floor(Math.random() * 7) + 1;
+      
+      // Calculate actual consecutive day streak
+      let calculatedStreak = 0;
+      if (attempts.length > 0) {
+        const uniqueDates = [...new Set(attempts.map(a => {
+          const d = new Date(a.attemptDate);
+          return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+        }))].sort((a, b) => b - a); // sort descending
+
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        const yesterday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1).getTime();
+
+        // If the most recent attempt is today or yesterday, streak is active
+        if (uniqueDates.length > 0 && (uniqueDates[0] === today || uniqueDates[0] === yesterday)) {
+          let expectedDate = new Date(uniqueDates[0]);
+          for (const dateTime of uniqueDates) {
+            if (dateTime === expectedDate.getTime()) {
+              calculatedStreak++;
+              expectedDate.setDate(expectedDate.getDate() - 1); // decrement by one day safely
+            } else {
+              break;
+            }
+          }
+        }
+      }
+      this.streak = calculatedStreak;
     });
 
     this.api.getUserPolicies(userId).subscribe(policies => {

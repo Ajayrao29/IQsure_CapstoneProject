@@ -28,7 +28,9 @@ import org.hartford.iqsure.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,6 +45,10 @@ public class QuizAttemptService {
     private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
     private final BadgeService badgeService;
+    private final DiscountRuleRepository discountRuleRepository;
+    private final RewardRepository rewardRepository;
+    private final UserRewardRepository userRewardRepository;
+    private final UserBadgeRepository userBadgeRepository;
 
     @Transactional
     public AttemptResponseDTO submitQuiz(Long userId, QuizSubmissionDTO dto) {
@@ -58,32 +64,62 @@ public class QuizAttemptService {
                 .stream()
                 .collect(Collectors.toMap(
                         a -> a.getQuestion().getQuestionId(),
-                        Answer::getRightOption
+                        Answer::getRightOption,
+                        (existing, replacement) -> replacement
                 ));
 
         // Count correct answers
         int score = 0;
-        for (Map.Entry<Long, Integer> entry : dto.getAnswers().entrySet()) {
-            Long questionId = entry.getKey();
-            Integer selected = entry.getValue();
+        
+        System.out.println("Quiz ID: " + dto.getQuizId());
+        System.out.println("Submitted answers: " + dto.getAnswers());
+        System.out.println("Correct answers DB: " + correctAnswers);
+
+        for (Map.Entry<?, ?> entry : dto.getAnswers().entrySet()) {
+            Long questionId;
+            Integer selected;
+            try {
+                questionId = Long.valueOf(entry.getKey().toString());
+                selected = Integer.valueOf(entry.getValue().toString());
+            } catch (Exception e) {
+                continue;
+            }
             if (correctAnswers.containsKey(questionId) && correctAnswers.get(questionId).equals(selected)) {
                 score++;
             }
         }
+        System.out.println("Calculated Score: " + score);
 
         int totalQuestions = (int) questionRepository.countByQuiz_QuizId(dto.getQuizId());
 
-        // Award points only on first attempt
-        boolean isFirstAttempt = attemptRepository
-                .findFirstByUser_UserIdAndQuiz_QuizId(userId, dto.getQuizId())
-                .isEmpty();
+        // We want users to be able to recover points if they retake a quiz and get a better score!
+        // Find their highest score on this quiz so far
+        int previousBestScore = attemptRepository
+                .findByQuiz_QuizId(dto.getQuizId())
+                .stream()
+                .filter(a -> a.getUser().getUserId().equals(userId))
+                .map(QuizAttempt::getScore)
+                .max(Integer::compareTo)
+                .orElse(-1); // -1 means they've never taken it before
 
         int pointsEarned = 0;
-        if (isFirstAttempt) {
-            pointsEarned = score * 10;
+        int newCorrectAnswers = score - Math.max(0, previousBestScore);
+        
+        if (newCorrectAnswers > 0) {
+            // Give 10 base points for every NEW correct answer they got
+            int basePoints = newCorrectAnswers * 10;
+            
+            // Calculate speed bonus (percentage increase applied to base points)
+            int speedBonusPercent = dto.getSpeedBonus() != null ? dto.getSpeedBonus() : 0;
+            int speedPoints = (int) (basePoints * (speedBonusPercent / 100.0));
+            
+            pointsEarned = basePoints + speedPoints;
+            
             user.setUserPoints(user.getUserPoints() + pointsEarned);
             userRepository.save(user);
         }
+        
+        boolean isFirstAttempt = (previousBestScore == -1);
 
         // Save the attempt
         QuizAttempt attempt = QuizAttempt.builder()
@@ -101,6 +137,9 @@ public class QuizAttemptService {
         List<BadgeResponseDTO> newBadges = isFirstAttempt
                 ? badgeService.checkAndAwardBadges(userId)
                 : List.of();
+
+        // Auto-award discount rule rewards if user newly qualifies
+        checkAndAwardDiscountRewards(user);
 
         double percentage = totalQuestions > 0 ? ((double) score / totalQuestions) * 100 : 0;
 
@@ -147,5 +186,68 @@ public class QuizAttemptService {
                 .attemptDate(a.getAttemptDate())
                 .newBadgesUnlocked(List.of())
                 .build();
+    }
+    /**
+     * After a quiz attempt, checks ALL active discount rules to see if the user newly qualifies.
+     * For each qualifying rule they haven't received a reward for yet → auto-create & grant the reward.
+     */
+    private void checkAndAwardDiscountRewards(User user) {
+        Long userId = user.getUserId();
+        int userPoints = user.getUserPoints();
+
+        // FIX 1: Use the correct badge repository (not rewards)
+        int badgeCount = userBadgeRepository.findByUser_UserId(userId).size();
+        
+        // Get user's best quiz score across all attempts
+        double bestScore = attemptRepository
+                .findByUser_UserIdOrderByAttemptDateDesc(userId)
+                .stream()
+                .mapToDouble(a -> a.getTotalQuestions() > 0
+                        ? ((double) a.getScore() / a.getTotalQuestions()) * 100 : 0)
+                .max().orElse(0.0);
+
+        System.out.println("[RewardCheck] userId=" + userId
+                + " points=" + userPoints + " badges=" + badgeCount + " bestScore=" + bestScore);
+
+        List<DiscountRule> rules = discountRuleRepository.findByIsActiveTrue();
+        for (DiscountRule rule : rules) {
+            // FIX 2: Badge condition was missing the actual comparison
+            boolean meetsConditions =
+                    (rule.getMinUserPoints() <= 0        || userPoints  >= rule.getMinUserPoints()) &&
+                    (rule.getMinQuizScorePercent() <= 0  || bestScore   >= rule.getMinQuizScorePercent()) &&
+                    (rule.getMinBadgesEarned() <= 0      || badgeCount  >= rule.getMinBadgesEarned());
+
+            System.out.println("[RewardCheck] Rule '" + rule.getRuleName() + "' meets=" + meetsConditions);
+
+            if (!meetsConditions) continue;
+
+            // Check if the user already has a reward for this rule (to avoid duplicates)
+            String rewardLabel = "Discount: " + rule.getRuleName();
+            boolean alreadyHas = userRewardRepository.findByUser_UserId(userId)
+                    .stream()
+                    .anyMatch(ur -> ur.getReward().getRewardType().equals(rewardLabel));
+
+            if (!alreadyHas) {
+                // Create the reward in the rewards table
+                Reward reward = rewardRepository.save(Reward.builder()
+                        .rewardType(rewardLabel)
+                        .discountValue(rule.getDiscountPercentage())
+                        .expiryDate(LocalDate.now().plusMonths(6))
+                        .build());
+
+                // FIX 3: Lombok boolean 'isXxx' builder method is 'xxx()', not 'isXxx()'
+                UserReward userReward = UserReward.builder()
+                        .user(user)
+                        .reward(reward)
+                        .redeemedDate(LocalDateTime.now())
+                        .build();
+                // isUsed defaults to false via @Builder.Default so we don't need to set it
+                userRewardRepository.save(userReward);
+
+                System.out.println("[RewardCheck] ✅ Awarded '" + rewardLabel + "' to user " + userId);
+            } else {
+                System.out.println("[RewardCheck] already has '" + rewardLabel + "'");
+            }
+        }
     }
 }

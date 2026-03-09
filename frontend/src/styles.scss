@@ -1,14 +1,14 @@
 /* ─── Hartford Brand Variables ─────────────────────────────────────────────── */
 :root {
-  --claret:     #75013F;
-  --fuchsia:    #FE3082;
-  --warm-gray:  #EAE5DF;
+  --claret:     #8B003F;
+  --fuchsia:    #E91E63;
+  --warm-gray:  #F8D7E6;
   --white:      #FFFFFF;
-  --light-bg:   #F8F6F4;
+  --light-bg:   #F9FAFB;
   --card-bg:    #FFFFFF;
-  --border:     #E0DDD9;
-  --text-dark:  #2C2C2C;
-  --text-gray:  #6B6B6B;
+  --border:     #F1F1F1;
+  --text-dark:  #1F2937;
+  --text-gray:  #6B7280;
 }
 
 /* ─── Reset & Base ──────────────────────────────────────────────────────────── */
@@ -59,20 +59,20 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--fuchsia);
+  background: #FF4D8D;
   color: white;
   border: none;
   padding: 0.75rem 1.75rem;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(254,48,130,0.2);
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.2);
 
-  &:hover  { background: #e0206e; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(254,48,130,0.3); }
+  &:hover  { background: #E63E7A; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(233, 30, 99, 0.3); }
   &:active { transform: translateY(0); }
   &:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 }
@@ -85,7 +85,7 @@ html, body {
   color: var(--claret);
   border: 2px solid var(--border);
   padding: 0.75rem 1.75rem;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
@@ -104,7 +104,7 @@ html, body {
   color: #DC2626;
   border: 1px solid #FCA5A5;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
@@ -117,7 +117,7 @@ html, body {
 .btn-sm {
   padding: 0.4rem 0.9rem !important;
   font-size: 0.85rem !important;
-  border-radius: 6px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -138,7 +138,7 @@ html, body {
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
   h2, h3 { color: var(--claret); font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem; }
 }
@@ -165,7 +165,7 @@ html, body {
   input, select, textarea {
     background: white;
     border: 2px solid var(--border);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 0.75rem 1rem;
     color: var(--text-dark);
     font-size: 0.95rem;
@@ -212,7 +212,7 @@ html, body {
   border-radius: 12px;
   overflow: hidden;
   overflow-x: auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 table {
@@ -220,7 +220,7 @@ table {
   border-collapse: collapse;
 
   thead tr {
-    background: linear-gradient(135deg, var(--claret), #9a0150);
+    background: linear-gradient(135deg, #8B003F, #B3125B, #E91E63);
     border-bottom: 2px solid var(--border);
 
     th {
@@ -241,7 +241,7 @@ table {
     border-left: 3px solid transparent;
 
     &:last-child { border-bottom: none; }
-    &:hover { background: #FFF5F9; border-left-color: var(--fuchsia); }
+    &:hover { background: #FFF1F6; border-left-color: var(--fuchsia); }
 
     td {
       padding: 1rem 1.5rem;
@@ -258,7 +258,7 @@ table {
   border-radius: 12px;
   padding: 1.75rem;
   transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
   &:hover { box-shadow: 0 6px 20px rgba(117,1,63,0.1); border-color: var(--fuchsia); }
 }
@@ -292,7 +292,7 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--warm-gray) 0%, #FFFFFF 100%);
+  background: linear-gradient(135deg, #F8D7E6 0%, #FFFFFF 100%);
   padding: 2rem;
 }
 
@@ -302,7 +302,7 @@ table {
   padding: 3rem;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 10px 40px rgba(117,1,63,0.1);
+  box-shadow: 0 10px 40px rgba(139, 0, 63, 0.1);
 
   .auth-logo {
     font-size: 2.5rem;
@@ -333,7 +333,7 @@ table {
     border: 1px solid #FCA5A5;
     color: #DC2626;
     padding: 0.75rem 1rem;
-    border-radius: 6px;
+    border-radius: 10px;
     margin-bottom: 1.5rem;
     font-size: 0.875rem;
   }

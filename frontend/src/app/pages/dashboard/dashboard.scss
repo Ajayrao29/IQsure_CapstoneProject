@@ -191,23 +191,24 @@
 }
 
 .share-card {
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+  background: linear-gradient(135deg, var(--claret), var(--fuchsia));
   border-radius: 16px;
   padding: 2rem 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(255,165,0,0.3);
+  box-shadow: 0 4px 20px rgba(117,1,63,0.25);
   animation: slideIn 0.5s ease;
   
   .share-content {
     h3 { color: white; font-size: 1.5rem; margin: 0 0 0.5rem; font-weight: 700; }
-    p { color: rgba(255,255,255,0.9); margin: 0; font-size: 1rem; }
+    p  { color: rgba(255,255,255,0.85); margin: 0; font-size: 1rem; }
   }
   
   .btn-primary {
     background: white;
-    color: #FFA500;
+    color: var(--claret);
+    border: none;
     &:hover { background: rgba(255,255,255,0.9); }
   }
 }

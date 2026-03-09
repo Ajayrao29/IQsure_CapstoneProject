@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,11 +46,12 @@ public class PremiumCalculationService {
     private final DiscountRuleRepository discountRuleRepository;
     private final UserBadgeRepository userBadgeRepository;
     private final QuizAttemptRepository quizAttemptRepository;
+    private final UserRewardRepository userRewardRepository;
     private final PremiumCalculationLogRepository logRepository;
     private final AppConfig appConfig;
 
     @Transactional
-    public PremiumBreakdownDTO calculatePremium(Long userId, Long policyId) {
+    public PremiumBreakdownDTO calculatePremium(Long userId, Long policyId, List<Long> selectedRewardIds) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
@@ -62,7 +64,7 @@ public class PremiumCalculationService {
         Double rawBestScore = quizAttemptRepository.findBestScorePercentByUserId(userId);
         double bestQuizScore = rawBestScore != null ? rawBestScore : 0.0;
 
-        // Check which discount rules apply
+        // Check which automatic discount rules apply
         List<DiscountRule> rules = discountRuleRepository.findActiveRulesForPolicyType(policy.getPolicyType());
         List<PremiumBreakdownDTO.AppliedDiscountDTO> applied = new ArrayList<>();
         double totalDiscount = 0.0;
@@ -75,6 +77,24 @@ public class PremiumCalculationService {
                         .reason(buildReason(rule))
                         .build());
                 totalDiscount += rule.getDiscountPercentage();
+            }
+        }
+        
+        // Apply only the SELECTED rewards the user explicitly chose as coupons
+        if (selectedRewardIds != null && !selectedRewardIds.isEmpty()) {
+            Set<Long> selectedSet = Set.copyOf(selectedRewardIds);
+            List<UserReward> allUserRewards = userRewardRepository.findByUser_UserIdAndUsedFalse(userId);
+            for (UserReward ur : allUserRewards) {
+                if (!selectedSet.contains(ur.getId())) continue;
+                Reward r = ur.getReward();
+                if (r.getExpiryDate().isAfter(java.time.LocalDate.now()) || r.getExpiryDate().isEqual(java.time.LocalDate.now())) {
+                    applied.add(PremiumBreakdownDTO.AppliedDiscountDTO.builder()
+                            .ruleName(r.getRewardType())
+                            .discountPercentage(r.getDiscountValue())
+                            .reason("Coupon applied on purchase")
+                            .build());
+                    totalDiscount += r.getDiscountValue();
+                }
             }
         }
 
@@ -139,6 +159,24 @@ public class PremiumCalculationService {
             throw new ResourceNotFoundException("Policy not found: " + policyId);
         return logRepository.findByUser_UserIdAndPolicy_PolicyIdOrderByCalculatedAtDesc(userId, policyId)
                 .stream().map(this::toLogDTO).toList();
+    }
+
+    // Mark selected rewards as used after a successful purchase so they can't be reused
+    @Transactional
+    public void markRewardsAsUsed(List<Long> userRewardIds) {
+        if (userRewardIds == null || userRewardIds.isEmpty()) return;
+        userRewardRepository.findAllById(userRewardIds).forEach(ur -> {
+            ur.setUsed(true);
+            userRewardRepository.save(ur);
+        });
+    }
+
+    // Get user's available (unused, unexpired) redeemed rewards for the coupon picker
+    public List<UserReward> getAvailableRewardsForUser(Long userId) {
+        return userRewardRepository.findByUser_UserIdAndUsedFalse(userId)
+                .stream()
+                .filter(ur -> !ur.getReward().getExpiryDate().isBefore(java.time.LocalDate.now()))
+                .toList();
     }
 
     // Returns true only if the user meets ALL conditions of the rule

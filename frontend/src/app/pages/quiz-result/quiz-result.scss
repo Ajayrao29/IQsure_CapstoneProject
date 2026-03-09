@@ -4,69 +4,81 @@
 }
 
 .score-card {
-  background: #111;
-  border: 1px solid #222;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 3rem 2rem;
+  padding: 3.5rem 2.5rem;
   text-align: center;
   margin-bottom: 2rem;
+  box-shadow: 0 10px 40px rgba(139, 0, 63, 0.08);
 
-  h1 { color: #fff; font-size: 1.5rem; margin: 1rem 0 0.5rem; }
+  h1 { 
+    color: var(--claret); 
+    font-size: 1.75rem; 
+    font-weight: 800;
+    margin: 1.5rem 0 0.5rem; 
+  }
 }
 
 .score-message {
-  font-size: 1.1rem;
-  color: #EAE5DF;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .score-circle {
-  width: 140px;
-  height: 140px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
-  border: 5px solid;
+  border: 6px solid;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
-  background: rgba(0,0,0,0.3);
+  background: var(--light-bg);
+  box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .score-number {
-  font-size: 2.25rem;
+  font-size: 2.75rem;
   font-weight: 800;
   line-height: 1;
 }
 
 .score-sub {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
 .points-earned {
   display: inline-block;
-  background: rgba(254,48,130,0.15);
-  border: 1px solid rgba(254,48,130,0.3);
-  color: #FE3082;
-  padding: 0.5rem 1.5rem;
+  background: var(--light-bg);
+  border: 1px solid var(--fuchsia);
+  color: var(--fuchsia);
+  padding: 0.5rem 1.75rem;
   border-radius: 20px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  margin-right: 0.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(233, 30, 99, 0.1);
 }
 
 .speed-bonus-display {
   display: inline-block;
   background: linear-gradient(135deg, #FFD700, #FFA500);
   color: white;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1.75rem;
   border-radius: 20px;
   font-weight: 700;
-  font-size: 0.95rem;
-  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  margin-top: 1rem;
   animation: bounce 0.5s ease;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
 }
 
 @keyframes bounce {
@@ -75,42 +87,73 @@
 }
 
 .no-points {
-  color: #555;
-  font-size: 0.85rem;
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+  background: var(--light-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  display: inline-block;
 }
 
 .badges-section {
-  background: #111;
-  border: 1px solid #75013F;
-  border-radius: 16px;
-  padding: 1.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
   margin-bottom: 2rem;
+  box-shadow: 0 10px 40px rgba(139, 0, 63, 0.08);
 
-  h2 { color: #fff; margin: 0 0 1.25rem; font-size: 1.1rem; }
+  h2 { 
+    color: var(--claret); 
+    margin: 0 0 1.5rem; 
+    font-size: 1.35rem; 
+    font-weight: 800;
+    text-align: center;
+  }
 }
 
 .badges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
 }
 
 .badge-card {
-  background: rgba(117,1,63,0.15);
-  border: 1px solid rgba(117,1,63,0.4);
-  border-radius: 12px;
-  padding: 1rem;
+  background: var(--light-bg);
+  border: 1px solid var(--fuchsia);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
   text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  .badge-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-  .badge-name { color: #fff; font-weight: 600; font-size: 0.9rem; }
-  .badge-desc { color: #888; font-size: 0.8rem; margin-top: 0.25rem; }
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(233, 30, 99, 0.15);
+  }
+
+  .badge-icon { 
+    font-size: 2.5rem; 
+    margin-bottom: 0.75rem; 
+  }
+  .badge-name { 
+    color: var(--text-dark); 
+    font-weight: 700; 
+    font-size: 1rem; 
+    margin-bottom: 0.25rem;
+  }
+  .badge-desc { 
+    color: var(--text-gray); 
+    font-size: 0.85rem; 
+    line-height: 1.4;
+  }
 }
 
 .result-actions {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   justify-content: center;
   flex-wrap: wrap;
+  padding: 1rem 0;
 }
 

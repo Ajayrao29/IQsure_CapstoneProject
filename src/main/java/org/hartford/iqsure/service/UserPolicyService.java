@@ -36,7 +36,7 @@ public class UserPolicyService {
     private final PremiumCalculationService premiumCalculationService;
 
     @Transactional
-    public UserPolicyResponseDTO purchasePolicy(Long userId, UserPolicyRequestDTO dto) {
+    public UserPolicyResponseDTO purchasePolicy(Long userId, UserPolicyRequestDTO dto, List<Long> selectedRewardIds) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 
@@ -47,8 +47,8 @@ public class UserPolicyService {
             throw new BadRequestException("Policy is not currently active: " + policy.getTitle());
         }
 
-        // Calculate premium using gamification discounts
-        PremiumBreakdownDTO breakdown = premiumCalculationService.calculatePremium(userId, dto.getPolicyId());
+        // Calculate premium using gamification discounts + selected coupon rewards
+        PremiumBreakdownDTO breakdown = premiumCalculationService.calculatePremium(userId, dto.getPolicyId(), selectedRewardIds);
 
         UserPolicy userPolicy = UserPolicy.builder()
                 .user(user)
@@ -59,7 +59,12 @@ public class UserPolicyService {
                 .status(UserPolicy.PolicyStatus.ACTIVE)
                 .build();
 
-        return toDTO(userPolicyRepository.save(userPolicy));
+        UserPolicyResponseDTO result = toDTO(userPolicyRepository.save(userPolicy));
+
+        // Mark the selected rewards as used so they can't be applied to another policy
+        premiumCalculationService.markRewardsAsUsed(selectedRewardIds);
+
+        return result;
     }
 
     public List<UserPolicyResponseDTO> getUserPolicies(Long userId) {

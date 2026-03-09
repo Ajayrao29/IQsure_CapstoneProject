@@ -118,7 +118,7 @@ export class ApiService {
   // ─── Attempts ─────────────────────────────────────────────────────────
   // → AttemptController.java → POST /api/v1/attempts?userId=X
   // Sends: { quizId, answers: { questionId: selectedOptionIndex, ... } }
-  submitQuiz(userId: number, data: { quizId: number; answers: { [questionId: number]: number } }): Observable<any> {
+  submitQuiz(userId: number, data: { quizId: number; answers: { [questionId: number]: number }, speedBonus?: number }): Observable<any> {
     return this.http.post<any>(`${API}/api/v1/attempts?userId=${userId}`, data);
   }
 
@@ -164,6 +164,11 @@ export class ApiService {
     return this.http.get<any[]>(`${API}/api/v1/rewards/user/${userId}`);
   }
 
+  // → RewardController.java → GET /api/v1/rewards/user/{userId}/earned
+  getEarnedRewardsByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/rewards/user/${userId}/earned`);
+  }
+
   // → RewardController.java → POST /api/v1/rewards/{rewardId}/redeem?userId=X
   redeemReward(rewardId: number, userId: number): Observable<any> {
     return this.http.post<any>(`${API}/api/v1/rewards/${rewardId}/redeem?userId=${userId}`, {});
@@ -207,13 +212,20 @@ export class ApiService {
 
   // ─── User Policies & Premium ──────────────────────────────────────────
   // → UserPolicyController.java → GET /api/v1/users/{userId}/premium/calculate/{policyId}
-  calculatePremium(userId: number, policyId: number): Observable<any> {
-    return this.http.get<any>(`${API}/api/v1/users/${userId}/premium/calculate/${policyId}`);
+  calculatePremium(userId: number, policyId: number, selectedRewardIds: number[] = []): Observable<any> {
+    const params = selectedRewardIds.length > 0 ? '?selectedRewardIds=' + selectedRewardIds.join('&selectedRewardIds=') : '';
+    return this.http.get<any>(`${API}/api/v1/users/${userId}/premium/calculate/${policyId}${params}`);
   }
 
   // → UserPolicyController.java → POST /api/v1/users/{userId}/policies
-  purchasePolicy(userId: number, data: { policyId: number }): Observable<any> {
-    return this.http.post<any>(`${API}/api/v1/users/${userId}/policies`, data);
+  purchasePolicy(userId: number, data: { policyId: number }, selectedRewardIds: number[] = []): Observable<any> {
+    const params = selectedRewardIds.length > 0 ? '?selectedRewardIds=' + selectedRewardIds.join('&selectedRewardIds=') : '';
+    return this.http.post<any>(`${API}/api/v1/users/${userId}/policies${params}`, data);
+  }
+
+  // → UserPolicyController.java → GET /api/v1/users/{userId}/premium/available-rewards
+  getAvailableRewardsForUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/users/${userId}/premium/available-rewards`);
   }
 
   // → UserPolicyController.java → GET /api/v1/users/{userId}/policies

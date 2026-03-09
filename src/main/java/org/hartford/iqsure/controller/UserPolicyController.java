@@ -27,6 +27,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Collections;
 
 /**
  * User Policy & Premium endpoints.
@@ -53,9 +54,10 @@ public class UserPolicyController {
     @Operation(summary = "Purchase a policy (applies gamification discounts automatically)")
     public ResponseEntity<UserPolicyResponseDTO> purchasePolicy(
             @PathVariable Long userId,
-            @Valid @RequestBody UserPolicyRequestDTO dto) {
+            @Valid @RequestBody UserPolicyRequestDTO dto,
+            @RequestParam(required = false) List<Long> selectedRewardIds) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(userPolicyService.purchasePolicy(userId, dto));
+                .body(userPolicyService.purchasePolicy(userId, dto, selectedRewardIds));
     }
 
     @GetMapping("/policies")
@@ -77,11 +79,28 @@ public class UserPolicyController {
     @GetMapping("/premium/calculate/{policyId}")
     @Operation(summary = "Preview dynamic premium for a policy before purchasing",
                description = "Evaluates all discount rules based on user's gamification data " +
-                             "(points, badges, quiz scores) and returns the full breakdown.")
+                             "(points, badges, quiz scores and selected coupon rewards) and returns the full breakdown.")
     public ResponseEntity<PremiumBreakdownDTO> calculatePremium(
             @PathVariable Long userId,
-            @PathVariable Long policyId) {
-        return ResponseEntity.ok(premiumCalculationService.calculatePremium(userId, policyId));
+            @PathVariable Long policyId,
+            @RequestParam(required = false) List<Long> selectedRewardIds) {
+        return ResponseEntity.ok(premiumCalculationService.calculatePremium(userId, policyId, selectedRewardIds));
+    }
+
+    @GetMapping("/premium/available-rewards")
+    @Operation(summary = "Get user's available (unused) redeemed rewards for coupon selection")
+    public ResponseEntity<List<java.util.Map<String, Object>>> getAvailableRewards(@PathVariable Long userId) {
+        return ResponseEntity.ok(
+            premiumCalculationService.getAvailableRewardsForUser(userId)
+                .stream()
+                .map(ur -> java.util.Map.<String, Object>of(
+                        "userRewardId", ur.getId(),
+                        "rewardType", ur.getReward().getRewardType(),
+                        "discountValue", ur.getReward().getDiscountValue(),
+                        "expiryDate", ur.getReward().getExpiryDate().toString()
+                ))
+                .toList()
+        );
     }
 
     @GetMapping("/premium/logs")

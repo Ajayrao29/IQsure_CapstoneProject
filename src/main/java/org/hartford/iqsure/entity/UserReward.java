@@ -47,4 +47,9 @@ public class UserReward {
     @Column(nullable = false)
     @Builder.Default
     private LocalDateTime redeemedDate = LocalDateTime.now();
+    
+    // Tracks if this reward has been applied to a policy purchase (one-time use)
+    @Column(name = "is_used", nullable = false, columnDefinition = "boolean default false")
+    @Builder.Default
+    private boolean used = false;
 }
