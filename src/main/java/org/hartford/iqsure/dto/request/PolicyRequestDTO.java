@@ -1,3 +1,8 @@
+/*
+ * FILE: PolicyRequestDTO.java | LOCATION: dto/request/
+ * PURPOSE: DTO for creating/updating an insurance policy. Admin sends this.
+ * FLOW: PolicyMgmtComponent → api.service.ts → POST/PUT /api/v1/policies → PolicyController → PolicyService
+ */
 package org.hartford.iqsure.dto.request;
 
 import jakarta.validation.constraints.*;
@@ -36,4 +41,3 @@ public class PolicyRequestDTO {
     @Builder.Default
     private Boolean isActive = true;
 }
-

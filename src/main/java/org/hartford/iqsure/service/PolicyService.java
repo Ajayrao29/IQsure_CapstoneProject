@@ -1,3 +1,9 @@
+/*
+ * FILE: PolicyService.java | LOCATION: service/
+ * PURPOSE: Insurance policy CRUD logic. Admin creates/updates/deletes policies.
+ * CALLED BY: PolicyController.java
+ * USES: PolicyRepository
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

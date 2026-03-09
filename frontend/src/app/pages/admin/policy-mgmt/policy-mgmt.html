@@ -34,24 +34,33 @@
 
   <div class="loading" *ngIf="loading">Loading…</div>
 
-  <div class="table-wrapper" *ngIf="!loading">
-    <table>
-      <thead><tr><th>Title</th><th>Type</th><th>Premium</th><th>Coverage</th><th>Months</th><th>Active</th><th>Actions</th></tr></thead>
-      <tbody>
-        <tr *ngFor="let p of policies">
-          <td>{{ p.title }}</td>
-          <td>{{ p.policyType }}</td>
-          <td>${{ p.basePremium }}</td>
-          <td>${{ p.coverageAmount | number }}</td>
-          <td>{{ p.durationMonths }}</td>
-          <td><span [class]="p.isActive ? 'active-tag' : 'inactive-tag'">{{ p.isActive ? 'Yes' : 'No' }}</span></td>
-          <td class="action-btns">
-            <button class="btn-sm" (click)="openEdit(p)">Edit</button>
-            <button class="btn-danger btn-sm" (click)="delete(p.policyId)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="policy-grid" *ngIf="!loading">
+    <div class="policy-card" *ngFor="let p of policies" [class.inactive]="!p.isActive">
+      <div class="policy-card-top">
+        <span class="policy-type" [ngClass]="p.policyType.toLowerCase()">{{ p.policyType }}</span>
+        <span [class]="p.isActive ? 'active-tag' : 'inactive-tag'">{{ p.isActive ? 'Active' : 'Inactive' }}</span>
+      </div>
+      <h3 class="policy-card-title">{{ p.title }}</h3>
+      <div class="policy-card-stats">
+        <div class="stat-box">
+          <span class="stat-label">Premium</span>
+          <span class="stat-value">${{ p.basePremium }}</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Coverage</span>
+          <span class="stat-value">${{ p.coverageAmount | number }}</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-label">Duration</span>
+          <span class="stat-value">{{ p.durationMonths }} mo</span>
+        </div>
+      </div>
+      <div class="policy-card-actions">
+        <button class="btn-sm" (click)="openEdit(p)">Edit</button>
+        <button class="btn-danger btn-sm" (click)="delete(p.policyId)">Delete</button>
+      </div>
+    </div>
+    <div class="empty-msg" *ngIf="policies.length === 0">No policies yet. Create one above.</div>
   </div>
 </div>
 

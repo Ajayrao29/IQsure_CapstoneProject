@@ -1,3 +1,9 @@
+/*
+ * FILE: RewardResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO for reward data sent to frontend. Maps to "Reward" interface in models/models.ts.
+ * RETURNED BY: RewardController endpoints → RewardService.toDTO()
+ * USED IN FRONTEND: RewardsComponent (pages/rewards/), RewardMgmtComponent (pages/admin/reward-mgmt/)
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.Builder;
@@ -14,4 +20,3 @@ public class RewardResponseDTO {
     private Double discountValue;
     private LocalDate expiryDate;
 }
-

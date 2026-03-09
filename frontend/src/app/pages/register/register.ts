@@ -1,3 +1,10 @@
+/*
+ * FILE: register.ts | LOCATION: pages/register/
+ * PURPOSE: Registration page (URL: /register). New user creates an account.
+ *          On success → saves user to AuthService → redirects to /dashboard.
+ * TEMPLATE: register.html | STYLES: register.scss
+ * CALLS: api.service.ts → register() → POST /api/auth/register → AuthController
+ */
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';

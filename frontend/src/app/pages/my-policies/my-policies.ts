@@ -1,3 +1,8 @@
+/*
+ * FILE: my-policies.ts | LOCATION: pages/my-policies/
+ * PURPOSE: My Policies page (URL: /my-policies). Shows all policies the user has purchased.
+ * CALLS: api.service.ts → getUserPolicies() → UserPolicyController → GET /api/v1/users/{id}/policies
+ */
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';

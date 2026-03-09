@@ -1,3 +1,23 @@
+/*
+ * ============================================================================
+ * FILE: GlobalExceptionHandler.java | LOCATION: exception/
+ * PURPOSE: Catches ALL exceptions thrown anywhere in the backend and converts
+ *          them into proper JSON error responses for the frontend.
+ *          Without this, Spring would return ugly HTML error pages.
+ *
+ * HOW IT WORKS:
+ *   - @RestControllerAdvice → Spring calls methods here when ANY controller throws an exception
+ *   - @ExceptionHandler(XyzException.class) → catches that specific exception type
+ *
+ * EXCEPTION TYPES HANDLED:
+ *   1. ResourceNotFoundException → 404 Not Found (e.g., user not found)
+ *   2. BadRequestException → 400 Bad Request (e.g., duplicate email)
+ *   3. MethodArgumentNotValidException → 400 (e.g., @NotBlank validation failed)
+ *   4. Exception (any other) → 500 Internal Server Error
+ *
+ * FRONTEND READS: err.error.message in the Angular subscribe error handler
+ * ============================================================================
+ */
 package org.hartford.iqsure.exception;
 
 import org.springframework.http.HttpStatus;

@@ -1,3 +1,9 @@
+/*
+ * FILE: QuizAttemptRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "quiz_attempts" table. Used by QuizAttemptService.java, UserService.java.
+ * ENTITY: QuizAttempt.java (entity/)
+ * KEY METHOD: findBestScorePercentByUserId → used by PremiumCalculationService for discount rules
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.QuizAttempt;
@@ -29,4 +35,3 @@ public interface QuizAttemptRepository extends JpaRepository<QuizAttempt, Long> 
            "FROM QuizAttempt a WHERE a.user.userId = :userId")
     Double findBestScorePercentByUserId(@Param("userId") Long userId);
 }
-

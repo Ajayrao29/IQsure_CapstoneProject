@@ -1,3 +1,9 @@
+/*
+ * FILE: QuestionRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "questions" table. Used by QuestionService.java, QuizAttemptService.java.
+ * ENTITY: Question.java (entity/)
+ * NOTE: "findByQuiz_QuizId" means: follow the "quiz" field in Question, then match on "quizId"
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.Question;
@@ -15,4 +21,3 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     // Count questions in a quiz (used to calculate score %)
     long countByQuiz_QuizId(Long quizId);
 }
-

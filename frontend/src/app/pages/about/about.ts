@@ -1,3 +1,8 @@
+/*
+ * FILE: about.ts | LOCATION: pages/about/
+ * PURPOSE: About page (URL: /about). Describes the platform's mission and team.
+ * TEMPLATE: about.html | STYLES: about.scss
+ */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';

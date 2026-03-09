@@ -1,3 +1,10 @@
+/*
+ * FILE: UserPolicyResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO for a user's purchased policy. Shows policy details + discount info.
+ *          Maps to "UserPolicy" interface in models/models.ts.
+ * RETURNED BY: UserPolicyController endpoints → UserPolicyService.toDTO()
+ * USED IN FRONTEND: MyPoliciesComponent (pages/my-policies/)
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.*;
@@ -38,4 +45,3 @@ public class UserPolicyResponseDTO {
      */
     private Double savedAmount;
 }
-

@@ -1,3 +1,9 @@
+/*
+ * FILE: DiscountRuleRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "discount_rules" table. Used by DiscountRuleService.java, PremiumCalculationService.java.
+ * ENTITY: DiscountRule.java (entity/)
+ * KEY METHOD: findActiveRulesForPolicyType → gets rules that apply to a specific policy type or ALL types
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.DiscountRule;
@@ -23,4 +29,3 @@ public interface DiscountRuleRepository extends JpaRepository<DiscountRule, Long
 
     boolean existsByRuleName(String ruleName);
 }
-

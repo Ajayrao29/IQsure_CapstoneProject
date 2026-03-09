@@ -16,18 +16,27 @@
     </div>
   </div>
   <div class="loading" *ngIf="loading">Loading…</div>
-  <div class="table-wrapper" *ngIf="!loading">
-    <table>
-      <thead><tr><th>ID</th><th>Type</th><th>Discount</th><th>Expiry</th><th>Action</th></tr></thead>
-      <tbody>
-        <tr *ngFor="let r of rewards">
-          <td>{{ r.rewardId }}</td><td>{{ r.rewardType }}</td>
-          <td><span class="disc-badge">{{ r.discountValue }}%</span></td>
-          <td>{{ r.expiryDate | date:'mediumDate' }}</td>
-          <td><button class="btn-danger btn-sm" (click)="delete(r.rewardId)">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="reward-grid" *ngIf="!loading">
+    <div class="reward-card" *ngFor="let r of rewards">
+      <div class="reward-card-top">
+        <span class="reward-id">#{{ r.rewardId }}</span>
+        <span class="reward-expiry">{{ r.expiryDate | date:'mediumDate' }}</span>
+      </div>
+      <h3 class="reward-card-type">{{ r.rewardType }}</h3>
+      <div class="reward-card-value">
+        <div class="discount-info">
+          <span class="discount-number">{{ r.discountValue }}%</span>
+          <span class="discount-label">OFF</span>
+        </div>
+        <div class="discount-bar-track">
+          <div class="discount-bar-fill" [style.width.%]="r.discountValue"></div>
+        </div>
+      </div>
+      <div class="reward-card-actions">
+        <button class="btn-danger btn-sm" (click)="delete(r.rewardId)">Delete</button>
+      </div>
+    </div>
+    <div class="empty-msg" *ngIf="rewards.length === 0">No rewards yet. Create one above.</div>
   </div>
 </div>
 

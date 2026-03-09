@@ -1,3 +1,11 @@
+/*
+ * FILE: UserPolicyService.java | LOCATION: service/
+ * PURPOSE: Handles policy purchase logic. When user buys a policy, this service:
+ *          1. Calls PremiumCalculationService to get discounted price
+ *          2. Creates a UserPolicy record with the final premium
+ * CALLED BY: UserPolicyController.java
+ * USES: UserRepository, PolicyRepository, UserPolicyRepository, PremiumCalculationService
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

@@ -34,24 +34,24 @@
   <!-- Quiz List -->
   <div class="loading" *ngIf="loading">Loading…</div>
 
-  <div class="table-wrapper" *ngIf="!loading && !selectedQuiz">
-    <table>
-      <thead><tr><th>ID</th><th>Title</th><th>Category</th><th>Difficulty</th><th>Questions</th><th>Actions</th></tr></thead>
-      <tbody>
-        <tr *ngFor="let q of quizzes">
-          <td>{{ q.quizId }}</td>
-          <td>{{ q.title }}</td>
-          <td>{{ q.category }}</td>
-          <td><span class="diff-badge" [ngClass]="q.difficulty.toLowerCase()">{{ q.difficulty }}</span></td>
-          <td>{{ q.totalQuestions }}</td>
-          <td class="action-btns">
-            <button class="btn-sm" (click)="manageQuestions(q)">Questions</button>
-            <button class="btn-sm" (click)="openEdit(q)">Edit</button>
-            <button class="btn-danger btn-sm" (click)="deleteQuiz(q.quizId)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="quiz-grid" *ngIf="!loading && !selectedQuiz">
+    <div class="quiz-card" *ngFor="let q of quizzes">
+      <div class="quiz-card-top">
+        <span class="quiz-id">#{{ q.quizId }}</span>
+        <span class="diff-badge" [ngClass]="q.difficulty.toLowerCase()">{{ q.difficulty }}</span>
+      </div>
+      <h3 class="quiz-card-title">{{ q.title }}</h3>
+      <div class="quiz-card-meta">
+        <span class="meta-tag category-tag">{{ q.category }}</span>
+        <span class="meta-tag questions-tag">{{ q.totalQuestions }} Questions</span>
+      </div>
+      <div class="quiz-card-actions">
+        <button class="btn-sm" (click)="manageQuestions(q)">Questions</button>
+        <button class="btn-sm" (click)="openEdit(q)">Edit</button>
+        <button class="btn-danger btn-sm" (click)="deleteQuiz(q.quizId)">Delete</button>
+      </div>
+    </div>
+    <div class="empty-msg" *ngIf="quizzes.length === 0">No quizzes yet. Create one above.</div>
   </div>
 
   <!-- Questions Manager -->

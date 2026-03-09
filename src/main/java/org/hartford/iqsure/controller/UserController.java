@@ -1,3 +1,18 @@
+/*
+ * ============================================================================
+ * FILE: UserController.java | LOCATION: controller/
+ * PURPOSE: User profile and leaderboard API endpoints.
+ *
+ * API ENDPOINTS:
+ *   GET    /api/v1/users             → Get all users (Admin)
+ *   GET    /api/v1/users/{userId}    → Get user profile by ID
+ *   DELETE /api/v1/users/{userId}    → Delete a user (Admin)
+ *   GET    /api/v1/users/leaderboard → Get leaderboard (top users by points)
+ *
+ * FLOW: DashboardComponent / AdminUsersComponent / LeaderboardComponent
+ *       → api.service.ts → THIS → UserService → UserRepository
+ * ============================================================================
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,4 +59,3 @@ public class UserController {
         return ResponseEntity.ok(userService.getLeaderboard());
     }
 }
-

@@ -1,3 +1,10 @@
+/*
+ * FILE: landing.ts | LOCATION: pages/landing/
+ * PURPOSE: Landing/Home page (URL: /). Public page shown before login.
+ *          Displays feature highlights and stats about the platform.
+ * TEMPLATE: landing.html | STYLES: landing.scss
+ * ROUTE: { path: '', component: LandingComponent } in app.routes.ts
+ */
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';

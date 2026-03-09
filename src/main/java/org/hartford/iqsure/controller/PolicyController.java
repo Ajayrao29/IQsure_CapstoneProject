@@ -1,3 +1,9 @@
+/*
+ * FILE: PolicyController.java | LOCATION: controller/
+ * PURPOSE: Insurance policy catalog management API. Admin creates/edits policies; users browse them.
+ * ENDPOINTS: GET/POST/PUT/DELETE /api/v1/policies
+ * FLOW: PolicyMgmtComponent / PoliciesComponent → api.service.ts → THIS → PolicyService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,4 +76,3 @@ public class PolicyController {
         return ResponseEntity.noContent().build();
     }
 }
-

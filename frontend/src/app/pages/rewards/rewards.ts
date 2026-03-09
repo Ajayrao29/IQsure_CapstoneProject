@@ -1,3 +1,10 @@
+/*
+ * FILE: rewards.ts | LOCATION: pages/rewards/
+ * PURPOSE: Rewards page (URL: /rewards). Shows all available rewards. Users can redeem rewards (once each).
+ *          Checks for expiry and duplicate redemption.
+ * TEMPLATE: rewards.html | STYLES: rewards.scss
+ * CALLS: api.service.ts → getAllRewards(), getRewardsByUser(), redeemReward() → RewardController
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';

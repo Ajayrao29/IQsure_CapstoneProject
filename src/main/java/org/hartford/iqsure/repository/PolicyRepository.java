@@ -1,3 +1,8 @@
+/*
+ * FILE: PolicyRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "policies" table. Used by PolicyService.java, UserPolicyService.java.
+ * ENTITY: Policy.java (entity/)
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.Policy;
@@ -15,4 +20,3 @@ public interface PolicyRepository extends JpaRepository<Policy, Long> {
 
     boolean existsByTitle(String title);
 }
-

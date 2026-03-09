@@ -1,3 +1,11 @@
+/*
+ * FILE: PremiumBreakdownDTO.java | LOCATION: dto/response/
+ * PURPOSE: Detailed premium calculation breakdown returned when user previews a policy.
+ *          Shows base price, all matched discount rules, and the final discounted price.
+ *          Maps to "PremiumBreakdown" interface in models/models.ts.
+ * RETURNED BY: UserPolicyController → calculatePremium() → PremiumCalculationService
+ * USED IN FRONTEND: PoliciesComponent (pages/policies/) → premium preview modal
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.*;
@@ -52,4 +60,3 @@ public class PremiumBreakdownDTO {
         private String reason;
     }
 }
-

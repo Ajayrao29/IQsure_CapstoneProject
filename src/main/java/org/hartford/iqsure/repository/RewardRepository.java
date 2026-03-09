@@ -1,3 +1,8 @@
+/*
+ * FILE: RewardRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "rewards" table. Used by RewardService.java.
+ * ENTITY: Reward.java (entity/)
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.Reward;
@@ -16,4 +21,3 @@ public interface RewardRepository extends JpaRepository<Reward, Long> {
     // Get rewards by type (e.g. "PREMIUM_DISCOUNT", "CASHBACK")
     List<Reward> findByRewardType(String rewardType);
 }
-

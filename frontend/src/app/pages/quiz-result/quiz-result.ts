@@ -1,3 +1,10 @@
+/*
+ * FILE: quiz-result.ts | LOCATION: pages/quiz-result/
+ * PURPOSE: Quiz result page (URL: /quiz-result). Shows score, percentage, points earned.
+ *          Data is passed via router state from TakeQuizComponent after submission.
+ * TEMPLATE: quiz-result.html | STYLES: quiz-result.scss
+ * DATA FROM: TakeQuizComponent → router.navigate(['/quiz-result'], { state: { result } })
+ */
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';

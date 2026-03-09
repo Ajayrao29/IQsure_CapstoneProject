@@ -1,3 +1,8 @@
+/*
+ * FILE: RewardRequestDTO.java | LOCATION: dto/request/
+ * PURPOSE: DTO for creating a reward. Admin sends this.
+ * FLOW: RewardMgmtComponent → api.service.ts → POST /api/v1/rewards → RewardController → RewardService
+ */
 package org.hartford.iqsure.dto.request;
 
 import jakarta.validation.constraints.Future;
@@ -22,4 +27,3 @@ public class RewardRequestDTO {
     @Future(message = "Expiry date must be in the future")
     private LocalDate expiryDate;
 }
-

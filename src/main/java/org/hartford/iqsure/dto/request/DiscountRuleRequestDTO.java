@@ -1,3 +1,9 @@
+/*
+ * FILE: DiscountRuleRequestDTO.java | LOCATION: dto/request/
+ * PURPOSE: DTO for creating/updating discount rules. Admin sends this.
+ * FLOW: DiscountRulesComponent → api.service.ts → POST/PUT /api/v1/discount-rules
+ *       → DiscountRuleController → DiscountRuleService
+ */
 package org.hartford.iqsure.dto.request;
 
 import jakarta.validation.constraints.*;
@@ -54,4 +60,3 @@ public class DiscountRuleRequestDTO {
     @Builder.Default
     private Boolean isActive = true;
 }
-

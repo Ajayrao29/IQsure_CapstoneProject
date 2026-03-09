@@ -1,3 +1,8 @@
+/*
+ * FILE: QuizRequestDTO.java | LOCATION: dto/request/
+ * PURPOSE: DTO for creating/updating quizzes. Sent by admin from QuizMgmtComponent.
+ * FLOW: QuizMgmtComponent → api.service.ts → POST/PUT /api/v1/quizzes → QuizController → QuizService
+ */
 package org.hartford.iqsure.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
@@ -17,4 +22,3 @@ public class QuizRequestDTO {
     @NotNull(message = "Difficulty is required")
     private Quiz.Difficulty difficulty;
 }
-

@@ -1,3 +1,15 @@
+/*
+ * FILE: discount-rules.ts | LOCATION: pages/admin/discount-rules/
+ * PURPOSE: Admin Discount Rules page (URL: /admin/discount-rules). Admin can:
+ *          - Create, edit, delete discount rules
+ *          - Set conditions: min quiz score, min points, min badges
+ *          - Set discount percentage and applicable policy type
+ *          These rules are evaluated by PremiumCalculationService when a user previews/buys a policy.
+ * TEMPLATE: discount-rules.html | STYLES: discount-rules.scss
+ * CALLS: api.service.ts → getAllDiscountRules(), createDiscountRule(), updateDiscountRule(), deleteDiscountRule()
+ * BACKEND: DiscountRuleController → DiscountRuleService
+ * GUARD: AdminGuard — only accessible by admin users
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

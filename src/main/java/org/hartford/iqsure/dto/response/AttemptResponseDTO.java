@@ -1,3 +1,11 @@
+/*
+ * FILE: AttemptResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO returned after a quiz is submitted OR when viewing attempt history.
+ *          Contains score, percentage, points earned, and any new badges unlocked.
+ *          Maps to "AttemptResponse" interface in models/models.ts.
+ * RETURNED BY: AttemptController → submit(), getByUser() → QuizAttemptService
+ * USED IN FRONTEND: QuizResultComponent (pages/quiz-result/), DashboardComponent (pages/dashboard/)
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.Builder;
@@ -24,4 +32,3 @@ public class AttemptResponseDTO {
      */
     private java.util.List<BadgeResponseDTO> newBadgesUnlocked;
 }
-

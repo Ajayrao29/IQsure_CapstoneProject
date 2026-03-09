@@ -1,3 +1,11 @@
+/*
+ * FILE: QuestionResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO sent to frontend with question data for taking a quiz.
+ *          NOTE: The correct answer is NOT included (to prevent cheating).
+ *          Maps to "Question" interface in models/models.ts.
+ * RETURNED BY: QuestionController → getByQuiz() → QuestionService.toDTO()
+ * USED IN FRONTEND: TakeQuizComponent (pages/take-quiz/) displays questions
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.Builder;
@@ -22,4 +30,3 @@ public class QuestionResponseDTO {
     // NOTE: correct answer is NOT included in this response
     // It is only used server-side during scoring
 }
-

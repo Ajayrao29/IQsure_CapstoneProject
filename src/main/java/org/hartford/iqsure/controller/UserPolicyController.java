@@ -1,3 +1,15 @@
+/*
+ * FILE: UserPolicyController.java | LOCATION: controller/
+ * PURPOSE: Policy purchase and dynamic premium calculation API.
+ *          Users can preview their personalized premium (with gamification discounts)
+ *          and then purchase policies.
+ * ENDPOINTS:
+ *   POST /api/v1/users/{userId}/policies                    → Purchase a policy
+ *   GET  /api/v1/users/{userId}/policies                    → User's purchased policies
+ *   GET  /api/v1/users/{userId}/premium/calculate/{policyId}→ Preview premium before purchase
+ *   GET  /api/v1/users/{userId}/premium/logs                → Premium calculation history
+ * FLOW: PoliciesComponent / MyPoliciesComponent → api.service.ts → THIS → UserPolicyService / PremiumCalculationService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -86,4 +98,3 @@ public class UserPolicyController {
         return ResponseEntity.ok(premiumCalculationService.getLogsForUserAndPolicy(userId, policyId));
     }
 }
-

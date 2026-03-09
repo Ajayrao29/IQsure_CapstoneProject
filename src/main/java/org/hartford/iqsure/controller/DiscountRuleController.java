@@ -1,3 +1,10 @@
+/*
+ * FILE: DiscountRuleController.java | LOCATION: controller/
+ * PURPOSE: Discount rule CRUD API. Admin configures rules that give premium discounts
+ *          based on user gamification data (points, badges, quiz scores).
+ * ENDPOINTS: GET/POST/PUT/DELETE /api/v1/discount-rules
+ * FLOW: DiscountRulesComponent → api.service.ts → THIS → DiscountRuleService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -70,4 +77,3 @@ public class DiscountRuleController {
         return ResponseEntity.noContent().build();
     }
 }
-

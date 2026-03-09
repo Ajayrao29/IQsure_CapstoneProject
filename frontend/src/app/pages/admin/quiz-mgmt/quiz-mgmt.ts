@@ -1,3 +1,16 @@
+/*
+ * FILE: quiz-mgmt.ts | LOCATION: pages/admin/quiz-mgmt/
+ * PURPOSE: Admin Quiz Management page (URL: /admin/quiz-mgmt). Admin can:
+ *          - Create, edit, delete quizzes
+ *          - Add questions to quizzes (with comma-separated options)
+ *          - Set correct answers for questions
+ *          - Delete questions
+ * TEMPLATE: quiz-mgmt.html | STYLES: quiz-mgmt.scss
+ * CALLS: api.service.ts → getAllQuizzes(), createQuiz(), updateQuiz(), deleteQuiz(),
+ *        getQuestionsByQuiz(), addQuestion(), addAnswer(), deleteQuestion()
+ * BACKEND: QuizController, QuestionController
+ * GUARD: AdminGuard — only accessible by admin users
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

@@ -1,3 +1,10 @@
+/*
+ * FILE: DiscountRuleService.java | LOCATION: service/
+ * PURPOSE: Discount rule CRUD logic. Admin creates rules that define how gamification
+ *          data (points, badges, quiz scores) translates into premium discounts.
+ * CALLED BY: DiscountRuleController.java
+ * USES: DiscountRuleRepository
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

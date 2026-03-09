@@ -1,3 +1,13 @@
+/*
+ * FILE: policies.ts | LOCATION: pages/policies/
+ * PURPOSE: Policy browsing & purchasing page (URL: /policies). Users can:
+ *          1. Browse active insurance policies
+ *          2. Preview their personalized premium (with gamification discounts)
+ *          3. Purchase a policy
+ * TEMPLATE: policies.html | STYLES: policies.scss
+ * CALLS: api.service.ts → getActivePolicies(), calculatePremium(), purchasePolicy()
+ * BACKEND: PolicyController, UserPolicyController, PremiumCalculationService
+ */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -27,5 +37,3 @@ export class PoliciesComponent implements OnInit {
   closePreview(): void { this.preview = null; this.selectedPolicyId = null; this.message = ''; }
   getPolicyIcon(type: string): string { return type === 'HEALTH' ? '❤️' : type === 'LIFE' ? '🌿' : '🚗'; }
 }
-
-

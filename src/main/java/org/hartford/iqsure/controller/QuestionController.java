@@ -1,3 +1,9 @@
+/*
+ * FILE: QuestionController.java | LOCATION: controller/
+ * PURPOSE: Question and Answer management API. Admin adds questions to quizzes and sets correct answers.
+ * ENDPOINTS: POST /api/v1/questions, POST /api/v1/questions/answers, GET/DELETE /api/v1/questions
+ * FLOW: QuizMgmtComponent → api.service.ts → THIS → QuestionService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,4 +53,3 @@ public class QuestionController {
         return ResponseEntity.noContent().build();
     }
 }
-

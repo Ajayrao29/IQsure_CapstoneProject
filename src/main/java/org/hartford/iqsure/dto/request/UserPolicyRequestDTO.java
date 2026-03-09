@@ -1,3 +1,10 @@
+/*
+ * FILE: UserPolicyRequestDTO.java | LOCATION: dto/request/
+ * PURPOSE: DTO for purchasing a policy. User only sends the policyId.
+ *          The server calculates the final premium automatically.
+ * FLOW: PoliciesComponent → api.service.ts → POST /api/v1/users/{userId}/policies
+ *       → UserPolicyController → UserPolicyService.purchasePolicy()
+ */
 package org.hartford.iqsure.dto.request;
 
 import jakarta.validation.constraints.NotNull;
@@ -16,4 +23,3 @@ public class UserPolicyRequestDTO {
     @NotNull(message = "Policy ID is required")
     private Long policyId;
 }
-

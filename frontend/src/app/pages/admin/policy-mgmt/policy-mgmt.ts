@@ -1,3 +1,13 @@
+/*
+ * FILE: policy-mgmt.ts | LOCATION: pages/admin/policy-mgmt/
+ * PURPOSE: Admin Policy Management page (URL: /admin/policy-mgmt). Admin can:
+ *          - Create, edit, delete insurance policies
+ *          - Set base premium, coverage amount, duration, and policy type
+ * TEMPLATE: policy-mgmt.html | STYLES: policy-mgmt.scss
+ * CALLS: api.service.ts → getAllPolicies(), createPolicy(), updatePolicy(), deletePolicy()
+ * BACKEND: PolicyController → PolicyService
+ * GUARD: AdminGuard — only accessible by admin users
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';

@@ -1,3 +1,9 @@
+/*
+ * FILE: BadgeController.java | LOCATION: controller/
+ * PURPOSE: Badge management API. Admin creates badges; users view earned badges.
+ * ENDPOINTS: POST/GET/DELETE /api/v1/badges, GET /api/v1/badges/user/{userId}
+ * FLOW: BadgeMgmtComponent / BadgesComponent → api.service.ts → THIS → BadgeService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,6 +45,12 @@ public class BadgeController {
         return ResponseEntity.ok(badgeService.getBadgesByUser(userId));
     }
 
+    @PutMapping("/{badgeId}")
+    @Operation(summary = "Update a badge (Admin)")
+    public ResponseEntity<BadgeResponseDTO> update(@PathVariable Long badgeId, @Valid @RequestBody BadgeRequestDTO dto) {
+        return ResponseEntity.ok(badgeService.updateBadge(badgeId, dto));
+    }
+
     @DeleteMapping("/{badgeId}")
     @Operation(summary = "Delete a badge (Admin)")
     public ResponseEntity<Void> delete(@PathVariable Long badgeId) {
@@ -46,4 +58,3 @@ public class BadgeController {
         return ResponseEntity.noContent().build();
     }
 }
-

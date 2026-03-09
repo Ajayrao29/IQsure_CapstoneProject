@@ -1,3 +1,9 @@
+/*
+ * FILE: AnswerRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "answers" table. Used by QuestionService.java, QuizAttemptService.java.
+ * ENTITY: Answer.java (entity/)
+ * KEY METHOD: findByQuestion_Quiz_QuizId → gets all correct answers for a quiz (used in scoring)
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.Answer;
@@ -16,4 +22,3 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     // Get all answers for questions in a quiz (used during scoring)
     List<Answer> findByQuestion_Quiz_QuizId(Long quizId);
 }
-

@@ -12,12 +12,15 @@
 
   <div class="rewards-grid" *ngIf="!loading">
     <div class="reward-card" *ngFor="let r of rewards" [class.expired]="isExpired(r.expiryDate)" [class.redeemed]="isRedeemed(r.rewardId)">
-      <div class="reward-icon">🎁</div>
+      <div class="reward-icon">&#9733;</div>
       <div class="reward-type">{{ r.rewardType }}</div>
       <div class="reward-value">{{ r.discountValue }}% OFF</div>
+      <div class="reward-bar-track">
+        <div class="reward-bar-fill" [style.width.%]="r.discountValue"></div>
+      </div>
       <div class="reward-expiry">Expires: {{ r.expiryDate | date:'mediumDate' }}</div>
       <div class="expired-tag" *ngIf="isExpired(r.expiryDate)">Expired</div>
-      <div class="redeemed-tag" *ngIf="isRedeemed(r.rewardId)">✓ Redeemed</div>
+      <div class="redeemed-tag" *ngIf="isRedeemed(r.rewardId)">Redeemed</div>
       <button
         class="btn-primary"
         *ngIf="!isRedeemed(r.rewardId) && !isExpired(r.expiryDate)"

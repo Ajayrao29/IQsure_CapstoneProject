@@ -1,3 +1,10 @@
+/*
+ * FILE: quizzes.ts | LOCATION: pages/quizzes/
+ * PURPOSE: Quiz list page (URL: /quizzes). Shows all available quizzes.
+ *          User clicks "Take Quiz" → navigates to /take-quiz/:id.
+ * TEMPLATE: quizzes.html | STYLES: quizzes.scss
+ * CALLS: api.service.ts → getAllQuizzes() → QuizController → GET /api/v1/quizzes
+ */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';

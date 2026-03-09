@@ -36,6 +36,8 @@ html, body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border);
   gap: 1rem;
 
   h1 {
@@ -112,16 +114,31 @@ html, body {
   &:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
-.btn-sm { padding: 0.4rem 0.9rem !important; font-size: 0.85rem !important; }
+.btn-sm {
+  padding: 0.4rem 0.9rem !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--claret);
+  color: white;
+  border: none;
+
+  &:hover { background: #5a0132; transform: translateY(-1px); }
+}
+
+.action-btns { display: flex; gap: 0.5rem; align-items: center; }
 
 /* ─── Forms ─────────────────────────────────────────────────────────────────── */
 .form-card {
   background: white;
   border: 1px solid var(--border);
+  border-top: 3px solid var(--fuchsia);
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 
   h2, h3 { color: var(--claret); font-size: 1.25rem; font-weight: 700; margin: 0 0 1.5rem; }
 }
@@ -195,7 +212,7 @@ html, body {
   border-radius: 12px;
   overflow: hidden;
   overflow-x: auto;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 table {
@@ -203,7 +220,7 @@ table {
   border-collapse: collapse;
 
   thead tr {
-    background: var(--warm-gray);
+    background: linear-gradient(135deg, var(--claret), #9a0150);
     border-bottom: 2px solid var(--border);
 
     th {
@@ -213,17 +230,18 @@ table {
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--claret);
+      color: white;
       white-space: nowrap;
     }
   }
 
   tbody tr {
     border-bottom: 1px solid var(--border);
-    transition: background 0.15s ease;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
 
     &:last-child { border-bottom: none; }
-    &:hover { background: #FFF9F5; }
+    &:hover { background: #FFF5F9; border-left-color: var(--fuchsia); }
 
     td {
       padding: 1rem 1.5rem;
@@ -233,18 +251,16 @@ table {
   }
 }
 
-.action-btns { display: flex; gap: 0.5rem; align-items: center; }
-
 /* ─── Cards ─────────────────────────────────────────────────────────────────── */
 .card {
   background: white;
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 1.75rem;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 
-  &:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: var(--claret); }
+  &:hover { box-shadow: 0 6px 20px rgba(117,1,63,0.1); border-color: var(--fuchsia); }
 }
 
 /* ─── Misc ───────────────────────────────────────────────────────────────────── */

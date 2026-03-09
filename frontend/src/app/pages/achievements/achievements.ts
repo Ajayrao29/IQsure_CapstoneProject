@@ -1,14 +1,22 @@
+/*
+ * FILE: achievements.ts | LOCATION: pages/achievements/
+ * PURPOSE: Achievements page (URL: /achievements). Shows progress, level, and 8 achievement milestones.
+ *          Checks user's quiz history, policies, badges, and leaderboard position to unlock achievements.
+ * TEMPLATE: achievements.html | STYLES: achievements.scss
+ * CALLS: api.service.ts → getProfile(), getAttemptsByUser(), getUserPolicies(), getBadgesByUser(), getLeaderboard()
+ * BACKEND: Multiple controllers — UserController, AttemptController, UserPolicyController, BadgeController
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 
-@Component({ 
-  selector: 'app-achievements', 
-  standalone: true, 
-  imports: [CommonModule], 
-  templateUrl: './achievements.html', 
-  styleUrls: ['./achievements.scss'] 
+@Component({
+  selector: 'app-achievements',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './achievements.html',
+  styleUrls: ['./achievements.scss']
 })
 export class AchievementsComponent implements OnInit {
   userPoints = 0;
@@ -17,7 +25,7 @@ export class AchievementsComponent implements OnInit {
   nextLevelPoints = 100;
   completionRate = 0;
   streak = 0;
-  
+
   achievements = [
     { icon: '🎓', name: 'First Steps', description: 'Complete your first quiz', points: 10, unlocked: false },
     { icon: '💯', name: 'Perfect Score', description: 'Score 100% on any quiz', points: 50, unlocked: false },
@@ -50,14 +58,14 @@ export class AchievementsComponent implements OnInit {
     this.api.getAttemptsByUser(userId).subscribe(attempts => {
       if (attempts.length > 0) this.achievements[0].unlocked = true;
       if (attempts.some(a => a.percentage === 100)) this.achievements[1].unlocked = true;
-      if (attempts.filter(a => new Date(a.attemptDate).toDateString() === new Date().toDateString()).length >= 3) 
+      if (attempts.filter(a => new Date(a.attemptDate).toDateString() === new Date().toDateString()).length >= 3)
         this.achievements[2].unlocked = true;
-      
+
       const categories = new Set(attempts.map(a => a.quizTitle.split(' ')[0]));
       if (categories.size >= 3) this.achievements[3].unlocked = true;
-      
+
       if (attempts.filter(a => a.percentage >= 80).length >= 5) this.achievements[5].unlocked = true;
-      
+
       this.completionRate = Math.round((attempts.length / 3) * 100);
       this.streak = Math.floor(Math.random() * 7) + 1;
     });

@@ -1,3 +1,10 @@
+/*
+ * FILE: login.ts | LOCATION: pages/login/
+ * PURPOSE: Login page (URL: /login). User enters email + password to log in.
+ *          On success → saves user to AuthService → redirects to /dashboard.
+ * TEMPLATE: login.html | STYLES: login.scss
+ * CALLS: api.service.ts → login() → POST /api/auth/login → AuthController
+ */
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';

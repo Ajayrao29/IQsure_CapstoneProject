@@ -1,3 +1,9 @@
+/*
+ * FILE: QuizController.java | LOCATION: controller/
+ * PURPOSE: Quiz CRUD API endpoints. Admin creates/edits/deletes quizzes; users browse them.
+ * ENDPOINTS: GET/POST/PUT/DELETE /api/v1/quizzes
+ * FLOW: QuizzesComponent / QuizMgmtComponent → api.service.ts → THIS → QuizService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,4 +64,3 @@ public class QuizController {
         return ResponseEntity.noContent().build();
     }
 }
-

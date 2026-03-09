@@ -1,3 +1,9 @@
+/*
+ * FILE: QuizService.java | LOCATION: service/
+ * PURPOSE: Business logic for quiz CRUD. Admin creates/edits/deletes quizzes.
+ * CALLED BY: QuizController.java
+ * USES: QuizRepository, QuestionRepository
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

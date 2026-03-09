@@ -1,1 +1,97 @@
-.pts-badge { background:rgba(254,48,130,0.12); color:#FE3082; font-size:0.8rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:20px; }
+.pts-badge { background: rgba(254,48,130,0.12); color: #FE3082; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 20px; }
+
+// ─── Badge Card Grid ─────────────────────────────────────────────────────
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.badge-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(117,1,63,0.12);
+    border-color: var(--fuchsia);
+    transform: translateY(-2px);
+  }
+}
+
+.badge-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.badge-id {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-gray);
+}
+
+.badge-card-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+
+  &.bronze   { background: linear-gradient(135deg, #cd7f32, #e8a856); }
+  &.silver   { background: linear-gradient(135deg, #8e9aaf, #c0c7d4); }
+  &.gold     { background: linear-gradient(135deg, #d4a017, #f5d442); }
+  &.diamond  { background: linear-gradient(135deg, #5b9bd5, #89cff0); }
+  &.platinum { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+  &.ruby     { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+}
+
+// Card border-top accent per level
+.badge-card {
+  // ...existing code...
+  &.bronze   { border-top: 3px solid #cd7f32; }
+  &.silver   { border-top: 3px solid #8e9aaf; }
+  &.gold     { border-top: 3px solid #d4a017; }
+  &.diamond  { border-top: 3px solid #5b9bd5; }
+  &.platinum { border-top: 3px solid #6c5ce7; }
+  &.ruby     { border-top: 3px solid #c0392b; }
+}
+
+.badge-card-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--claret);
+  margin: 0;
+}
+
+.badge-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.badge-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  justify-content: center;
+}

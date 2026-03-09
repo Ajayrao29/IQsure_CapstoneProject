@@ -1,3 +1,8 @@
+/*
+ * FILE: UserPolicyRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "user_policies" table. Used by UserPolicyService.java.
+ * ENTITY: UserPolicy.java (entity/) — stores purchased policies with final premium
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.UserPolicy;
@@ -13,4 +18,3 @@ public interface UserPolicyRepository extends JpaRepository<UserPolicy, Long> {
 
     boolean existsByUser_UserIdAndPolicy_PolicyId(Long userId, Long policyId);
 }
-

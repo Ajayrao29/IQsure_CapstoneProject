@@ -1,3 +1,9 @@
+/*
+ * FILE: DiscountRuleResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO for discount rule data sent to frontend. Maps to "DiscountRule" in models/models.ts.
+ * RETURNED BY: DiscountRuleController endpoints → DiscountRuleService.toDTO()
+ * USED IN FRONTEND: DiscountRulesComponent (pages/admin/discount-rules/)
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.*;
@@ -22,4 +28,3 @@ public class DiscountRuleResponseDTO {
     private Policy.PolicyType applicablePolicyType;
     private Boolean isActive;
 }
-

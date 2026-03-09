@@ -1,3 +1,12 @@
+/*
+ * FILE: reward-mgmt.ts | LOCATION: pages/admin/reward-mgmt/
+ * PURPOSE: Admin Reward Management page (URL: /admin/reward-mgmt). Admin can:
+ *          - Create rewards with type, discount value, and expiry date
+ *          - Delete rewards
+ * TEMPLATE: reward-mgmt.html | STYLES: reward-mgmt.scss
+ * CALLS: api.service.ts → getAllRewards(), createReward(), deleteReward() → RewardController
+ * GUARD: AdminGuard — only accessible by admin users
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

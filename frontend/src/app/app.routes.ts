@@ -1,3 +1,44 @@
+/*
+ * ============================================================================
+ * FILE: app.routes.ts | LOCATION: frontend/src/app/
+ * PURPOSE: Defines ALL URL routes in the application.
+ *          Maps each URL path to a page component.
+ *          Also applies route guards to protect pages.
+ *
+ * ROUTE GUARDS:
+ *   - AuthGuard (guards/auth.guard.ts) → Requires user to be logged in
+ *   - AdminGuard (guards/admin.guard.ts) → Requires user to be an admin
+ *
+ * PUBLIC ROUTES (no guard):
+ *   /              → LandingComponent (pages/landing/)
+ *   /about         → AboutComponent (pages/about/)
+ *   /login         → LoginComponent (pages/login/)
+ *   /register      → RegisterComponent (pages/register/)
+ *
+ * USER ROUTES (AuthGuard — must be logged in):
+ *   /dashboard     → DashboardComponent (pages/dashboard/)
+ *   /quizzes       → QuizzesComponent (pages/quizzes/)
+ *   /take-quiz/:id → TakeQuizComponent (pages/take-quiz/)
+ *   /quiz-result   → QuizResultComponent (pages/quiz-result/)
+ *   /policies      → PoliciesComponent (pages/policies/)
+ *   /my-policies   → MyPoliciesComponent (pages/my-policies/)
+ *   /badges        → BadgesComponent (pages/badges/)
+ *   /rewards       → RewardsComponent (pages/rewards/)
+ *   /leaderboard   → LeaderboardComponent (pages/leaderboard/)
+ *   /achievements  → AchievementsComponent (pages/achievements/)
+ *   /savings       → SavingsCalculatorComponent (pages/savings-calculator/)
+ *
+ * ADMIN ROUTES (AuthGuard + AdminGuard — must be logged in AND be admin):
+ *   /admin/users          → AdminUsersComponent (pages/admin/users/)
+ *   /admin/quiz-mgmt      → QuizMgmtComponent (pages/admin/quiz-mgmt/)
+ *   /admin/policy-mgmt    → PolicyMgmtComponent (pages/admin/policy-mgmt/)
+ *   /admin/badge-mgmt     → BadgeMgmtComponent (pages/admin/badge-mgmt/)
+ *   /admin/reward-mgmt    → RewardMgmtComponent (pages/admin/reward-mgmt/)
+ *   /admin/discount-rules → DiscountRulesComponent (pages/admin/discount-rules/)
+ *
+ * WILDCARD: /** → redirects unknown URLs to /login
+ * ============================================================================
+ */
 import { Routes } from '@angular/router';
 import { AuthGuard }  from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';

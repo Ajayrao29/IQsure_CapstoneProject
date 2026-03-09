@@ -1,3 +1,10 @@
+/*
+ * FILE: leaderboard.ts | LOCATION: pages/leaderboard/
+ * PURPOSE: Leaderboard page (URL: /leaderboard). Shows top users ranked by total points.
+ * TEMPLATE: leaderboard.html | STYLES: leaderboard.scss
+ * CALLS: api.service.ts → getLeaderboard() → UserController → GET /api/v1/users/leaderboard
+ * BACKEND: UserService.getLeaderboard() → queries users sorted by points DESC
+ */
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';

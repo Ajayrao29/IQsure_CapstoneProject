@@ -1,3 +1,9 @@
+/*
+ * FILE: QuestionService.java | LOCATION: service/
+ * PURPOSE: Business logic for adding questions and correct answers to quizzes.
+ * CALLED BY: QuestionController.java
+ * USES: QuestionRepository, QuizRepository, AnswerRepository
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

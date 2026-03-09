@@ -1,3 +1,27 @@
+/*
+ * ============================================================================
+ * FILE: AuthController.java | LOCATION: controller/
+ * PURPOSE: Handles user REGISTRATION and LOGIN API endpoints.
+ *          This is the first thing the frontend calls when a user signs up or logs in.
+ *
+ * API ENDPOINTS:
+ *   POST /api/auth/register → Creates a new user account
+ *   POST /api/auth/login    → Authenticates user and returns their info
+ *
+ * FLOW:
+ *   Frontend (LoginComponent / RegisterComponent)
+ *   → api.service.ts (login() / register())
+ *   → THIS CONTROLLER
+ *   → UserService.java (business logic)
+ *   → UserRepository.java (database)
+ *
+ * ANNOTATIONS:
+ *   @RestController → This class handles HTTP requests and returns JSON
+ *   @RequestMapping("/api/auth") → All URLs in this class start with /api/auth
+ *   @CrossOrigin → Allows requests from the Angular frontend (localhost:4200)
+ *   @Tag → Swagger/OpenAPI documentation group name
+ * ============================================================================
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,4 +57,3 @@ public class AuthController {
         return ResponseEntity.ok(userService.login(request));
     }
 }
-

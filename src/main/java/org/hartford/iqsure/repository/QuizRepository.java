@@ -1,3 +1,9 @@
+/*
+ * FILE: QuizRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "quizzes" table. Used by QuizService.java.
+ * ENTITY: Quiz.java (entity/)
+ * Spring auto-generates SQL from method names (e.g., findByCategory → WHERE category = ?)
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.Quiz;
@@ -18,4 +24,3 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     // Filter by both category and difficulty
     List<Quiz> findByCategoryAndDifficulty(String category, Quiz.Difficulty difficulty);
 }
-

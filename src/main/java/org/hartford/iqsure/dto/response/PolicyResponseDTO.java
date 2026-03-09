@@ -1,3 +1,9 @@
+/*
+ * FILE: PolicyResponseDTO.java | LOCATION: dto/response/
+ * PURPOSE: DTO for policy data sent to frontend. Maps to "Policy" in models/models.ts.
+ * RETURNED BY: PolicyController endpoints → PolicyService.toDTO()
+ * USED IN FRONTEND: PoliciesComponent (pages/policies/), PolicyMgmtComponent (pages/admin/policy-mgmt/)
+ */
 package org.hartford.iqsure.dto.response;
 
 import lombok.*;
@@ -21,4 +27,3 @@ public class PolicyResponseDTO {
     private Integer durationMonths;
     private Boolean isActive;
 }
-

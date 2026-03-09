@@ -1,6 +1,28 @@
+/*
+ * ============================================================================
+ * FILE: PremiumCalculationService.java | LOCATION: service/
+ * PURPOSE: THE PREMIUM DISCOUNT ENGINE. This is the most important service in the app.
+ *          It calculates personalized insurance premiums by evaluating gamification
+ *          discount rules against a user's engagement data.
+ *
+ * HOW IT WORKS (calculatePremium method):
+ *   1. Load user's gamification stats: points, badge count, best quiz score
+ *   2. Find all active discount rules that apply to this policy type
+ *   3. For each rule, check if user meets ALL conditions (points, badges, score)
+ *   4. Sum up all matching rule discounts (capped at 50% max from AppConfig)
+ *   5. Calculate: finalPremium = basePremium - (basePremium × totalDiscount%)
+ *   6. Save an audit log (PremiumCalculationLog) for transparency
+ *   7. Return a detailed breakdown showing everything
+ *
+ * CALLED BY: UserPolicyController.java (preview), UserPolicyService.java (purchase)
+ * USES: UserRepository, PolicyRepository, DiscountRuleRepository, UserBadgeRepository,
+ *       QuizAttemptRepository, PremiumCalculationLogRepository, AppConfig
+ * ============================================================================
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hartford.iqsure.config.AppConfig;
 import org.hartford.iqsure.dto.response.PremiumBreakdownDTO;
 import org.hartford.iqsure.dto.response.PremiumCalculationLogResponseDTO;
 import org.hartford.iqsure.entity.*;
@@ -18,15 +40,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PremiumCalculationService {
 
-    // Total discount is capped at 50% no matter how many rules match
-    private static final double MAX_DISCOUNT_CAP = 50.0;
-
     private final UserRepository userRepository;
     private final PolicyRepository policyRepository;
     private final DiscountRuleRepository discountRuleRepository;
     private final UserBadgeRepository userBadgeRepository;
     private final QuizAttemptRepository quizAttemptRepository;
     private final PremiumCalculationLogRepository logRepository;
+    private final AppConfig appConfig;
 
     @Transactional
     public PremiumBreakdownDTO calculatePremium(Long userId, Long policyId) {
@@ -58,9 +78,9 @@ public class PremiumCalculationService {
             }
         }
 
-        // Cap total discount at 50%
-        if (totalDiscount > MAX_DISCOUNT_CAP) {
-            totalDiscount = MAX_DISCOUNT_CAP;
+        // Cap total discount at configured max
+        if (totalDiscount > appConfig.getMaxDiscountCap()) {
+            totalDiscount = appConfig.getMaxDiscountCap();
         }
 
         double basePremium = policy.getBasePremium();
@@ -123,10 +143,9 @@ public class PremiumCalculationService {
 
     // Returns true only if the user meets ALL conditions of the rule
     private boolean isRuleSatisfied(DiscountRule rule, int points, int badges, double score) {
-        if (rule.getMinUserPoints() > 0 && points < rule.getMinUserPoints()) return false;
-        if (rule.getMinBadgesEarned() > 0 && badges < rule.getMinBadgesEarned()) return false;
-        if (rule.getMinQuizScorePercent() > 0 && score < rule.getMinQuizScorePercent()) return false;
-        return true;
+        return (rule.getMinUserPoints() <= 0 || points >= rule.getMinUserPoints()) &&
+               (rule.getMinBadgesEarned() <= 0 || badges >= rule.getMinBadgesEarned()) &&
+               (rule.getMinQuizScorePercent() <= 0 || score >= rule.getMinQuizScorePercent());
     }
 
     // Builds a human-readable reason string for why the discount was applied

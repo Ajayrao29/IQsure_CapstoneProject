@@ -1,3 +1,9 @@
+/*
+ * FILE: RewardController.java | LOCATION: controller/
+ * PURPOSE: Reward management and redemption API. Admin creates rewards; users redeem them.
+ * ENDPOINTS: POST/GET/DELETE /api/v1/rewards, POST /api/v1/rewards/{id}/redeem?userId=X
+ * FLOW: RewardMgmtComponent / RewardsComponent → api.service.ts → THIS → RewardService
+ */
 package org.hartford.iqsure.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,4 +64,3 @@ public class RewardController {
         return ResponseEntity.noContent().build();
     }
 }
-

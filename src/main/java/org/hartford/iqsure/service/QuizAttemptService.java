@@ -1,3 +1,21 @@
+/*
+ * ============================================================================
+ * FILE: QuizAttemptService.java | LOCATION: service/
+ * PURPOSE: THE CORE GAMIFICATION ENGINE. Handles quiz submission, scoring,
+ *          point awarding, and badge checking. This is where the magic happens!
+ *
+ * KEY METHOD — submitQuiz():
+ *   1. Gets correct answers from DB for the quiz
+ *   2. Compares user's answers with correct answers → calculates score
+ *   3. If FIRST attempt on this quiz → awards points (score × 10)
+ *   4. Updates user's total points in the database
+ *   5. Checks if user qualifies for any new badges (BadgeService)
+ *   6. Returns result with score, percentage, points, and new badges
+ *
+ * CALLED BY: AttemptController.java
+ * USES: QuizAttemptRepository, UserRepository, QuizRepository, AnswerRepository, BadgeService
+ * ============================================================================
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

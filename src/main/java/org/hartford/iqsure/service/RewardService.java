@@ -1,3 +1,10 @@
+/*
+ * FILE: RewardService.java | LOCATION: service/
+ * PURPOSE: Reward CRUD + redemption logic. Users can redeem rewards (once each).
+ *          Checks for expiry and duplicate redemption.
+ * CALLED BY: RewardController.java
+ * USES: RewardRepository, UserRepository, UserRewardRepository
+ */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;

@@ -1,3 +1,8 @@
+/*
+ * FILE: UserRewardRepository.java | LOCATION: repository/
+ * PURPOSE: Database access for "user_rewards" join table. Used by RewardService.java.
+ * ENTITY: UserReward.java (entity/) — links users to their redeemed rewards
+ */
 package org.hartford.iqsure.repository;
 
 import org.hartford.iqsure.entity.UserReward;
@@ -15,4 +20,3 @@ public interface UserRewardRepository extends JpaRepository<UserReward, Long> {
     // Check if user already redeemed a specific reward
     boolean existsByUser_UserIdAndReward_RewardId(Long userId, Long rewardId);
 }
-
