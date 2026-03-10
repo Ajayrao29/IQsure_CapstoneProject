@@ -1,6 +1,8 @@
-@if (!loading) {
-  <div class="page">
-    <!-- Welcome Banner -->
+<div class="page" *ngIf="!loading">
+
+  <!-- ========================= USER DASHBOARD ========================= -->
+  <ng-container *ngIf="!isAdmin; else adminDashboard">
+
     <div class="welcome-banner">
       <div>
         <h1>Welcome back, <span>{{ user?.name }}</span> 👋</h1>
@@ -11,7 +13,7 @@
         <div class="points-label">Total Points</div>
       </div>
     </div>
-    <!-- Stats Row -->
+
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon">🧩</div>
@@ -34,65 +36,58 @@
         <div class="stat-label">Total Saved</div>
       </div>
     </div>
-    <!-- Share Achievement -->
-    @if (user?.userPoints >= 50) {
-      <div class="share-section">
-        <div class="share-card">
-          <div class="share-content">
-            <h3>🎉 Share Your Achievement!</h3>
-            <p>You've earned {{ user?.userPoints }} points! Share your progress with friends.</p>
-          </div>
-          <button class="btn-primary" (click)="shareAchievement()">📤 Share</button>
+
+    <div class="share-section" *ngIf="user?.userPoints >= 50">
+      <div class="share-card">
+        <div class="share-content">
+          <h3>🎉 Share Your Achievement!</h3>
+          <p>You've earned {{ user?.userPoints }} points! Share your progress with friends.</p>
         </div>
+        <button class="btn-primary" (click)="shareAchievement()">📤 Share</button>
       </div>
-    }
-    <!-- Two-column section -->
+    </div>
+
     <div class="two-col">
-      <!-- Recent Attempts -->
       <div class="card">
         <div class="card-header">
           <h2>Recent Quiz Attempts</h2>
           <a routerLink="/quizzes" class="card-link">Take a Quiz →</a>
         </div>
-        @if (recentAttempts.length === 0) {
-          <div class="empty-msg">
-            No attempts yet. <a routerLink="/quizzes">Start your first quiz!</a>
+
+        <div *ngIf="recentAttempts.length === 0" class="empty-msg">
+          No attempts yet. <a routerLink="/quizzes">Start your first quiz!</a>
+        </div>
+
+        <div class="attempt-item" *ngFor="let a of recentAttempts">
+          <div class="attempt-title">{{ a.quizTitle }}</div>
+          <div class="attempt-stats">
+            <span class="score-badge" [class.good]="a.percentage >= 70" [class.bad]="a.percentage < 50">
+              {{ a.percentage }}%
+            </span>
+            <span class="attempt-points">+{{ a.pointsEarned }} pts</span>
           </div>
-        }
-        @for (a of recentAttempts; track a) {
-          <div class="attempt-item">
-            <div class="attempt-title">{{ a.quizTitle }}</div>
-            <div class="attempt-stats">
-              <span class="score-badge" [class.good]="a.percentage >= 70" [class.bad]="a.percentage < 50">
-                {{ a.percentage }}%
-              </span>
-              <span class="attempt-points">+{{ a.pointsEarned }} pts</span>
-            </div>
-          </div>
-        }
+        </div>
       </div>
-      <!-- Badges -->
+
       <div class="card">
         <div class="card-header">
           <h2>Your Badges</h2>
           <a routerLink="/badges" class="card-link">All Badges →</a>
         </div>
-        @if (myBadges.length === 0) {
-          <div class="empty-msg">
-            Earn points to unlock badges!
-          </div>
-        }
+
+        <div *ngIf="myBadges.length === 0" class="empty-msg">
+          Earn points to unlock badges!
+        </div>
+
         <div class="badge-grid">
-          @for (b of myBadges; track b) {
-            <div class="badge-item">
-              <div class="badge-icon">🏅</div>
-              <div class="badge-name">{{ b.name }}</div>
-            </div>
-          }
+          <div class="badge-item" *ngFor="let b of myBadges">
+            <div class="badge-icon">🏅</div>
+            <div class="badge-name">{{ b.name }}</div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- Quick Actions -->
+
     <div class="quick-actions">
       <h2>Quick Actions</h2>
       <div class="action-grid">
@@ -110,10 +105,118 @@
         </a>
       </div>
     </div>
-  </div>
-}
+  </ng-container>
 
-@if (loading) {
-  <div class="loading">Loading your dashboard…</div>
-}
+  <!-- ========================= ADMIN DASHBOARD ========================= -->
+  <ng-template #adminDashboard>
+    <div class="welcome-banner admin-banner">
+      <div>
+        <h1>Welcome back, <span>{{ user?.name }}</span> 👋</h1>
+        <p>Manage quizzes, policies, rewards, discount rules, and platform users.</p>
+      </div>
+      <div class="points-badge">
+        <div class="points-number">{{ totalUsers }}</div>
+        <div class="points-label">Total Users</div>
+      </div>
+    </div>
 
+    <div class="stats-row">
+      <div class="stat-card admin-stat">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ totalUsers }}</div>
+        <div class="stat-label">Registered Users</div>
+      </div>
+
+      <div class="stat-card admin-stat">
+        <div class="stat-icon">🧩</div>
+        <div class="stat-value">{{ totalQuizzes }}</div>
+        <div class="stat-label">Total Quizzes</div>
+      </div>
+
+      <div class="stat-card admin-stat">
+        <div class="stat-icon">📋</div>
+        <div class="stat-value">{{ totalPolicies }}</div>
+        <div class="stat-label">Policies</div>
+      </div>
+
+      <div class="stat-card admin-stat">
+        <div class="stat-icon">🎁</div>
+        <div class="stat-value">{{ totalRewardsIssued }}</div>
+        <div class="stat-label">Rewards Issued</div>
+      </div>
+    </div>
+
+    <div class="two-col admin-panels">
+      <div class="card admin-summary-card">
+        <div class="card-header">
+          <h2>Platform Overview</h2>
+        </div>
+
+        <div class="summary-list">
+          <div class="summary-row">
+            <span>Total Admins</span>
+            <strong>{{ totalAdmins }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Total Customers</span>
+            <strong>{{ totalNormalUsers }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Active Policies</span>
+            <strong>{{ activePolicies }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Inactive Policies</span>
+            <strong>{{ inactivePolicies }}</strong>
+          </div>
+          <div class="summary-row">
+            <span>Discount Rules</span>
+            <strong>{{ totalDiscountRules }}</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card admin-summary-card">
+        <div class="card-header">
+          <h2>Admin Actions</h2>
+        </div>
+
+        <div class="admin-actions-list">
+          <a routerLink="/admin/users" class="mini-action">Manage Users</a>
+          <a routerLink="/admin/quiz-mgmt" class="mini-action">Manage Quizzes</a>
+          <a routerLink="/admin/policy-mgmt" class="mini-action">Manage Policies</a>
+          <a routerLink="/admin/badge-mgmt" class="mini-action">Manage Badges</a>
+          <a routerLink="/admin/reward-mgmt" class="mini-action">Manage Rewards</a>
+          <a routerLink="/admin/discount-rules" class="mini-action">Discount Rules</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <h2>Quick Admin Actions</h2>
+      <div class="action-grid">
+        <a routerLink="/admin/users" class="action-card admin-action-card">
+          <span>👥</span><span>Users</span>
+        </a>
+        <a routerLink="/admin/quiz-mgmt" class="action-card admin-action-card">
+          <span>🧩</span><span>Quiz Management</span>
+        </a>
+        <a routerLink="/admin/policy-mgmt" class="action-card admin-action-card">
+          <span>📋</span><span>Policy Management</span>
+        </a>
+        <a routerLink="/admin/badge-mgmt" class="action-card admin-action-card">
+          <span>🏅</span><span>Badge Management</span>
+        </a>
+        <a routerLink="/admin/reward-mgmt" class="action-card admin-action-card">
+          <span>🎁</span><span>Reward Management</span>
+        </a>
+        <a routerLink="/admin/discount-rules" class="action-card admin-action-card">
+          <span>⚙️</span><span>Discount Rules</span>
+        </a>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+
+<div class="loading" *ngIf="loading">Loading dashboard…</div>

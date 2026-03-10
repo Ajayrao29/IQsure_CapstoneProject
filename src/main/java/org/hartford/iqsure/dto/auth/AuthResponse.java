@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthResponse {
 
-    private String token;                // Auth token (currently "NO-AUTH" — no JWT)
+    private String token;                // Auth token (// real JWT token)
     private String tokenType = "Bearer"; // Token type (standard for JWT)
     private Long userId;                 // User's database ID — used in all frontend API calls
     private String name;                 // User's display name

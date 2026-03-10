@@ -30,6 +30,7 @@ import org.hartford.iqsure.repository.QuizAttemptRepository;  // → repository/
 import org.hartford.iqsure.repository.UserRepository;         // → repository/UserRepository.java
 import org.springframework.security.crypto.password.PasswordEncoder; // From config/SecurityConfig.java
 import org.springframework.stereotype.Service;
+import org.hartford.iqsure.security.JwtUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserService {
     private final UserRepository userRepository;          // Talks to "users" DB table
     private final QuizAttemptRepository attemptRepository; // Needed for leaderboard stats
     private final PasswordEncoder passwordEncoder;         // BCrypt hasher from SecurityConfig
+    private final JwtUtil jwtUtil;
 
     // ── REGISTER: Create a new user account ──────────────────────────────
     // Called by: AuthController → POST /api/auth/register
@@ -75,13 +77,19 @@ public class UserService {
         user = userRepository.save(user);   // Save to database → returns saved entity with generated ID
 
         // Step 4: Build and return response (stored in frontend localStorage)
+        String token = jwtUtil.generateToken(
+                user.getEmail(),
+                user.getRole().name(),
+                user.getUserId()
+        );
+
         return AuthResponse.builder()
-                .token("NO-AUTH")           // No JWT implemented — placeholder token
-                .tokenType("None")
-                .userId(user.getUserId())   // Frontend needs this for all API calls
+                .token(token)
+                .tokenType("Bearer")
+                .userId(user.getUserId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .role(user.getRole().name()) // "ROLE_USER" — frontend uses this to show user/admin UI
+                .role(user.getRole().name())
                 .build();
     }
 
@@ -107,9 +115,15 @@ public class UserService {
         }
 
         // Step 3: Return user info (stored in frontend localStorage)
+        String token = jwtUtil.generateToken(
+                user.getEmail(),
+                user.getRole().name(),
+                user.getUserId()
+        );
+
         return AuthResponse.builder()
-                .token("NO-AUTH")
-                .tokenType("None")
+                .token(token)
+                .tokenType("Bearer")
                 .userId(user.getUserId())
                 .name(user.getName())
                 .email(user.getEmail())
