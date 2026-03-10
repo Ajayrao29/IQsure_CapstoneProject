@@ -26,7 +26,8 @@
  *   /rewards       → RewardsComponent (pages/rewards/)
  *   /leaderboard   → LeaderboardComponent (pages/leaderboard/)
  *   /achievements  → AchievementsComponent (pages/achievements/)
- *   /savings       → SavingsCalculatorComponent (pages/savings-calculator/)
+ *   /savings          → SavingsCalculatorComponent (pages/savings-calculator/)
+ *   /risk-simulator   → RiskSimulatorComponent (pages/risk-simulator/)
  *
  * ADMIN ROUTES (AuthGuard + AdminGuard — must be logged in AND be admin):
  *   /admin/users          → AdminUsersComponent (pages/admin/users/)
@@ -58,6 +59,7 @@ import { RewardsComponent }       from './pages/rewards/rewards';
 import { LeaderboardComponent }   from './pages/leaderboard/leaderboard';
 import { AchievementsComponent }  from './pages/achievements/achievements';
 import { SavingsCalculatorComponent } from './pages/savings-calculator/savings-calculator';
+import { RiskSimulatorComponent } from './pages/risk-simulator/risk-simulator';
 import { AdminUsersComponent }    from './pages/admin/users/users';
 import { QuizMgmtComponent }      from './pages/admin/quiz-mgmt/quiz-mgmt';
 import { PolicyMgmtComponent }    from './pages/admin/policy-mgmt/policy-mgmt';
@@ -81,6 +83,7 @@ export const routes: Routes = [
   { path: 'leaderboard',   component: LeaderboardComponent, canActivate: [AuthGuard] },
   { path: 'achievements',  component: AchievementsComponent, canActivate: [AuthGuard] },
   { path: 'savings',       component: SavingsCalculatorComponent, canActivate: [AuthGuard] },
+  { path: 'risk-simulator', component: RiskSimulatorComponent, canActivate: [AuthGuard] },
   { path: 'admin/users',          component: AdminUsersComponent,    canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin/quiz-mgmt',      component: QuizMgmtComponent,      canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin/policy-mgmt',    component: PolicyMgmtComponent,    canActivate: [AuthGuard, AdminGuard] },
