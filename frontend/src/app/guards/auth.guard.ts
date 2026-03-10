@@ -16,7 +16,15 @@ export class AuthGuard implements CanActivate {
   // Called by Angular Router before navigating to a protected route
   canActivate(): boolean {
     if (this.auth.isLoggedIn()) return true;  // User is logged in → allow access
-    this.router.navigate(['/login']);           // Not logged in → redirect to login page
+    this.router.navigate(['/login']);         // Not logged in → redirect to login page
     return false;
   }
 }
+
+
+
+
+
+
+
+

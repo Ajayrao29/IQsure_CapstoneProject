@@ -5,6 +5,8 @@
  * USED IN: app.routes.ts → canActivate: [AuthGuard, AdminGuard] on admin routes
  * CHECKS: AuthService.isAdmin() (services/auth.service.ts)
  */
+
+
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';  // → services/auth.service.ts
@@ -20,3 +22,4 @@ export class AdminGuard implements CanActivate {
     return false;
   }
 }
+

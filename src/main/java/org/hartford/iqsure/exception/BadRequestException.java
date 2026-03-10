@@ -6,6 +6,7 @@
  * CAUGHT BY: GlobalExceptionHandler.java → handleBadRequest() method
  * THROWN BY: UserService, RewardService, PolicyService, UserPolicyService, DiscountRuleService
  */
+
 package org.hartford.iqsure.exception;
 
 import org.springframework.http.HttpStatus;
