@@ -1,24 +1,3 @@
-/*
- * ============================================================================
- * FILE: PremiumCalculationService.java | LOCATION: service/
- * PURPOSE: THE PREMIUM DISCOUNT ENGINE. This is the most important service in the app.
- *          It calculates personalized insurance premiums by evaluating gamification
- *          discount rules against a user's engagement data.
- *
- * HOW IT WORKS (calculatePremium method):
- *   1. Load user's gamification stats: points, badge count, best quiz score
- *   2. Find all active discount rules that apply to this policy type
- *   3. For each rule, check if user meets ALL conditions (points, badges, score)
- *   4. Sum up all matching rule discounts (capped at 50% max from AppConfig)
- *   5. Calculate: finalPremium = basePremium - (basePremium × totalDiscount%)
- *   6. Save an audit log (PremiumCalculationLog) for transparency
- *   7. Return a detailed breakdown showing everything
- *
- * CALLED BY: UserPolicyController.java (preview), UserPolicyService.java (purchase)
- * USES: UserRepository, PolicyRepository, DiscountRuleRepository, UserBadgeRepository,
- *       QuizAttemptRepository, PremiumCalculationLogRepository, AppConfig
- * ============================================================================
- */
 package org.hartford.iqsure.service;
 
 import lombok.RequiredArgsConstructor;
@@ -55,60 +34,72 @@ public class PremiumCalculationService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+
         Policy policy = policyRepository.findById(policyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Policy not found: " + policyId));
 
-        // Get user's gamification stats
+        // User gamification stats (for audit only)
         int userPoints = user.getUserPoints();
         int badgeCount = userBadgeRepository.findByUser_UserId(userId).size();
         Double rawBestScore = quizAttemptRepository.findBestScorePercentByUserId(userId);
         double bestQuizScore = rawBestScore != null ? rawBestScore : 0.0;
 
-        // Check which automatic discount rules apply
-        List<DiscountRule> rules = discountRuleRepository.findActiveRulesForPolicyType(policy.getPolicyType());
         List<PremiumBreakdownDTO.AppliedDiscountDTO> applied = new ArrayList<>();
         double totalDiscount = 0.0;
 
-        for (DiscountRule rule : rules) {
-            if (isRuleSatisfied(rule, userPoints, badgeCount, bestQuizScore)) {
-                applied.add(PremiumBreakdownDTO.AppliedDiscountDTO.builder()
-                        .ruleName(rule.getRuleName())
-                        .discountPercentage(rule.getDiscountPercentage())
-                        .reason(buildReason(rule))
-                        .build());
-                totalDiscount += rule.getDiscountPercentage();
-            }
-        }
-        
-        // Apply only the SELECTED rewards the user explicitly chose as coupons
+        /*
+         * APPLY ONLY SELECTED COUPONS
+         * No automatic discount rules are used anymore
+         */
+
         if (selectedRewardIds != null && !selectedRewardIds.isEmpty()) {
+
             Set<Long> selectedSet = Set.copyOf(selectedRewardIds);
-            List<UserReward> allUserRewards = userRewardRepository.findByUser_UserIdAndUsedFalse(userId);
+
+            List<UserReward> allUserRewards =
+                    userRewardRepository.findByUser_UserIdAndUsedFalse(userId);
+
             for (UserReward ur : allUserRewards) {
-                if (!selectedSet.contains(ur.getId())) continue;
-                Reward r = ur.getReward();
-                if (r.getExpiryDate().isAfter(java.time.LocalDate.now()) || r.getExpiryDate().isEqual(java.time.LocalDate.now())) {
+
+                if (!selectedSet.contains(ur.getId())) {
+                    continue;
+                }
+
+                Reward reward = ur.getReward();
+
+                boolean notExpired =
+                        !reward.getExpiryDate().isBefore(java.time.LocalDate.now());
+
+                if (notExpired) {
+
                     applied.add(PremiumBreakdownDTO.AppliedDiscountDTO.builder()
-                            .ruleName(r.getRewardType())
-                            .discountPercentage(r.getDiscountValue())
+                            .ruleName(reward.getRewardType())
+                            .discountPercentage(reward.getDiscountValue())
                             .reason("Coupon applied on purchase")
                             .build());
-                    totalDiscount += r.getDiscountValue();
+
+                    totalDiscount += reward.getDiscountValue();
                 }
             }
         }
 
-        // Cap total discount at configured max
+        // Apply discount cap
         if (totalDiscount > appConfig.getMaxDiscountCap()) {
             totalDiscount = appConfig.getMaxDiscountCap();
         }
 
         double basePremium = policy.getBasePremium();
-        double discountedAmount = Math.round(basePremium * (totalDiscount / 100.0) * 100.0) / 100.0;
-        double finalPremium = Math.round((basePremium - discountedAmount) * 100.0) / 100.0;
-        double roundedBestScore = Math.round(bestQuizScore * 100.0) / 100.0;
 
-        // Save audit log
+        double discountedAmount =
+                Math.round(basePremium * (totalDiscount / 100.0) * 100.0) / 100.0;
+
+        double finalPremium =
+                Math.round((basePremium - discountedAmount) * 100.0) / 100.0;
+
+        double roundedBestScore =
+                Math.round(bestQuizScore * 100.0) / 100.0;
+
+        // Save calculation log
         String ruleNames = applied.stream()
                 .map(PremiumBreakdownDTO.AppliedDiscountDTO::getRuleName)
                 .collect(Collectors.joining(", "));
@@ -146,56 +137,59 @@ public class PremiumCalculationService {
     }
 
     public List<PremiumCalculationLogResponseDTO> getLogsForUser(Long userId) {
+
         if (!userRepository.existsById(userId))
             throw new ResourceNotFoundException("User not found: " + userId);
+
         return logRepository.findByUser_UserIdOrderByCalculatedAtDesc(userId)
-                .stream().map(this::toLogDTO).toList();
+                .stream()
+                .map(this::toLogDTO)
+                .toList();
     }
 
     public List<PremiumCalculationLogResponseDTO> getLogsForUserAndPolicy(Long userId, Long policyId) {
+
         if (!userRepository.existsById(userId))
             throw new ResourceNotFoundException("User not found: " + userId);
+
         if (!policyRepository.existsById(policyId))
             throw new ResourceNotFoundException("Policy not found: " + policyId);
-        return logRepository.findByUser_UserIdAndPolicy_PolicyIdOrderByCalculatedAtDesc(userId, policyId)
-                .stream().map(this::toLogDTO).toList();
+
+        return logRepository
+                .findByUser_UserIdAndPolicy_PolicyIdOrderByCalculatedAtDesc(userId, policyId)
+                .stream()
+                .map(this::toLogDTO)
+                .toList();
     }
 
-    // Mark selected rewards as used after a successful purchase so they can't be reused
+    // Mark rewards as used after purchase
     @Transactional
     public void markRewardsAsUsed(List<Long> userRewardIds) {
-        if (userRewardIds == null || userRewardIds.isEmpty()) return;
+
+        if (userRewardIds == null || userRewardIds.isEmpty()) {
+            return;
+        }
+
         userRewardRepository.findAllById(userRewardIds).forEach(ur -> {
             ur.setUsed(true);
             userRewardRepository.save(ur);
         });
     }
 
-    // Get user's available (unused, unexpired) redeemed rewards for the coupon picker
+    // Available coupons for user
     public List<UserReward> getAvailableRewardsForUser(Long userId) {
-        return userRewardRepository.findByUser_UserIdAndUsedFalse(userId)
+
+        return userRewardRepository
+                .findByUser_UserIdAndUsedFalse(userId)
                 .stream()
-                .filter(ur -> !ur.getReward().getExpiryDate().isBefore(java.time.LocalDate.now()))
+                .filter(ur ->
+                        !ur.getReward().getExpiryDate()
+                                .isBefore(java.time.LocalDate.now()))
                 .toList();
     }
 
-    // Returns true only if the user meets ALL conditions of the rule
-    private boolean isRuleSatisfied(DiscountRule rule, int points, int badges, double score) {
-        return (rule.getMinUserPoints() <= 0 || points >= rule.getMinUserPoints()) &&
-               (rule.getMinBadgesEarned() <= 0 || badges >= rule.getMinBadgesEarned()) &&
-               (rule.getMinQuizScorePercent() <= 0 || score >= rule.getMinQuizScorePercent());
-    }
-
-    // Builds a human-readable reason string for why the discount was applied
-    private String buildReason(DiscountRule rule) {
-        List<String> conditions = new ArrayList<>();
-        if (rule.getMinUserPoints() > 0)       conditions.add("points >= " + rule.getMinUserPoints());
-        if (rule.getMinBadgesEarned() > 0)     conditions.add("badges >= " + rule.getMinBadgesEarned());
-        if (rule.getMinQuizScorePercent() > 0) conditions.add("quiz score >= " + rule.getMinQuizScorePercent() + "%");
-        return conditions.isEmpty() ? "Always applied" : String.join(", ", conditions);
-    }
-
     private PremiumCalculationLogResponseDTO toLogDTO(PremiumCalculationLog l) {
+
         return PremiumCalculationLogResponseDTO.builder()
                 .logId(l.getLogId())
                 .userId(l.getUser().getUserId())

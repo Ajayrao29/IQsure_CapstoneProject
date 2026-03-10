@@ -23,6 +23,7 @@ export class SavingsCalculatorComponent implements OnInit {
   potentialSavings = 0;
   policies: any[] = [];
   userPoints = 0;
+  availableRewards: any[] = [];
 
   constructor(private api: ApiService, private auth: AuthService) {}
 
@@ -31,24 +32,55 @@ export class SavingsCalculatorComponent implements OnInit {
 
     this.api.getUserPolicies(userId).subscribe(policies => {
       this.policies = policies;
-      this.totalSavings = policies.reduce((sum, p) => sum + p.savedAmount, 0);
+      this.totalSavings = policies.reduce((sum, p) => sum + (p.savedAmount || 0), 0);
     });
 
     this.api.getProfile(userId).subscribe(u => {
-      this.userPoints = u.userPoints;
-      this.calculatePotentialSavings(userId);
+      this.userPoints = u.userPoints || 0;
+
+      this.api.getAvailableRewardsForUser(userId).subscribe(rewards => {
+        this.availableRewards = rewards || [];
+        this.calculatePotentialSavings(userId);
+      });
     });
   }
 
   calculatePotentialSavings(userId: number): void {
     this.api.getActivePolicies().subscribe(policies => {
+      if (!policies || policies.length === 0) {
+        this.potentialSavings = 0;
+        return;
+      }
+
+      const selectedRewardIds = this.availableRewards.map(r => r.userRewardId);
+
+      if (selectedRewardIds.length === 0) {
+        this.potentialSavings = 0;
+        return;
+      }
+
       let potential = 0;
+      let completed = 0;
+
       policies.forEach(p => {
-        this.api.calculatePremium(userId, p.policyId).subscribe(calc => {
-          potential += calc.discountedAmount;
+        this.api.calculatePremium(userId, p.policyId, selectedRewardIds).subscribe({
+          next: calc => {
+            potential += calc.discountedAmount || 0;
+            completed++;
+
+            if (completed === policies.length) {
+              this.potentialSavings = Number(potential.toFixed(2));
+            }
+          },
+          error: () => {
+            completed++;
+
+            if (completed === policies.length) {
+              this.potentialSavings = Number(potential.toFixed(2));
+            }
+          }
         });
       });
-      setTimeout(() => this.potentialSavings = potential, 1000);
     });
   }
 }
