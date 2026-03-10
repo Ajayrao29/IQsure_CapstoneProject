@@ -37,10 +37,13 @@ export interface LeaderboardEntry { rank: number; userId: number; name: string; 
 export interface Quiz { quizId: number; title: string; category: string; difficulty: string; totalQuestions: number; }
 
 // A single quiz question with options → displayed on Take Quiz page
-export interface Question { questionId: number; quizId: number; text: string; options: string[]; }
+export interface Question { questionId: number; quizId: number; text: string; options: string[]; explanation?: string; }
+
+// Detailed question report for an attempt
+export interface QuestionReport { questionText: string; selectedAnswer: string; correctAnswer: string; explanation: string; isCorrect: boolean; }
 
 // Returned after submitting a quiz → displayed on Quiz Result page
-export interface AttemptResponse { attemptId: number; userId: number; quizId: number; quizTitle: string; score: number; totalQuestions: number; percentage: number; pointsEarned: number; attemptDate: string; newBadgesUnlocked: Badge[]; }
+export interface AttemptResponse { attemptId: number; userId: number; quizId: number; quizTitle: string; score: number; totalQuestions: number; percentage: number; pointsEarned: number; attemptDate: string; newBadgesUnlocked: Badge[]; questions?: QuestionReport[]; }
 
 // Badge info → displayed on Badges page, Admin Badge Management
 export interface Badge { badgeId: number; name: string; description: string; reqPoints: number; }
@@ -62,3 +65,6 @@ export interface AppliedDiscount { ruleName: string; discountPercentage: number;
 
 // Discount rule configuration → displayed on Admin Discount Rules page
 export interface DiscountRule { ruleId: number; ruleName: string; description: string; minQuizScorePercent: number; minUserPoints: number; minBadgesEarned: number; discountPercentage: number; applicablePolicyType: string | null; isActive: boolean; }
+
+// Education content for learning center
+export interface EducationContent { id: number; topic: string; language: string; title: string; content: string; }

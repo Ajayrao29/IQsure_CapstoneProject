@@ -21,7 +21,7 @@ export class QuizMgmtComponent implements OnInit {
   quizzes: any[] = []; loading = true; showForm = false; editingQuiz: any = null;
   form: any = { title: '', category: '', difficulty: 'EASY' };
   selectedQuiz: any = null; questions: any[] = [];
-  questionForm: any = { text: '', options: '' }; showQuestionForm = false;
+  questionForm: any = { text: '', options: '', explanation: '' }; showQuestionForm = false;
   constructor(private api: ApiService) {}
   ngOnInit(): void { this.loadQuizzes(); }
   loadQuizzes(): void { this.api.getAllQuizzes().subscribe(q => { this.quizzes = q; this.loading = false; }); }
@@ -54,7 +54,7 @@ export class QuizMgmtComponent implements OnInit {
     });
   }
   addQuestion(): void {
-    this.api.addQuestion({ quizId: this.selectedQuiz.quizId, text: this.questionForm.text, options: this.questionForm.options }).subscribe((q: any) => {
+    this.api.addQuestion({ quizId: this.selectedQuiz.quizId, text: this.questionForm.text, options: this.questionForm.options, explanation: this.questionForm.explanation }).subscribe((q: any) => {
       let opts = q.options;
       if (typeof opts === 'string') {
         opts = opts.includes('|') ? opts.split('|') : opts.split(',');
@@ -68,8 +68,8 @@ export class QuizMgmtComponent implements OnInit {
       if (Array.isArray(opts)) {
         opts = opts.map((opt: string) => opt.replace(/^[A-Da-d][\)\.]\s*/, '').trim());
       }
-      this.questions.push({ ...q, options: opts });
-      this.questionForm = { text: '', options: '' };
+      this.questions.push({ ...q, options: opts, explanation: this.questionForm.explanation });
+      this.questionForm = { text: '', options: '', explanation: '' };
       this.showQuestionForm = false;
     });
   }

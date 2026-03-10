@@ -38,6 +38,7 @@ public class QuestionService {
                 .quiz(quiz)
                 .text(dto.getText())
                 .options(dto.getOptions())
+                .explanation(dto.getExplanation())
                 .build();
 
         return toDTO(questionRepository.save(question));
@@ -73,11 +74,18 @@ public class QuestionService {
     }
 
     private QuestionResponseDTO toDTO(Question q) {
+        String[] optsArr = q.getOptions().contains("|") ? q.getOptions().split("\\|") : q.getOptions().split(",");
+        List<String> cleanedOpts = Arrays.stream(optsArr)
+                .map(opt -> opt.replaceFirst("^[A-Da-d][\\)\\.]\\s*", "").trim())
+                .filter(opt -> !opt.isEmpty())
+                .toList();
+                
         return QuestionResponseDTO.builder()
                 .questionId(q.getQuestionId())
                 .quizId(q.getQuiz().getQuizId())
                 .text(q.getText())
-                .options(Arrays.asList(q.getOptions().split(",")))
+                .options(cleanedOpts)
+                .explanation(q.getExplanation())
                 .build();
     }
 }

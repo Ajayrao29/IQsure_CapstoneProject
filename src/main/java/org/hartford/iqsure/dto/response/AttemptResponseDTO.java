@@ -31,4 +31,6 @@ public class AttemptResponseDTO {
      * Newly unlocked badges after this attempt (if any)
      */
     private java.util.List<BadgeResponseDTO> newBadgesUnlocked;
+
+    private java.util.List<QuestionReportDTO> questions;
 }

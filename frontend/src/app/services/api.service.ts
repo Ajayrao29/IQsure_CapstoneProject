@@ -253,5 +253,16 @@ export class ApiService {
   deleteDiscountRule(ruleId: number): Observable<void> {
     return this.http.delete<void>(`${API}/api/v1/discount-rules/${ruleId}`);
   }
+
+  // ─── Education Content ────────────────────────────────────────────────
+  // → EducationContentController.java → GET /api/v1/education?language=lang
+  getEducationContentByLanguage(language: string): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/education?language=${language}`);
+  }
+
+  // → EducationContentController.java → GET /api/v1/education/tts
+  getTtsAudio(text: string, language: string): Observable<Blob> {
+    return this.http.get(`${API}/api/v1/education/tts?language=${language}&text=${encodeURIComponent(text)}`, { responseType: 'blob' });
+  }
 }
 

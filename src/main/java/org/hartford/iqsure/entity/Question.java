@@ -71,4 +71,8 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Answer> answers = new ArrayList<>(); // → entity/Answer.java
+
+    // The explanation to show after the user answers the question (for feature 2)
+    @Column(columnDefinition = "TEXT")
+    private String explanation;
 }

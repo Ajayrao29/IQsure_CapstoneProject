@@ -24,4 +24,6 @@ public class QuestionRequestDTO {
      */
     @NotBlank(message = "Options are required")
     private String options;
+
+    private String explanation;
 }

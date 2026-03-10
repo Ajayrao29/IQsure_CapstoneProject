@@ -85,6 +85,10 @@
             <label>Options (comma-separated)</label>
             <input [(ngModel)]="questionForm.options" placeholder="Option A,Option B,Option C,Option D" />
           </div>
+          <div class="form-group">
+            <label>Explanation (Optional)</label>
+            <textarea [(ngModel)]="questionForm.explanation" placeholder="Provide an explanation for the quiz report..." rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; resize: vertical; margin-top: 5px;"></textarea>
+          </div>
           <div class="form-actions">
             <button class="btn-primary" (click)="addQuestion()">Add Question</button>
             <button class="btn-secondary" (click)="showQuestionForm = false">Cancel</button>

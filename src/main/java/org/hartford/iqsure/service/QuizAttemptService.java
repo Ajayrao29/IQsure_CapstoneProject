@@ -68,29 +68,70 @@ public class QuizAttemptService {
                         (existing, replacement) -> replacement
                 ));
 
-        // Count correct answers
+        // Count correct answers and generate reports
         int score = 0;
+        List<org.hartford.iqsure.dto.response.QuestionReportDTO> questionReports = new ArrayList<>();
+        List<Question> allQuestions = questionRepository.findByQuiz_QuizId(dto.getQuizId());
         
         System.out.println("Quiz ID: " + dto.getQuizId());
         System.out.println("Submitted answers: " + dto.getAnswers());
         System.out.println("Correct answers DB: " + correctAnswers);
 
-        for (Map.Entry<?, ?> entry : dto.getAnswers().entrySet()) {
-            Long questionId;
-            Integer selected;
+        for (Question q : allQuestions) {
+            Long qId = q.getQuestionId();
+            Integer selectedIdx = null;
             try {
-                questionId = Long.valueOf(entry.getKey().toString());
-                selected = Integer.valueOf(entry.getValue().toString());
-            } catch (Exception e) {
-                continue;
-            }
-            if (correctAnswers.containsKey(questionId) && correctAnswers.get(questionId).equals(selected)) {
+                if (dto.getAnswers().containsKey(qId)) {
+                    selectedIdx = Integer.valueOf(dto.getAnswers().get(qId).toString());
+                } else if (dto.getAnswers().containsKey(qId.toString())) {
+                    selectedIdx = Integer.valueOf(dto.getAnswers().get(qId.toString()).toString());
+                }
+            } catch (Exception e) {}
+
+            boolean isCorrect = false;
+            Integer correctIdx = correctAnswers.get(qId);
+            if (correctIdx != null && correctIdx.equals(selectedIdx)) {
                 score++;
+                isCorrect = true;
             }
+
+            String selectedAnswerText = "Not answered (" + selectedIdx + ")";
+            // Extract options by splitting on pipe or comma, handling escaped pipes if necessary
+            String rawOptions = q.getOptions();
+            String[] opts = rawOptions.split("[\\|\\,]");
+            
+            // Clean individual option texts (remove A) B) etc.)
+            List<String> cleanedOptsList = new java.util.ArrayList<>();
+            for (String opt : opts) {
+                String cleaned = opt.replaceFirst("^[A-Da-d][\\)\\.]\\s*", "").trim();
+                if (!cleaned.isEmpty()) cleanedOptsList.add(cleaned);
+            }
+            String[] cleanedOpts = cleanedOptsList.toArray(new String[0]);
+            
+            if (selectedIdx != null && selectedIdx >= 0 && selectedIdx < cleanedOpts.length) {
+                selectedAnswerText = cleanedOpts[selectedIdx];
+            } else if (selectedIdx != null) {
+                // If the index was too high, maybe the split failed? Let's show the whole options text for debugging
+                selectedAnswerText = "Invalid index: " + selectedIdx + " for total options: " + cleanedOpts.length;
+            }
+
+            String correctAnswerText = "Unknown (Check Admin Panel)";
+            if (correctIdx != null && correctIdx >= 0 && correctIdx < cleanedOpts.length) {
+                correctAnswerText = cleanedOpts[correctIdx];
+            }
+
+            questionReports.add(org.hartford.iqsure.dto.response.QuestionReportDTO.builder()
+                .questionText(q.getText())
+                .selectedAnswer(selectedAnswerText)
+                .correctAnswer(correctAnswerText)
+                .explanation(q.getExplanation() != null ? q.getExplanation() : "No explanation provided.")
+                .isCorrect(isCorrect)
+                .build());
         }
+        
         System.out.println("Calculated Score: " + score);
 
-        int totalQuestions = (int) questionRepository.countByQuiz_QuizId(dto.getQuizId());
+        int totalQuestions = allQuestions.size();
 
         // We want users to be able to recover points if they retake a quiz and get a better score!
         // Find their highest score on this quiz so far
@@ -154,6 +195,7 @@ public class QuizAttemptService {
                 .pointsEarned(pointsEarned)
                 .attemptDate(attempt.getAttemptDate())
                 .newBadgesUnlocked(newBadges)
+                .questions(questionReports)
                 .build();
     }
 
