@@ -249,6 +249,18 @@ table {
       border-color: #E91E63;
       box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.1);
     }
+
+    /* Angular Validation Errors */
+    &.ng-invalid.ng-touched,
+    &.ng-invalid.ng-dirty {
+      border-color: #E11D48;
+      background-color: #FFF5F5;
+      
+      &:focus {
+        border-color: #E11D48;
+        box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.15);
+      }
+    }
   }
 }
 
