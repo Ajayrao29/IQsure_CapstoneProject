@@ -47,3 +47,4 @@ public class AppConfig {
     private int pointsPerLevel = 100;
 }
 
+

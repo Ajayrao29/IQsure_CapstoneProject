@@ -5,6 +5,7 @@
 
 <!-- ═══════════════════ ADMIN DASHBOARD ═══════════════════ -->
 <ng-container *ngIf="!loading && auth.isAdmin()">
+<div class="page">
 
   <!-- Welcome Banner -->
   <div class="welcome-banner admin-banner">
@@ -174,11 +175,13 @@
 
   </div>
 
+</div>
 </ng-container>
 
 
 <!-- ═══════════════════ USER DASHBOARD ═══════════════════ -->
 <ng-container *ngIf="!loading && !auth.isAdmin()">
+<div class="page">
 
   <!-- Welcome Banner -->
   <div class="welcome-banner">
@@ -307,4 +310,5 @@
     </div>
   </div>
 
+</div>
 </ng-container>

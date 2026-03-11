@@ -1,30 +1,34 @@
-.pts-badge { background: rgba(254,48,130,0.12); color: #FE3082; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 20px; }
+.pts-badge {
+  background: #FFF0F5;
+  color: #E91E63;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 30px;
+  border: 1px solid rgba(233, 30, 99, 0.1);
+}
 
-// ─── Badge Card Grid ─────────────────────────────────────────────────────
+/* ─── Badge Card Grid ───────────────────────────────────────────────────── */
 .badge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem;
 }
 
 .badge-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(233, 30, 99, 0.15);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(233, 30, 99, 0.1);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-align: center;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 2.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-
-  &:hover {
-    box-shadow: 0 8px 24px rgba(117,1,63,0.12);
-    border-color: var(--fuchsia);
-    transform: translateY(-2px);
-  }
+  gap: 0.75rem;
 }
 
 .badge-card-top {
@@ -35,23 +39,24 @@
 }
 
 .badge-id {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--text-gray);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #8A4B6B;
 }
 
 .badge-card-icon {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   color: white;
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 1.85rem;
+  font-weight: 900;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0.5rem 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin: 1rem 0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border: 3px solid white;
 
   &.bronze   { background: linear-gradient(135deg, #cd7f32, #e8a856); }
   &.silver   { background: linear-gradient(135deg, #8e9aaf, #c0c7d4); }
@@ -61,37 +66,37 @@
   &.ruby     { background: linear-gradient(135deg, #c0392b, #e74c3c); }
 }
 
-// Card border-top accent per level
+/* Level accents */
 .badge-card {
-  // ...existing code...
-  &.bronze   { border-top: 3px solid #cd7f32; }
-  &.silver   { border-top: 3px solid #8e9aaf; }
-  &.gold     { border-top: 3px solid #d4a017; }
-  &.diamond  { border-top: 3px solid #5b9bd5; }
-  &.platinum { border-top: 3px solid #6c5ce7; }
-  &.ruby     { border-top: 3px solid #c0392b; }
+  &.bronze   { border-top: 6px solid #cd7f32; }
+  &.silver   { border-top: 6px solid #8e9aaf; }
+  &.gold     { border-top: 6px solid #d4a017; }
+  &.diamond  { border-top: 6px solid #5b9bd5; }
+  &.platinum { border-top: 6px solid #6c5ce7; }
+  &.ruby     { border-top: 6px solid #c0392b; }
 }
 
 .badge-card-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--claret);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #4A154B;
   margin: 0;
 }
 
 .badge-card-desc {
-  font-size: 0.85rem;
-  color: var(--text-gray);
+  font-size: 0.95rem;
+  color: #8A4B6B;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.5;
+  font-weight: 500;
 }
 
 .badge-card-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-top: auto;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
   width: 100%;
   justify-content: center;
 }

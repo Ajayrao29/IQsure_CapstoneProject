@@ -1,12 +1,26 @@
 .pts-badge {
-  background: rgba(254,48,130,0.12); color: #FE3082;
-  font-size: 0.8rem; font-weight: 700;
-  padding: 0.2rem 0.6rem; border-radius: 20px;
-}
-.role-badge {
-  background: rgba(107,114,128,0.15); color: #9ca3af;
-  font-size: 0.75rem; font-weight: 700;
-  padding: 0.2rem 0.6rem; border-radius: 20px; text-transform: uppercase;
-  &.admin { background: rgba(254,48,130,0.12); color: #FE3082; }
+  background: #FFF0F5;
+  color: #E91E63;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 30px;
+  border: 1px solid rgba(233, 30, 99, 0.1);
 }
 
+.role-badge {
+  background: #F1F5F9;
+  color: #64748B;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  
+  &.admin {
+    background: #FFF0F5;
+    color: #8B003F;
+    border: 1px solid rgba(139, 0, 63, 0.1);
+  }
+}
