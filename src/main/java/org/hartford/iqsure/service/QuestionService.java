@@ -85,7 +85,6 @@ public class QuestionService {
                 .quizId(q.getQuiz().getQuizId())
                 .text(q.getText())
                 .options(cleanedOpts)
-                .explanation(q.getExplanation())
                 .build();
     }
 }

@@ -46,3 +46,4 @@ public class AppConfig {
     // Example: 250 points → Level 3 (250 / 100 = 2.5, rounded = Level 3)
     private int pointsPerLevel = 100;
 }
+
