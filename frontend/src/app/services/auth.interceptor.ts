@@ -13,8 +13,10 @@
  *
  * REGISTERED IN: app.config.ts → provideHttpClient(withInterceptors([authInterceptor]))
  */
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { AuthService } from './auth.service';  // → services/auth.service.ts
 
 // Functional interceptor (Angular 17+ style — no class needed)
@@ -23,14 +25,20 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const token = auth.getToken();
 
+  let requestToForward = req;
+
   // If a token exists, clone the request and add the Authorization header
   if (token) {
-    const cloned = req.clone({
+    requestToForward = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` }
     });
-    return next(cloned);  // Send the modified request
   }
 
-  // No token → send the original request without auth header
-  return next(req);
+  // Pass the request on, and catch any errors to log them clearly
+  return next(requestToForward).pipe(
+    catchError((error: HttpErrorResponse) => {
+      console.error(`[HTTP Error] URL: ${req.url} | Status: ${error.status} | Message: ${error.message}`, error.error);
+      return throwError(() => error);
+    })
+  );
 };

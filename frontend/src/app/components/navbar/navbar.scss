@@ -210,6 +210,17 @@
       border-top: 1px solid rgba(233, 30, 99, 0.08);
     }
 
+    /* Invisible bridge to prevent hover loss over the margin gap */
+    &::after {
+      content: '';
+      position: absolute;
+      top: -1rem;
+      left: 0;
+      right: 0;
+      height: 1rem;
+      background: transparent;
+    }
+
     a {
       color: #4A154B;
       padding: 0.85rem 1.25rem;
@@ -220,11 +231,19 @@
       margin-bottom: 6px;
       font-weight: 600;
       
-      &:hover, &.active {
+      &:hover {
         background-color: rgba(233, 30, 99, 0.05);
         color: #E91E63;
         transform: translateX(6px);
       }
+      
+      &.active {
+        background: rgba(233, 30, 99, 0.08); /* explicitly 'background', not 'background-color' to clear gradient */
+        color: #E91E63;
+        transform: translateX(6px);
+        box-shadow: none; /* explicitly clear box-shadow from top level active as well */
+      }
+      
       &:last-child { margin-bottom: 0; }
     }
   }
