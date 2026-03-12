@@ -25,7 +25,7 @@ import { AuthResponse } from '../models/models';  // → models/models.ts
 @Injectable({ providedIn: 'root' })  // Singleton — one instance shared across entire app
 export class AuthService {
 
-  private readonly KEY = 'iqsure_user';  // localStorage key name
+  private KEY = 'iqsure_user';  // localStorage key name
 
   // Save user data after login/register
   // Called by: LoginComponent.login(), RegisterComponent.register()

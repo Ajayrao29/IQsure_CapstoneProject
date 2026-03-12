@@ -16,47 +16,56 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * UNIT TEST CONCEPT: Controller Testing
+ * We test the Controller independently of the Service by Mocking the QuizService.
+ * We want to verify the API returns the correct HTTP status (200 OK) and data.
+ */
 @ExtendWith(MockitoExtension.class)
 public class QuizControllerTest {
 
+    // Create a fake Service so we don't run any real business logic.
     @Mock
     private QuizService quizServiceMock;
 
+    // Inject the fake service into our Controller.
     @InjectMocks
     private QuizController quizController;
 
     @Test
     public void testGetAllQuizzes() {
-        // Arrange
+        // --- ARRANGE ---
         QuizResponseDTO quizDTO = QuizResponseDTO.builder()
                 .quizId(1L)
                 .title("Sample Quiz")
                 .build();
+        // Mock the service to return a list containing our fake quiz DTO.
         when(quizServiceMock.getAllQuizzes()).thenReturn(java.util.List.of(quizDTO));
 
-        // Act
+        // --- ACT ---
+        // Call the controller method (passing null for category since it's optional)
         ResponseEntity<List<QuizResponseDTO>> response = quizController.getAll(null);
 
-        // Assert
-        assertEquals(200, response.getStatusCode().value());
-        assertEquals(1, response.getBody().size());
-        assertEquals("Sample Quiz", response.getBody().get(0).getTitle());
-        verify(quizServiceMock).getAllQuizzes();
+        // --- ASSERT ---
+        assertEquals(200, response.getStatusCode().value()); // Verify HTTP 200 OK status
+        assertEquals(1, response.getBody().size()); // List should contain 1 item
+        assertEquals("Sample Quiz", response.getBody().get(0).getTitle()); // Data should match
+        verify(quizServiceMock).getAllQuizzes(); // Verify the service was called
     }
 
     @Test
     public void testGetById() {
-        // Arrange
+        // --- ARRANGE ---
         QuizResponseDTO quizDTO = QuizResponseDTO.builder()
                 .quizId(1L)
                 .title("Sample Quiz")
                 .build();
         when(quizServiceMock.getQuizById(1L)).thenReturn(quizDTO);
 
-        // Act
+        // --- ACT ---
         ResponseEntity<QuizResponseDTO> response = quizController.getById(1L);
 
-        // Assert
+        // --- ASSERT ---
         assertNotNull(response);
         assertEquals(200, response.getStatusCode().value());
         assertEquals("Sample Quiz", response.getBody().getTitle());

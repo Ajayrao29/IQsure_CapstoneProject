@@ -17,18 +17,25 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * UNIT TEST CONCEPT: Service Layer
+ * Testing the logic that converts a Database Entity (EducationContent) 
+ * into a Data Transfer Object (EducationContentDTO).
+ */
 @ExtendWith(MockitoExtension.class)
 public class EducationContentServiceTest {
 
+    // Mock the repository to simulate database calls.
     @Mock
     private EducationContentRepository repositoryMock;
 
+    // Inject the mock repository into our real service class.
     @InjectMocks
     private EducationContentService educationContentService;
 
     @Test
     public void testGetByLanguage() {
-        // Arrange
+        // --- ARRANGE ---
         EducationContent content = EducationContent.builder()
                 .id(1L)
                 .topic("insurance")
@@ -36,12 +43,13 @@ public class EducationContentServiceTest {
                 .title("Insurance Info")
                 .content("Basic content")
                 .build();
+        // Return a list with our fake entity when findByLanguage("en") is called.
         when(repositoryMock.findByLanguage("en")).thenReturn(java.util.List.of(content));
 
-        // Act
+        // --- ACT ---
         List<EducationContentDTO> result = educationContentService.getByLanguage("en");
 
-        // Assert
+        // --- ASSERT ---
         assertEquals(1, result.size());
         assertEquals("Insurance Info", result.get(0).getTitle());
         verify(repositoryMock).findByLanguage("en");
@@ -49,7 +57,7 @@ public class EducationContentServiceTest {
 
     @Test
     public void testGetByTopicAndLanguage() {
-        // Arrange
+        // --- ARRANGE ---
         EducationContent content = EducationContent.builder()
                 .id(1L)
                 .topic("insurance")
@@ -59,10 +67,10 @@ public class EducationContentServiceTest {
                 .build();
         when(repositoryMock.findByTopicAndLanguage("insurance", "en")).thenReturn(Optional.of(content));
 
-        // Act
+        // --- ACT ---
         EducationContentDTO result = educationContentService.getByTopicAndLanguage("insurance", "en");
 
-        // Assert
+        // --- ASSERT ---
         assertNotNull(result);
         assertEquals("Insurance Info", result.getTitle());
         verify(repositoryMock).findByTopicAndLanguage("insurance", "en");

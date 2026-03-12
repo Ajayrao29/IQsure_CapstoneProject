@@ -13,10 +13,9 @@
  *
  * REGISTERED IN: app.config.ts → provideHttpClient(withInterceptors([authInterceptor]))
  */
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+
 import { AuthService } from './auth.service';  // → services/auth.service.ts
 
 // Functional interceptor (Angular 17+ style — no class needed)
@@ -34,11 +33,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
-  // Pass the request on, and catch any errors to log them clearly
-  return next(requestToForward).pipe(
-    catchError((error: HttpErrorResponse) => {
-      console.error(`[HTTP Error] URL: ${req.url} | Status: ${error.status} | Message: ${error.message}`, error.error);
-      return throwError(() => error);
-    })
-  );
+  // Pass the request on
+  return next(requestToForward);
 };

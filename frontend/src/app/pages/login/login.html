@@ -17,6 +17,7 @@
           name="email"
           [(ngModel)]="email"
           placeholder="you@example.com"
+          [class.has-error]="error && (error.toLowerCase().includes('email') || error.toLowerCase().includes('all fields') || error.toLowerCase().includes('invalid'))"
           required
           />
       </div>
@@ -28,6 +29,7 @@
           name="password"
           [(ngModel)]="password"
           placeholder="••••••••"
+          [class.has-error]="error && (error.toLowerCase().includes('password') || error.toLowerCase().includes('all fields') || error.toLowerCase().includes('invalid'))"
           required
           />
       </div>

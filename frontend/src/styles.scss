@@ -250,9 +250,10 @@ table {
       box-shadow: 0 0 0 4px rgba(233, 30, 99, 0.1);
     }
 
-    /* Angular Validation Errors */
+    /* Angular Validation Errors & Custom Error Class */
     &.ng-invalid.ng-touched,
-    &.ng-invalid.ng-dirty {
+    &.ng-invalid.ng-dirty,
+    &.has-error {
       border-color: #E11D48;
       background-color: #FFF5F5;
       

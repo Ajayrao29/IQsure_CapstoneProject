@@ -46,13 +46,11 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    @Operation(summary = "Register a new user")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody UserRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(dto));
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Login and receive a token")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         return ResponseEntity.ok(userService.login(request));
     }

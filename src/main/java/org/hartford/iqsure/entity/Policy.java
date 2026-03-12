@@ -110,3 +110,4 @@ public class Policy {
         MOTOR    // Car/vehicle insurance
     }
 }
+
