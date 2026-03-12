@@ -210,6 +210,41 @@ export class ApiService {
     return this.http.delete<void>(`${API}/api/v1/policies/${policyId}`);
   }
 
+  // ─── Claims ────────────────────────────────────────────────────────────
+  uploadClaimDocument(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<any>(`${API}/api/v1/claims/upload`, formData);
+  }
+
+  submitClaim(userId: number, data: any): Observable<any> {
+    return this.http.post<any>(`${API}/api/v1/users/${userId}/claims`, data);
+  }
+
+  getClaimsByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/users/${userId}/claims`);
+  }
+
+  getClaimsByPolicy(userId: number, userPolicyId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/users/${userId}/claims/policy/${userPolicyId}`);
+  }
+
+  getAllClaims(): Observable<any[]> {
+    return this.http.get<any[]>(`${API}/api/v1/admin/claims`);
+  }
+
+  moveClaimToReview(claimId: number): Observable<any> {
+    return this.http.put<any>(`${API}/api/v1/admin/claims/${claimId}/review`, {});
+  }
+
+  approveClaim(claimId: number, adminRemarks: string): Observable<any> {
+    return this.http.put<any>(`${API}/api/v1/admin/claims/${claimId}/approve`, { adminRemarks });
+  }
+
+  rejectClaim(claimId: number, adminRemarks: string): Observable<any> {
+    return this.http.put<any>(`${API}/api/v1/admin/claims/${claimId}/reject`, { adminRemarks });
+  }
+
   // ─── User Policies & Premium ──────────────────────────────────────────
   // → UserPolicyController.java → GET /api/v1/users/{userId}/premium/calculate/{policyId}
   calculatePremium(userId: number, policyId: number, selectedRewardIds: number[] = []): Observable<any> {

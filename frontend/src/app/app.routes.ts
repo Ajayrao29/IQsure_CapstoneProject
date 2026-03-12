@@ -68,6 +68,9 @@ import { PolicyMgmtComponent }    from './pages/admin/policy-mgmt/policy-mgmt';
 import { BadgeMgmtComponent }     from './pages/admin/badge-mgmt/badge-mgmt';
 import { RewardMgmtComponent }    from './pages/admin/reward-mgmt/reward-mgmt';
 import { DiscountRulesComponent } from './pages/admin/discount-rules/discount-rules';
+import { FileClaimComponent } from './pages/file-claim/file-claim';
+import { MyClaimsComponent } from './pages/my-claims/my-claims';
+import { AdminClaimsComponent } from './pages/admin/admin-claims/admin-claims';
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -88,6 +91,9 @@ export const routes: Routes = [
   { path: 'risk-simulator', component: RiskSimulatorComponent, canActivate: [AuthGuard] },
   { path: 'learning-center/education-center', component: EducationCenterComponent, canActivate: [AuthGuard] },
   { path: 'learning-center/quiz-reports', component: QuizReportsComponent, canActivate: [AuthGuard] },
+    { path: 'file-claim', component: FileClaimComponent, canActivate: [AuthGuard] },
+    { path: 'my-claims', component: MyClaimsComponent, canActivate: [AuthGuard] },
+    { path: 'admin/claims', component: AdminClaimsComponent, canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin/users',          component: AdminUsersComponent,    canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin/quiz-mgmt',      component: QuizMgmtComponent,      canActivate: [AuthGuard, AdminGuard] },
   { path: 'admin/policy-mgmt',    component: PolicyMgmtComponent,    canActivate: [AuthGuard, AdminGuard] },

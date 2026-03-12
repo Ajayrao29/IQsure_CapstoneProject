@@ -1,0 +1,51 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>Claims Management</h1>
+      <p>Review and process all customer claims</p>
+    </div>
+  </div>
+
+  @if (loading) {
+  <div class="loading">Loading claims...</div>
+  }
+
+  @if (!loading) {
+  <div class="table-wrap">
+    <table>
+      <thead>
+      <tr>
+        <th>Claim #</th>
+        <th>User</th>
+        <th>Policy</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th>Remarks</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      @for (c of claims; track c) {
+      <tr>
+        <td>{{ c.claimNumber }}</td>
+        <td>{{ c.userName }}</td>
+        <td>{{ c.policyTitle }}</td>
+        <td>${{ c.claimAmount }}</td>
+        <td>{{ c.status }}</td>
+        <td>{{ c.claimDate | date:'short' }}</td>
+        <td>
+          <input type="text" [(ngModel)]="remarks[c.id]" placeholder="Add remark" />
+        </td>
+        <td class="actions">
+          <button (click)="moveToReview(c.id)">Review</button>
+          <button class="approve" (click)="approve(c.id)">Approve</button>
+          <button class="reject" (click)="reject(c.id)">Reject</button>
+        </td>
+      </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

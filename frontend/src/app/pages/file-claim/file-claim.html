@@ -1,0 +1,59 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>File a Claim</h1>
+      <p>Submit a claim for one of your active purchased policies</p>
+    </div>
+    <a routerLink="/my-claims" class="btn-secondary">View My Claims</a>
+  </div>
+
+  @if (loading) {
+  <div class="loading">Loading your policies...</div>
+  }
+
+  @if (!loading) {
+  <div class="form-card">
+    <div class="form-group">
+      <label>Purchased Policy</label>
+      <select [(ngModel)]="form.userPolicyId">
+        <option [ngValue]="null">Select policy</option>
+        @for (p of userPolicies; track p) {
+        <option [ngValue]="p.id">
+          {{ p.policyTitle }} - {{ p.policyType }} - ${{ p.finalPremium }}
+        </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Reason</label>
+      <input type="text" [(ngModel)]="form.reason" placeholder="e.g. Hospitalization, Accident, Damage" />
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea [(ngModel)]="form.description" rows="4" placeholder="Explain what happened"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Claim Amount</label>
+      <input type="number" [(ngModel)]="form.claimAmount" placeholder="Enter claim amount" />
+    </div>
+
+    <div class="form-group">
+      <label>Supporting Document (PDF/JPG/PNG)</label>
+      <input type="file" (change)="onFileSelected($event)" />
+      <button type="button" class="btn-secondary mt" (click)="uploadDocument()">Upload Document</button>
+      @if (uploadMessage) {
+      <p class="upload-message">{{ uploadMessage }}</p>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-primary" [disabled]="submitting" (click)="submitClaim()">
+        {{ submitting ? 'Submitting...' : 'Submit Claim' }}
+      </button>
+    </div>
+  </div>
+  }
+</div>

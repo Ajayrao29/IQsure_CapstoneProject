@@ -1,0 +1,10 @@
+.page { padding: 24px; }
+.table-wrap { overflow-x: auto; background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: top; }
+input { width: 180px; padding: 8px; border: 1px solid #d1d5db; border-radius: 8px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+button { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; }
+.approve { background: #dcfce7; }
+.reject { background: #fee2e2; }
+.loading { padding: 24px; }

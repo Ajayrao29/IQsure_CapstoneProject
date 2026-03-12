@@ -1,84 +1,98 @@
 @if (auth.isLoggedIn()) {
-  <nav class="navbar">
-    <a class="navbar-brand" routerLink="/dashboard">
-      <span>IQ<span class="accent">sure</span></span>
-    </a>
-    <!-- Admin Navigation -->
-    @if (isAdmin) {
-      <div class="navbar-links">
-        <a routerLink="/admin/users" routerLinkActive="active">Users</a>
-        <a routerLink="/admin/quiz-mgmt" routerLinkActive="active">Quizzes</a>
-        <a routerLink="/admin/policy-mgmt" routerLinkActive="active">Policies</a>
-        <a routerLink="/admin/badge-mgmt" routerLinkActive="active">Badges</a>
-        <a routerLink="/admin/reward-mgmt" routerLinkActive="active">Rewards</a>
-        <a routerLink="/admin/discount-rules" routerLinkActive="active">Discount Rules</a>
+<nav class="navbar">
+  <a class="navbar-brand" routerLink="/dashboard">
+    <span>IQ<span class="accent">sure</span></span>
+  </a>
+
+  <!-- Admin Navigation -->
+  @if (isAdmin) {
+  <div class="navbar-links">
+    <a routerLink="/admin/users" routerLinkActive="active">Users</a>
+    <a routerLink="/admin/quiz-mgmt" routerLinkActive="active">Quizzes</a>
+    <a routerLink="/admin/policy-mgmt" routerLinkActive="active">Policies</a>
+    <a routerLink="/admin/badge-mgmt" routerLinkActive="active">Badges</a>
+    <a routerLink="/admin/reward-mgmt" routerLinkActive="active">Rewards</a>
+    <a routerLink="/admin/discount-rules" routerLinkActive="active">Discount Rules</a>
+    <a routerLink="/admin/claims" routerLinkActive="active">Claims</a>
+  </div>
+  }
+
+  <!-- User Navigation -->
+  @if (!isAdmin) {
+  <div class="navbar-links">
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle">Policies ▾</a>
+      <div class="nav-dropdown-content">
+        <a routerLink="/policies" routerLinkActive="active">Explore Policies</a>
+        <a routerLink="/my-policies" routerLinkActive="active">My Policies</a>
       </div>
-    }
-    <!-- User Navigation -->
-    @if (!isAdmin) {
-      <div class="navbar-links">
-        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-
-        <div class="nav-dropdown">
-          <a class="nav-dropdown-toggle">Policies ▾</a>
-          <div class="nav-dropdown-content">
-            <a routerLink="/policies" routerLinkActive="active">Explore Policies</a>
-            <a routerLink="/my-policies" routerLinkActive="active">My Policies</a>
-          </div>
-        </div>
-
-        <div class="nav-dropdown">
-          <a class="nav-dropdown-toggle">Learning ▾</a>
-          <div class="nav-dropdown-content">
-            <a routerLink="/quizzes" routerLinkActive="active">Play Quizzes</a>
-            <a routerLink="/learning-center/education-center" routerLinkActive="active">Education Center</a>
-            <a routerLink="/learning-center/quiz-reports" routerLinkActive="active">Quiz Reports</a>
-          </div>
-        </div>
-
-        <div class="nav-dropdown">
-          <a class="nav-dropdown-toggle">Tools ▾</a>
-          <div class="nav-dropdown-content">
-            <a routerLink="/risk-simulator" routerLinkActive="active">Risk Simulator</a>
-            <a routerLink="/savings" routerLinkActive="active">Savings Calculator</a>
-          </div>
-        </div>
-
-        <div class="nav-dropdown">
-          <a class="nav-dropdown-toggle">Rewards ▾</a>
-          <div class="nav-dropdown-content">
-            <a routerLink="/badges" routerLinkActive="active">Badges</a>
-            <a routerLink="/achievements" routerLinkActive="active">Achievements</a>
-            <a routerLink="/rewards" routerLinkActive="active">My Rewards</a>
-            <a routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
-          </div>
-        </div>
-      </div>
-    }
-    <div class="navbar-right">
-      <!-- User Profile Dropdown -->
-      @if (!isAdmin) {
-        <div class="profile-dropdown">
-          <div class="profile-avatar">{{ getInitials() }}</div>
-          <div class="profile-menu">
-            <div class="profile-header">
-              <div class="profile-avatar-large">{{ getInitials() }}</div>
-              <div class="profile-info">
-                <div class="profile-name">{{ userName }}</div>
-                <div class="profile-email">{{ userEmail }}</div>
-                <div class="profile-points">⭐ {{ userPoints }} points</div>
-              </div>
-            </div>
-            <div class="profile-divider"></div>
-            <button class="profile-logout" (click)="logout()">Logout</button>
-          </div>
-        </div>
-      }
-      <!-- Admin Simple Display -->
-      @if (isAdmin) {
-        <span class="user-name">👤 {{ userName }}</span>
-      }
-      <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
-  </nav>
+
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle">Claims ▾</a>
+      <div class="nav-dropdown-content">
+        <a routerLink="/file-claim" routerLinkActive="active">File Claim</a>
+        <a routerLink="/my-claims" routerLinkActive="active">My Claims</a>
+      </div>
+    </div>
+
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle">Learning ▾</a>
+      <div class="nav-dropdown-content">
+        <a routerLink="/quizzes" routerLinkActive="active">Play Quizzes</a>
+        <a routerLink="/learning-center/education-center" routerLinkActive="active">Education Center</a>
+        <a routerLink="/learning-center/quiz-reports" routerLinkActive="active">Quiz Reports</a>
+      </div>
+    </div>
+
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle">Tools ▾</a>
+      <div class="nav-dropdown-content">
+        <a routerLink="/risk-simulator" routerLinkActive="active">Risk Simulator</a>
+        <a routerLink="/savings" routerLinkActive="active">Savings Calculator</a>
+      </div>
+    </div>
+
+    <div class="nav-dropdown">
+      <a class="nav-dropdown-toggle">Rewards ▾</a>
+      <div class="nav-dropdown-content">
+        <a routerLink="/badges" routerLinkActive="active">Badges</a>
+        <a routerLink="/achievements" routerLinkActive="active">Achievements</a>
+        <a routerLink="/rewards" routerLinkActive="active">My Rewards</a>
+        <a routerLink="/leaderboard" routerLinkActive="active">Leaderboard</a>
+      </div>
+    </div>
+  </div>
+  }
+
+  <div class="navbar-right">
+    <!-- User Profile Dropdown -->
+    @if (!isAdmin) {
+    <div class="profile-dropdown">
+      <div class="profile-avatar">{{ getInitials() }}</div>
+      <div class="profile-menu">
+        <div class="profile-header">
+          <div class="profile-avatar-large">{{ getInitials() }}</div>
+          <div class="profile-info">
+            <div class="profile-name">{{ userName }}</div>
+            <div class="profile-email">{{ userEmail }}</div>
+            <div class="profile-points">⭐ {{ userPoints }} points</div>
+          </div>
+        </div>
+        <div class="profile-divider"></div>
+        <button class="profile-logout" (click)="logout()">Logout</button>
+      </div>
+    </div>
+    }
+
+    <!-- Admin Simple Display -->
+    @if (isAdmin) {
+    <span class="user-name">👤 {{ userName }}</span>
+    }
+
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</nav>
 }

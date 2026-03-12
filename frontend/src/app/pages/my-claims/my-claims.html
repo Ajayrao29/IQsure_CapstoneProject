@@ -1,0 +1,57 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>My Claims</h1>
+      <p>Track your submitted insurance claims</p>
+    </div>
+    <a routerLink="/file-claim" class="btn-primary">File New Claim</a>
+  </div>
+
+  @if (loading) {
+  <div class="loading">Loading claims...</div>
+  }
+
+  @if (!loading && claims.length === 0) {
+  <div class="empty-state">
+    <h3>No claims submitted yet</h3>
+    <p>You can file a claim for your active purchased policies.</p>
+    <a routerLink="/file-claim" class="btn-primary">File a Claim</a>
+  </div>
+  }
+
+  @if (!loading && claims.length > 0) {
+  <div class="claims-list">
+    @for (c of claims; track c) {
+    <div class="claim-card">
+      <div class="claim-top">
+        <div>
+          <h3>{{ c.claimNumber }}</h3>
+          <p>{{ c.policyTitle }} • {{ c.policyType }}</p>
+        </div>
+        <span class="status-tag" [ngClass]="getStatusClass(c.status)">
+              {{ c.status }}
+            </span>
+      </div>
+
+      <div class="claim-body">
+        <p><strong>Reason:</strong> {{ c.reason }}</p>
+        <p><strong>Description:</strong> {{ c.description || '—' }}</p>
+        <p><strong>Claim Amount:</strong> ${{ c.claimAmount }}</p>
+        <p><strong>Submitted:</strong> {{ c.claimDate | date:'medium' }}</p>
+
+        @if (c.documentUrl) {
+        <p>
+          <strong>Document:</strong>
+          <a [href]="'http://localhost:8080' + c.documentUrl" target="_blank">View Document</a>
+        </p>
+        }
+
+        @if (c.adminRemarks) {
+        <p><strong>Admin Remarks:</strong> {{ c.adminRemarks }}</p>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
